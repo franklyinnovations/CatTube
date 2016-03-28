@@ -1,4 +1,4 @@
-# FresherNote
+# CatTube
 
 [Heroku link][heroku]
 
