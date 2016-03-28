@@ -1,23 +1,22 @@
 # FresherNote
 
-[Heroku link][heroku] **NB:** This should be a link to your production site
+[Heroku link][heroku]
 
 [heroku]: http://www.herokuapp.com
 
 ## Minimum Viable Product
 
-FresherNote is a web application inspired by Evernote built using Ruby on Rails
-and React.js. FresherNote allows users to:
+CatTube is a web application inspired by YouTube built using Ruby on Rails and React.js; the main purpose of CatTube is to allow users to view and and upload cat themed videos and related content.
 
 <!-- This is a Markdown checklist. Use it to keep track of your
 progress. Put an x between the brackets for a checkmark: [x] -->
 
+- [ ] Watch uploaded videos
+- [ ] Search uploaded videos by name and filters
 - [ ] Create an account
 - [ ] Log in / Log out
-- [ ] Create, read, edit, and delete notes
-- [ ] Organize notes within Notebooks
-- [ ] Tag notes with multiple tags
-- [ ] Apply complex styling to notes while editing
+- [ ] Users can rate and leave comments on videos
+- [ ] Users can upload and delete videos
 
 ## Design Docs
 * [View Wireframes][views]
@@ -34,103 +33,72 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 
 ## Implementation Timeline
 
-### Phase 1: Backend setup and User Authentication (0.5 days)
+### Phase 1: Basic Video (1.0 days)
 
-**Objective:** Functioning rails project with Authentication
+**Objective:** Create barebones video and home page and allow users to watch video.
 
 - [ ] create new project
+- [ ] create `Video` model
+- [ ] test different ways of serving static assets
+- [ ] troubleshoot any issues with playback
+- [ ] implement basic page layout for video and home page
+- [ ] implement API for videos
+
+### Phase 2: Account Creation and Login (1.0 days)
+
+**Objective:** Implement users and channels associated with users.
+
 - [ ] create `User` model
 - [ ] authentication
 - [ ] user signup/signin pages
-- [ ] blank landing page after signin
+- [ ] user home page (channel)
 
-### Phase 2: Notes Model, API, and basic APIUtil (1.5 days)
+### Phase 3: Comments and Votes (1.0 days)
 
-**Objective:** Notes can be created, read, edited and destroyed through
-the API.
+**Objective:** Allow logged in users to comment and vote on videos.
 
-- [ ] create `Note` model
-- [ ] seed the database with a small amount of test data
-- [ ] CRUD API for notes (`NotesController`)
-- [ ] jBuilder views for notes
-- [ ] setup Webpack & Flux scaffold
-- [ ] setup `APIUtil` to interact with the API
-- [ ] test out API interaction in the console.
+- [ ] create `Vote` model
+- [ ] create `Comment` model
+- [ ] implement `Vote` API
+- [ ] implement `Comment` API
+- [ ] update the video page with likes and index of comments
+- [ ] add comment on video page
 
-### Phase 3: Flux Architecture and Router (1.5 days)
+### Phase 4: Search Uploaded Videos (1.0 days)
 
-**Objective:** Notes can be created, read, edited and destroyed with the
-user interface.
+**Objective:** Make the auto suggesting search bar and search results page.
 
-- [ ] setup the flux loop with skeleton files
-- [ ] setup React Router
-- implement each note component, building out the flux loop as needed.
-  - [ ] `NotesIndex`
-  - [ ] `NoteIndexItem`
-  - [ ] `NoteForm`
-- [ ] save Notes to the DB when the form loses focus or is left idle
-  after editing.
+- [ ] create the components for the search bar
+- [ ] create the search page
 
-### Phase 4: Start Styling (0.5 days)
+### Phase 5: Upload Videos (1.0 day)
 
-**Objective:** Existing pages (including singup/signin) will look good.
+**Objective:** Users can now upload videos to CatTube.
 
-- [ ] create a basic style guide
-- [ ] position elements on the page
-- [ ] add basic colors & styles
+- [ ] test different ways for uploading video content
+- [ ] create page to upload videos
+- [ ] compress and convert video server side with tools
 
-### Phase 5: Notebooks (1 day)
+### Phase 7: Additional Features And Components (2.0 days)
 
-**Objective:** Notes belong to Notebooks, and can be viewed by notebook.
+**objective:** Finish other non-critical components on pages.
 
-- [ ] create `Notebook` model
-- build out API, Flux loop, and components for:
-  - [ ] Notebook CRUD
-  - [ ] adding notes requires a notebook
-  - [ ] moving notes to a different notebook
-  - [ ] viewing notes by notebook
-- Use CSS to style new views
+- [ ] Track views per user account and modify suggestions based on it
+- [ ] Complete the floating navbar used on many different pages
+- [ ] Complete the footer used on many different pages
+- [ ] Complete the video page, home page, channel page, and search page
 
-Phase 3 adds organization to the Notes. Notes belong to a Notebook,
-which has its own `Index` view.
+### Phase 6: Styling (1.5 days)
 
-### Phase 6: Tags (1.5 days)
-
-**Objective:** Notes can be tagged with multiple tags, and tags are searchable.
-
-- [ ] create `Tag` model and join table
-- build out API, Flux loop, and components for:
-  - [ ] fetching tags for notebook
-  - [ ] adding tags to notebook
-  - [ ] creating tags while adding to notebooks
-  - [ ] searching notebooks by tag
-- [ ] Style new elements
-
-### Phase 7: Allow Complex Styling in Notes (0.5 days)
-
-**objective:** Enable complex styling of notes.
-
-- [ ] Integrate `react-quill` (based on Quill.js).
-- [ ] Use Rails helpers to sanitize HTML before rendering.
-- [ ] Style the new Quill elements.
-
-### Phase 8: Styling Cleanup and Seeding (1 day)
-
-**objective:** Make the site feel more cohesive and awesome.
+**Objective:** Start styling in the format of YouTube.
 
 - [ ] Get feedback on my UI from others
 - [ ] Refactor HTML classes & CSS rules
 - [ ] Add modals, transitions, and other styling flourishes.
 
 ### Bonus Features (TBD)
-- [ ] Search through notes for blocks of text
-- [ ] Pagination / infinite scroll for Notes Index
-- [ ] Set reminders on notes
-- [ ] Changelogs for Notes
-- [ ] Multiple sessions
-
-[phase-one]: ./docs/phases/phase1.md
-[phase-two]: ./docs/phases/phase2.md
-[phase-three]: ./docs/phases/phase3.md
-[phase-four]: ./docs/phases/phase4.md
-[phase-five]: ./docs/phases/phase5.md
+- [ ] Allow users to vote on comments
+- [ ] Allow users to subscribe to channels
+- [ ] Allow tags for videos
+- [ ] Setup a reverse proxy or CDN to serve static video assets
+- [ ] Configure video playback to allow for more advanced options like quality

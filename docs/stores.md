@@ -1,66 +1,133 @@
 # Flux Stores
 
-### NoteStore
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
 
-Holds all persisted note data.
+## Home Page
 
+### SearchSuggestionStore
+Holds suggestions for search.
 ##### Actions:
-- `receiveAllNotes`
-- `receiveSingleNote`
-- `removeNote`
-
+- `receiveSearchSuggestions`
 ##### Listeners:
-- `NotesIndex` (passes to `NoteIndexItem` via props)
-- `NoteDetail`
+- `SearchBar`
 
-### NoteFormStore
-
-Holds un-persisted note data to send to the API.
-
+### RecentlyViewedStore
+Holds recently viewed videos for user (or random otherwise).
 ##### Actions:
-- `receiveNoteFormParams`
-
+- `receiveRecentlyViewed`
 ##### Listeners:
-- `NoteForm`
+- `PopularIndex`
 
-### NotebookStore
-
-Holds all persisted notebook data.
-
+### FeaturedVideoStore
+Holds featured video.
 ##### Actions:
-- `receiveAllNotebooks`
-- `receiveSingleNotebook`
-- `removeNotebook`
-
+- `receiveFeaturedVideo`
 ##### Listeners:
-- `NotebookIndex`
+- `FeaturedVideo`
 
-### NotebookFormStore
-
-Holds un-persisted notebook data to send to the API.
-
+### RecommendedVideoStore
+Holds recommended videos.
 ##### Actions:
-- `receiveNotebookFormParams`
-
+- `receiveRecommendedVideos`
 ##### Listeners:
-- `NotebookForm`
+- `RecommendedIndex`
 
-### SearchStore
-
-Holds search parameters to send to the API.
-
+### RecommendedChannelStore
+Holds recommended channels, with each channel containing several videos each.
 ##### Actions:
-- `receiveSearchParams`
+- `receiveRecommendedChannels`
+- `receiveMoreRecommendedChannels`
+##### Listeners:
+- `RecommendedChannelIndex`
 
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+
+## Video
+
+### SearchSuggestionStore
+Holds suggestions for search.
+##### Actions:
+- `receiveSearchSuggestions`
+##### Listeners:
+- `SearchBar`
+
+### VideoInfoStore
+Holds information about the current video.
+##### Actions:
+- `receiveVideoInfo`
+##### Listeners:
+- `VideoBar`
+
+### CommentsStore
+Holds comments for the current video.
+##### Actions:
+- `receiveComments`
+- `receiveMoreComments`
+##### Listeners:
+- `CommentIndex`
+
+### RecommendedVideoStore
+Holds recommended videos.
+##### Actions:
+- `receiveRecommendedVideos`
+##### Listeners:
+- `VideoIndex`
+
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+
+## Search Page
+
+### SearchSuggestionStore
+Holds suggestions for search.
+##### Actions:
+- `receiveSearchSuggestions`
+##### Listeners:
+- `SearchBar`
+
+### SearchVideoStore
+Holds results for video search.
+##### Actions:
+- `receiveSearchedVideos`
 ##### Listeners:
 - `SearchIndex`
 
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+
+## Channel Page
+
 ### SearchSuggestionStore
-
-Holds typeahead suggestions for search.
-
+Holds suggestions for search.
 ##### Actions:
 - `receiveSearchSuggestions`
-
 ##### Listeners:
-- `SearchSuggestions`
+- `SearchBar`
+
+### ChannelVideoStore
+Holds videos for the current channel.
+##### Actions:
+- `receiveChannelVideos`
+##### Listeners:
+- `UploadIndex`
+
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+
+## Upload Page
+
+### ProgressBarStore
+Holds progress (upload) percent status.
+##### Actions:
+- `receiveProgressBar`
+##### Listeners:
+- `Progress`
+
+### ThumbnailStore
+Holds thumbnail for the uploaded video.
+##### Actions:
+- `receiveThumbnail`
+##### Listeners:
+- `Thumbnail`
