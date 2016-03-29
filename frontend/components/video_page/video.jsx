@@ -4,7 +4,11 @@ var Video = React.createClass({
 
 	render: function() {
 		return (
-			<div />
+			<section className='video'>
+				<video controls className='video-player'>
+					<source src="" className='video-player-source'></source>
+				</video>
+			</section>
 		);
 	}
 

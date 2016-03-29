@@ -26,7 +26,7 @@ $(function() {
 	ReactDOM.render(
 		<Router history={hashHistory}>
 			<Route path='/' component={CatTubeApp}>
-				<IndexRoute component={VideoPage}/>
+				<Route path='videos/:videoId' component={VideoPage}/>
 			</Route>
 		</Router>, $('#content')[0]);
 });
