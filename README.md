@@ -2,7 +2,7 @@
 
 [Heroku link][heroku]
 
-[heroku]: http://www.herokuapp.com
+[heroku]: https://cattube.herokuapp.com
 
 ## Minimum Viable Product
 
@@ -79,7 +79,7 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 - [ ] create page to upload videos
 - [ ] compress and convert video server side with tools
 
-### Phase 7: Additional Features And Components (2.0 days)
+### Phase 6: Additional Features And Components (2.0 days)
 
 **objective:** Finish other non-critical components on pages.
 
@@ -88,7 +88,7 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 - [ ] Complete the footer used on many different pages
 - [ ] Complete the video page, home page, channel page, and search page
 
-### Phase 6: Styling (1.5 days)
+### Phase 7: Styling (1.5 days)
 
 **Objective:** Start styling in the format of YouTube.
 
