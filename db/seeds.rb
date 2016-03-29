@@ -8,14 +8,22 @@
 
 ActiveRecord::Base.transaction do
 
-	5.times do
-		title = SecureRandom::urlsafe_base64(rand(5..10))
-		description = SecureRandom::urlsafe_base64(rand(30..200))
-		user_id = rand(0..100);
-		thumbnail = SecureRandom::urlsafe_base64(rand(30..100))
-		url = title;
+	# 5.times do
+	# 	title = SecureRandom::urlsafe_base64(rand(5..10))
+	# 	description = SecureRandom::urlsafe_base64(rand(30..200))
+	# 	user_id = rand(0..100);
+	# 	thumbnail = SecureRandom::urlsafe_base64(rand(30..100))
+	# 	url = title;
+	#
+	# 	Video.create!(title: title, description: description, user_id: user_id, thumbnail: thumbnail, url: url);
+	# end
 
-		Video.create!(title: title, description: description, user_id: user_id, thumbnail: thumbnail, url: url);
-	end
+	title = 'Best Cats VINES COMPILATION'
+	description = 'Creative Commons Video on Cats!'
+	user_id = rand(0..100);
+	thumbnail = SecureRandom::urlsafe_base64(rand(30..100))
+	url = 'Best Cats VINES COMPILATION.mp4';
+
+	Video.create!(title: title, description: description, user_id: user_id, thumbnail: thumbnail, url: url);
 
 end

@@ -24770,8 +24770,8 @@
 			return React.createElement(
 				'div',
 				{ className: 'video-page' },
-				React.createElement(Video, null),
-				React.createElement(VideoBar, { videoId: this.props.params.videoId }),
+				React.createElement(Video, { videoId: this.props.params.videoId }),
+				React.createElement(VideoBar, null),
 				React.createElement(VideoIndex, null)
 			);
 		}
@@ -24786,7 +24786,7 @@
 
 	var React = __webpack_require__(1);
 	
-	var ApiUtils = __webpack_require__(225);
+	// var ApiUtils = require('../../utils/api_utils');
 	var VideoStore = __webpack_require__(245);
 	
 	var VideoBar = React.createClass({
@@ -24798,7 +24798,7 @@
 	
 		componentDidMount: function () {
 			this.storeToken = VideoStore.addListener(this._onChange);
-			ApiUtils.getVideoById(this.props.videoId);
+			// ApiUtils.getVideoById(this.props.videoId);
 		},
 	
 		componentWillUnmount: function () {
@@ -24808,6 +24808,10 @@
 		_onChange: function () {
 			this.setState({ video: VideoStore.all() });
 		},
+	
+		// componentWillReceiveProps: function(newProps) {
+		// 	ApiUtils.getVideoById(newProps.videoId);
+		// },
 	
 		render: function () {
 			var video = this.state.video;
@@ -24864,12 +24868,7 @@
 			} else {
 				return React.createElement('div', null);
 			}
-		},
-	
-		componentWillReceiveProps: function (newProps) {
-			ApiUtils.getVideoById(newProps.videoId);
 		}
-	
 	});
 	
 	module.exports = VideoBar;
@@ -24898,19 +24897,38 @@
 
 	var React = __webpack_require__(1);
 	
+	var ApiUtils = __webpack_require__(225);
+	var VideoStore = __webpack_require__(245);
+	
 	var Video = React.createClass({
 		displayName: 'Video',
 	
+		getInitialState: function () {
+			return { video: { url: null } };
+		},
+	
+		componentDidMount: function () {
+			this.storeToken = VideoStore.addListener(this._onChange);
+			ApiUtils.getVideoById(this.props.videoId);
+		},
+	
+		componentWillUnmount: function () {
+			this.storeToken.remove();
+		},
+	
+		_onChange: function () {
+			this.setState({ video: VideoStore.all() });
+		},
+	
+		componentWillReceiveProps: function (newProps) {
+			ApiUtils.getVideoById(newProps.videoId);
+		},
 	
 		render: function () {
 			return React.createElement(
 				'section',
 				{ className: 'video' },
-				React.createElement(
-					'video',
-					{ controls: true, className: 'video-player' },
-					React.createElement('source', { src: '', className: 'video-player-source' })
-				)
+				React.createElement('video', { controls: true, src: this.state.video.url, className: 'video-player' })
 			);
 		}
 	

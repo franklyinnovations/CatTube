@@ -1,6 +1,6 @@
 var React = require('react');
 
-var ApiUtils = require('../../utils/api_utils');
+// var ApiUtils = require('../../utils/api_utils');
 var VideoStore = require('../../stores/video_page/video_store');
 
 var VideoBar = React.createClass({
@@ -10,7 +10,7 @@ var VideoBar = React.createClass({
 
 	componentDidMount: function () {
 		this.storeToken = VideoStore.addListener(this._onChange);
-		ApiUtils.getVideoById(this.props.videoId);
+		// ApiUtils.getVideoById(this.props.videoId);
 	},
 
 	componentWillUnmount: function () {
@@ -20,6 +20,10 @@ var VideoBar = React.createClass({
 	_onChange: function () {
 		this.setState({video: VideoStore.all()});
 	},
+	
+	// componentWillReceiveProps: function(newProps) {
+	// 	ApiUtils.getVideoById(newProps.videoId);
+	// },
 
 	render: function() {
 		var video = this.state.video;
@@ -43,12 +47,7 @@ var VideoBar = React.createClass({
 		else {
 			return <div></div>;
 		}
-	},
-
-	componentWillReceiveProps: function(newProps) {
-		ApiUtils.getVideoById(newProps.videoId);
 	}
-
 });
 
 module.exports = VideoBar;

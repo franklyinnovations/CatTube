@@ -9,8 +9,8 @@ var VideoPage = React.createClass({
 	render: function() {
 		return (
 			<div className='video-page'>
-				<Video/>
-				<VideoBar videoId={this.props.params.videoId}/>
+				<Video videoId={this.props.params.videoId}/>
+				<VideoBar/>
 				<VideoIndex/>
 			</div>
 		);
