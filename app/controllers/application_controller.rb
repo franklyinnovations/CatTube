@@ -5,6 +5,6 @@ class ApplicationController < ActionController::Base
 
 	# temporary hack before user auth and login
 	def current_user
-		@current_user ||= User.all.first
+		@current_user ||= User.all.last
 	end
 end

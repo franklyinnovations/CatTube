@@ -7987,6 +7987,10 @@
 	  }
 	};
 	
+	function registerNullComponentID() {
+	  ReactEmptyComponentRegistry.registerNullComponentID(this._rootNodeID);
+	}
+	
 	var ReactEmptyComponent = function (instantiate) {
 	  this._currentElement = null;
 	  this._rootNodeID = null;
@@ -7995,7 +7999,7 @@
 	assign(ReactEmptyComponent.prototype, {
 	  construct: function (element) {},
 	  mountComponent: function (rootID, transaction, context) {
-	    ReactEmptyComponentRegistry.registerNullComponentID(rootID);
+	    transaction.getReactMountReady().enqueue(registerNullComponentID, this);
 	    this._rootNodeID = rootID;
 	    return ReactReconciler.mountComponent(this._renderedComponent, rootID, transaction, context);
 	  },
@@ -18718,7 +18722,7 @@
 	
 	'use strict';
 	
-	module.exports = '0.14.7';
+	module.exports = '0.14.8';
 
 /***/ },
 /* 147 */
@@ -24759,8 +24763,8 @@
 	var React = __webpack_require__(1);
 	
 	var VideoBar = __webpack_require__(217);
-	var VideoIndex = __webpack_require__(218);
-	var Video = __webpack_require__(219);
+	var VideoIndex = __webpack_require__(241);
+	var Video = __webpack_require__(242);
 	
 	var VideoPage = React.createClass({
 		displayName: 'VideoPage',
@@ -24787,7 +24791,7 @@
 	var React = __webpack_require__(1);
 	
 	// var ApiUtils = require('../../utils/api_utils');
-	var VideoStore = __webpack_require__(245);
+	var VideoStore = __webpack_require__(218);
 	
 	var VideoBar = React.createClass({
 		displayName: 'VideoBar',
@@ -24877,75 +24881,40 @@
 /* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(1);
+	var Dispatcher = __webpack_require__(219);
+	var Store = __webpack_require__(223).Store;
+	var ApiConstants = __webpack_require__(240);
 	
-	var VideoIndex = React.createClass({
-		displayName: 'VideoIndex',
+	var VideoStore = new Store(Dispatcher);
 	
+	var _video = null;
 	
-		render: function () {
-			return React.createElement('div', null);
+	VideoStore.__onDispatch = function (payload) {
+		switch (payload.actionType) {
+			case ApiConstants.VIDEO_RECEIVED:
+				_video = payload.data;
+				VideoStore.__emitChange();
+				break;
+			default:
+				console.log('VideoStore#__onDispatch ignored a dispatch');
 		}
+	};
 	
-	});
+	VideoStore.all = function () {
+		return _video;
+	};
 	
-	module.exports = VideoIndex;
+	module.exports = VideoStore;
 
 /***/ },
 /* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(1);
-	
-	var ApiUtils = __webpack_require__(225);
-	var VideoStore = __webpack_require__(245);
-	
-	var Video = React.createClass({
-		displayName: 'Video',
-	
-		getInitialState: function () {
-			return { video: { url: null } };
-		},
-	
-		componentDidMount: function () {
-			this.storeToken = VideoStore.addListener(this._onChange);
-			ApiUtils.getVideoById(this.props.videoId);
-		},
-	
-		componentWillUnmount: function () {
-			this.storeToken.remove();
-		},
-	
-		_onChange: function () {
-			this.setState({ video: VideoStore.all() });
-		},
-	
-		componentWillReceiveProps: function (newProps) {
-			ApiUtils.getVideoById(newProps.videoId);
-		},
-	
-		render: function () {
-			return React.createElement(
-				'section',
-				{ className: 'video' },
-				React.createElement('video', { controls: true, src: this.state.video.url, className: 'video-player' })
-			);
-		}
-	
-	});
-	
-	module.exports = Video;
-
-/***/ },
-/* 220 */,
-/* 221 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Dispatcher = __webpack_require__(222).Dispatcher;
+	var Dispatcher = __webpack_require__(220).Dispatcher;
 	module.exports = new Dispatcher();
 
 /***/ },
-/* 222 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24957,11 +24926,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Dispatcher = __webpack_require__(223);
+	module.exports.Dispatcher = __webpack_require__(221);
 
 
 /***/ },
-/* 223 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24983,7 +24952,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(224);
+	var invariant = __webpack_require__(222);
 	
 	var _prefix = 'ID_';
 	
@@ -25198,7 +25167,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 224 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25253,62 +25222,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 225 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var ApiActions = __webpack_require__(226);
-	
-	var ApiUtils = {
-		getVideoById: function (videoId) {
-			$.ajax({
-				url: '/api/videos/' + videoId,
-				method: 'GET',
-				dataType: 'json',
-				success: function (res) {
-					ApiActions.receiveVideo(res);
-				},
-				failure: function (res) {
-					console.log('Error in ApiUtils#getVideoById with res: ' + res);
-				}
-			});
-		}
-	
-	};
-	
-	module.exports = ApiUtils;
-
-/***/ },
-/* 226 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var ApiConstants = __webpack_require__(227);
-	var Dispatcher = __webpack_require__(221);
-	
-	var ApiActions = {
-		receiveVideo: function (video) {
-			var payload = {
-				actionType: ApiConstants.VIDEO_RECEIVED,
-				data: video
-			};
-	
-			Dispatcher.dispatch(payload);
-		}
-	};
-	
-	module.exports = ApiActions;
-
-/***/ },
-/* 227 */
-/***/ function(module, exports) {
-
-	var ApiConstants = {
-		VIDEO_RECEIVED: 'VIDEO_RECEIVED'
-	};
-	
-	module.exports = ApiConstants;
-
-/***/ },
-/* 228 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25320,15 +25234,15 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Container = __webpack_require__(229);
-	module.exports.MapStore = __webpack_require__(232);
-	module.exports.Mixin = __webpack_require__(244);
-	module.exports.ReduceStore = __webpack_require__(233);
-	module.exports.Store = __webpack_require__(234);
+	module.exports.Container = __webpack_require__(224);
+	module.exports.MapStore = __webpack_require__(227);
+	module.exports.Mixin = __webpack_require__(239);
+	module.exports.ReduceStore = __webpack_require__(228);
+	module.exports.Store = __webpack_require__(229);
 
 
 /***/ },
-/* 229 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25350,10 +25264,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStoreGroup = __webpack_require__(230);
+	var FluxStoreGroup = __webpack_require__(225);
 	
-	var invariant = __webpack_require__(224);
-	var shallowEqual = __webpack_require__(231);
+	var invariant = __webpack_require__(222);
+	var shallowEqual = __webpack_require__(226);
 	
 	var DEFAULT_OPTIONS = {
 	  pure: true,
@@ -25511,7 +25425,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 230 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25530,7 +25444,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(224);
+	var invariant = __webpack_require__(222);
 	
 	/**
 	 * FluxStoreGroup allows you to execute a callback on every dispatch after
@@ -25592,7 +25506,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 231 */
+/* 226 */
 /***/ function(module, exports) {
 
 	/**
@@ -25647,7 +25561,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 232 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25668,10 +25582,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxReduceStore = __webpack_require__(233);
-	var Immutable = __webpack_require__(243);
+	var FluxReduceStore = __webpack_require__(228);
+	var Immutable = __webpack_require__(238);
 	
-	var invariant = __webpack_require__(224);
+	var invariant = __webpack_require__(222);
 	
 	/**
 	 * This is a simple store. It allows caching key value pairs. An implementation
@@ -25797,7 +25711,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 233 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25818,10 +25732,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStore = __webpack_require__(234);
+	var FluxStore = __webpack_require__(229);
 	
-	var abstractMethod = __webpack_require__(242);
-	var invariant = __webpack_require__(224);
+	var abstractMethod = __webpack_require__(237);
+	var invariant = __webpack_require__(222);
 	
 	var FluxReduceStore = (function (_FluxStore) {
 	  _inherits(FluxReduceStore, _FluxStore);
@@ -25904,7 +25818,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 234 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25923,11 +25837,11 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _require = __webpack_require__(235);
+	var _require = __webpack_require__(230);
 	
 	var EventEmitter = _require.EventEmitter;
 	
-	var invariant = __webpack_require__(224);
+	var invariant = __webpack_require__(222);
 	
 	/**
 	 * This class should be extended by the stores in your application, like so:
@@ -26087,7 +26001,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 235 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26100,14 +26014,14 @@
 	 */
 	
 	var fbemitter = {
-	  EventEmitter: __webpack_require__(236)
+	  EventEmitter: __webpack_require__(231)
 	};
 	
 	module.exports = fbemitter;
 
 
 /***/ },
-/* 236 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26126,11 +26040,11 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var EmitterSubscription = __webpack_require__(237);
-	var EventSubscriptionVendor = __webpack_require__(239);
+	var EmitterSubscription = __webpack_require__(232);
+	var EventSubscriptionVendor = __webpack_require__(234);
 	
-	var emptyFunction = __webpack_require__(241);
-	var invariant = __webpack_require__(240);
+	var emptyFunction = __webpack_require__(236);
+	var invariant = __webpack_require__(235);
 	
 	/**
 	 * @class BaseEventEmitter
@@ -26304,7 +26218,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 237 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26325,7 +26239,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var EventSubscription = __webpack_require__(238);
+	var EventSubscription = __webpack_require__(233);
 	
 	/**
 	 * EmitterSubscription represents a subscription with listener and context data.
@@ -26357,7 +26271,7 @@
 	module.exports = EmitterSubscription;
 
 /***/ },
-/* 238 */
+/* 233 */
 /***/ function(module, exports) {
 
 	/**
@@ -26411,7 +26325,7 @@
 	module.exports = EventSubscription;
 
 /***/ },
-/* 239 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26430,7 +26344,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(240);
+	var invariant = __webpack_require__(235);
 	
 	/**
 	 * EventSubscriptionVendor stores a set of EventSubscriptions that are
@@ -26520,7 +26434,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 240 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26575,7 +26489,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 241 */
+/* 236 */
 /***/ function(module, exports) {
 
 	/**
@@ -26617,7 +26531,7 @@
 	module.exports = emptyFunction;
 
 /***/ },
-/* 242 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26634,7 +26548,7 @@
 	
 	'use strict';
 	
-	var invariant = __webpack_require__(224);
+	var invariant = __webpack_require__(222);
 	
 	function abstractMethod(className, methodName) {
 	   true ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Subclasses of %s must override %s() with their own implementation.', className, methodName) : invariant(false) : undefined;
@@ -26644,7 +26558,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 243 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31631,7 +31545,7 @@
 	}));
 
 /***/ },
-/* 244 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -31648,9 +31562,9 @@
 	
 	'use strict';
 	
-	var FluxStoreGroup = __webpack_require__(230);
+	var FluxStoreGroup = __webpack_require__(225);
 	
-	var invariant = __webpack_require__(224);
+	var invariant = __webpack_require__(222);
 	
 	/**
 	 * `FluxContainer` should be preferred over this mixin, but it requires using
@@ -31754,33 +31668,122 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 245 */
+/* 240 */
+/***/ function(module, exports) {
+
+	var ApiConstants = {
+		VIDEO_RECEIVED: 'VIDEO_RECEIVED'
+	};
+	
+	module.exports = ApiConstants;
+
+/***/ },
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Dispatcher = __webpack_require__(221);
-	var Store = __webpack_require__(228).Store;
-	var ApiConstants = __webpack_require__(227);
+	var React = __webpack_require__(1);
 	
-	var VideoStore = new Store(Dispatcher);
+	var VideoIndex = React.createClass({
+		displayName: 'VideoIndex',
 	
-	var _video = null;
 	
-	VideoStore.__onDispatch = function (payload) {
-		switch (payload.actionType) {
-			case ApiConstants.VIDEO_RECEIVED:
-				_video = payload.data;
-				VideoStore.__emitChange();
-				break;
-			default:
-				console.log('VideoStore#__onDispatch ignored a dispatch');
+		render: function () {
+			return React.createElement('div', null);
+		}
+	
+	});
+	
+	module.exports = VideoIndex;
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var ApiUtils = __webpack_require__(243);
+	var VideoStore = __webpack_require__(218);
+	
+	var Video = React.createClass({
+		displayName: 'Video',
+	
+		getInitialState: function () {
+			return { video: { url: null } };
+		},
+	
+		componentDidMount: function () {
+			this.storeToken = VideoStore.addListener(this._onChange);
+			ApiUtils.getVideoById(this.props.videoId);
+		},
+	
+		componentWillUnmount: function () {
+			this.storeToken.remove();
+		},
+	
+		_onChange: function () {
+			this.setState({ video: VideoStore.all() });
+		},
+	
+		componentWillReceiveProps: function (newProps) {
+			ApiUtils.getVideoById(newProps.videoId);
+		},
+	
+		render: function () {
+			return React.createElement(
+				'section',
+				{ className: 'video' },
+				React.createElement('video', { controls: true, src: this.state.video.url, className: 'video-player' })
+			);
+		}
+	
+	});
+	
+	module.exports = Video;
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ApiActions = __webpack_require__(244);
+	
+	var ApiUtils = {
+		getVideoById: function (videoId) {
+			$.ajax({
+				url: '/api/videos/' + videoId,
+				method: 'GET',
+				dataType: 'json',
+				success: function (res) {
+					ApiActions.receiveVideo(res);
+				},
+				failure: function (res) {
+					console.log('Error in ApiUtils#getVideoById with res: ' + res);
+				}
+			});
+		}
+	
+	};
+	
+	module.exports = ApiUtils;
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ApiConstants = __webpack_require__(240);
+	var Dispatcher = __webpack_require__(219);
+	
+	var ApiActions = {
+		receiveVideo: function (video) {
+			var payload = {
+				actionType: ApiConstants.VIDEO_RECEIVED,
+				data: video
+			};
+	
+			Dispatcher.dispatch(payload);
 		}
 	};
 	
-	VideoStore.all = function () {
-		return _video;
-	};
-	
-	module.exports = VideoStore;
+	module.exports = ApiActions;
 
 /***/ }
 /******/ ]);

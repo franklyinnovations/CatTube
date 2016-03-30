@@ -12,7 +12,9 @@ ActiveRecord::Base.transaction do
 	users = []
 
 	users << User.create!(username: 'foo', password: 'foobar')
-	users << User.create!(username: 'bar', password: 'barfoo')
+	users << User.create!(username: 'bar', password: 'foobar')
+	users << User.create!(username: 'baz', password: 'foobar')
+	users << User.create!(username: 'qux', password: 'barfoo')
 
 	title = 'Best Cats VINES COMPILATION'
 	description = 'Creative Commons Video on Cats!'
