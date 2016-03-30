@@ -30,6 +30,21 @@ var ApiUtils = {
 			}
 		});
 	},
+
+	getLikesByVideoId: function(videoId, callback) {
+		$.ajax({
+			url: '/api/videos/' + videoId + '/likes',
+			method: 'GET',
+			dataType: 'json',
+			success: function (res) {
+				ApiActions.receiveLikes(res);
+				callback && callback();
+			},
+			failure: function (res) {
+				console.log('Error in ApiUtils#getLikesByVideoId with res: ' + res);
+			}
+		});
+	},
 };
 
 

@@ -33,14 +33,11 @@ var CommentIndex = React.createClass({
 				<section className='comment-index'> {
 
 					this.state.comments.map( function (comment) {
-
 						return (
 							<Comment key={comment.id} comment={comment}> {
-
 								comment.children.map( function (subComment) {
 									return <Comment key={subComment.id} comment={subComment}/>;
 								})
-
 							}</Comment>
 						);
 					})

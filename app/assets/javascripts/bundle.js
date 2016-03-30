@@ -24800,6 +24800,7 @@
 	
 	// var ApiUtils = require('../../utils/api_utils');
 	var VideoStore = __webpack_require__(218);
+	var Likes = __webpack_require__(248);
 	
 	var VideoBar = React.createClass({
 		displayName: 'VideoBar',
@@ -24874,7 +24875,8 @@
 							'li',
 							null,
 							'Updated At:' + video.updated_at
-						)
+						),
+						React.createElement(Likes, { videoId: video.id })
 					)
 				);
 			} else {
@@ -31681,7 +31683,8 @@
 
 	var ApiConstants = {
 		VIDEO_RECEIVED: 'VIDEO_RECEIVED',
-		COMMENTS_RECEIVED: 'COMMENTS_RECEIVED'
+		COMMENTS_RECEIVED: 'COMMENTS_RECEIVED',
+		LIKES_RECEIVED: 'LIKES_RECEIVED'
 	};
 	
 	module.exports = ApiConstants;
@@ -31784,6 +31787,21 @@
 					console.log('Error in ApiUtils#getCommentsByVideoId with res: ' + res);
 				}
 			});
+		},
+	
+		getLikesByVideoId: function (videoId, callback) {
+			$.ajax({
+				url: '/api/videos/' + videoId + '/likes',
+				method: 'GET',
+				dataType: 'json',
+				success: function (res) {
+					ApiActions.receiveLikes(res);
+					callback && callback();
+				},
+				failure: function (res) {
+					console.log('Error in ApiUtils#getLikesByVideoId with res: ' + res);
+				}
+			});
 		}
 	};
 	
@@ -31810,6 +31828,15 @@
 			var payload = {
 				actionType: ApiConstants.COMMENTS_RECEIVED,
 				data: comments
+			};
+	
+			Dispatcher.dispatch(payload);
+		},
+	
+		receiveLikes: function (likes) {
+			var payload = {
+				actionType: ApiConstants.LIKES_RECEIVED,
+				data: likes
 			};
 	
 			Dispatcher.dispatch(payload);
@@ -31899,7 +31926,6 @@
 					{ className: 'comment-index' },
 					' ',
 					this.state.comments.map(function (comment) {
-	
 						return React.createElement(
 							Comment,
 							{ key: comment.id, comment: comment },
@@ -31950,6 +31976,106 @@
 	};
 	
 	module.exports = CommentsStore;
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var LikesStore = __webpack_require__(249);
+	var ApiUtils = __webpack_require__(243);
+	
+	var Likes = React.createClass({
+		displayName: 'Likes',
+	
+	
+		getInitialState: function () {
+			return { likes: { up: 0, down: 0 } };
+		},
+	
+		componentDidMount: function () {
+			this.storeToken = LikesStore.addListener(this._onChange);
+			ApiUtils.getLikesByVideoId(this.props.videoId);
+		},
+	
+		componentWillUnmount: function () {
+			this.storeToken.remove();
+		},
+	
+		_onChange: function () {
+			this.setState({ likes: LikesStore.all() });
+		},
+	
+		componentWillReceiveProps: function (newProps) {
+			ApiUtils.getLikesByVideoId(newProps.videoId);
+		},
+	
+		render: function () {
+			var up = this.state.likes.up;
+			var down = this.state.likes.down;
+			var percent = up / (up + down);
+	
+			// check for NaN (no votes)
+			if (up + down === 0) {
+				percent = 1;
+			}
+	
+			return React.createElement(
+				'section',
+				{ className: 'likes' },
+				React.createElement(
+					'div',
+					{ className: 'likes-bar' },
+					'Bar Percentage: ',
+					percent
+				),
+				React.createElement(
+					'div',
+					{ className: 'likes-up' },
+					'Up: ',
+					up
+				),
+				React.createElement(
+					'div',
+					{ className: 'likes-down' },
+					'Down: ',
+					down
+				)
+			);
+		}
+	});
+	
+	module.exports = Likes;
+
+/***/ },
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Dispatcher = __webpack_require__(219);
+	var Store = __webpack_require__(223).Store;
+	var ApiConstants = __webpack_require__(240);
+	
+	var LikesStore = new Store(Dispatcher);
+	
+	var _likes = null;
+	
+	LikesStore.__onDispatch = function (payload) {
+		switch (payload.actionType) {
+			case ApiConstants.LIKES_RECEIVED:
+				_likes = payload.data;
+				LikesStore.__emitChange();
+				break;
+			default:
+				console.log('LikesStore#__onDispatch ignored a dispatch');
+		}
+	};
+	
+	LikesStore.all = function () {
+		return $.extend({}, _likes);
+	};
+	
+	module.exports = LikesStore;
 
 /***/ }
 /******/ ]);

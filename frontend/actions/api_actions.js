@@ -18,6 +18,15 @@ var ApiActions = {
 		};
 
 		Dispatcher.dispatch(payload);
+	},
+
+	receiveLikes: function (likes) {
+		var payload = {
+			actionType: ApiConstants.LIKES_RECEIVED,
+			data: likes
+		};
+
+		Dispatcher.dispatch(payload);
 	}
 };
 

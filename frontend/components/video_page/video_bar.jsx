@@ -2,6 +2,7 @@ var React = require('react');
 
 // var ApiUtils = require('../../utils/api_utils');
 var VideoStore = require('../../stores/video_page/video_store');
+var Likes = require('./likes');
 
 var VideoBar = React.createClass({
 	getInitialState: function () {
@@ -20,7 +21,7 @@ var VideoBar = React.createClass({
 	_onChange: function () {
 		this.setState({video: VideoStore.all()});
 	},
-	
+
 	// componentWillReceiveProps: function(newProps) {
 	// 	ApiUtils.getVideoById(newProps.videoId);
 	// },
@@ -40,6 +41,7 @@ var VideoBar = React.createClass({
 						<li>{'URL:' + video.url}</li>
 						<li>{'Created At:' + video.created_at}</li>
 						<li>{'Updated At:' + video.updated_at}</li>
+						<Likes videoId={video.id}/>
 					</ul>
 				</section>
 			);
