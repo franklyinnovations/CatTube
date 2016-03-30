@@ -1,7 +1,10 @@
 class Video < ActiveRecord::Base
-	validates :title, :description, :thumbnail, :url, presence: true
+	belongs_to :user
+	has_many :comments
+	has_many :likes
 
-	# validates :user, presence: true
+	validates :title, :description, :thumbnail, :url, presence: true
+	validates :user, presence: true
 
 private
 
