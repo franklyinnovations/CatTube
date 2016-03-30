@@ -1,7 +1,14 @@
 class Api::CommentsController < ApplicationController
 	def index
 		video = Video.find(params[:video_id])
-		@comments = video.comments
+		raw_comments = video.comments.includes(:children)
+		@comments = []
+
+		# only include top level comments
+		video.comments.each do |comment|
+			@comments << comment if comment.parent_id == nil
+		end
+
 		render :index
 	end
 
