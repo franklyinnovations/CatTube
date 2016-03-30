@@ -13,17 +13,24 @@ class Comment < ActiveRecord::Base
 		foreign_key: :parent_id
 
 	validates :user, :video, :body, presence: true
-	validate :parent_exists_if_present
+	validate :parent_exists_if_present, :parent_is_not_nested
 
 private
 
 	def parent_exists_if_present
 		if self.parent_id
 			begin
-				User.find(self.parent_id)
+				Comment.find(self.parent_id)
 			rescue ActiveRecord::RecordNotFound
 				self.errors[:parent_id] << "#{self.parent_id} doesn't exist!"
 			end
+		end
+	end
+
+	def parent_is_not_nested
+		# if the parent exists and it has a parent
+		if self.parent && self.parent.parent
+			self.errors[:parent_id] << "#{self.parent_id} can't be a nested comment!"
 		end
 	end
 end
