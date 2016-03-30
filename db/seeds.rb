@@ -33,7 +33,7 @@ ActiveRecord::Base.transaction do
 		videos.each do |video|
 			chance_to_like = 100
 
-			if chance_to_like >= rand(0..100)
+			if user.id != video.user.id && chance_to_like >= rand(0..100)
 				like_value = [-1, 1].sample
 				Like.create!(user_id: user.id, video_id: video.id, value: like_value)
 			end
