@@ -1,7 +1,9 @@
 class Api::LikesController < ApplicationController
 	def index
-		video = Video.find(params[:video_id])
-		@likes = video.likes
+		raw_likes = Video.find(params[:video_id]).likes
+
+		# only return the aggregate likes
+		@likes = {up: Like.up_total(raw_likes), down: Like.down_total(raw_likes)}
 		render :index
 	end
 
@@ -21,6 +23,8 @@ class Api::LikesController < ApplicationController
 	end
 
 private
+
+
 
 	def like_params
 		params.require(:like).permit(:value, :video_id)

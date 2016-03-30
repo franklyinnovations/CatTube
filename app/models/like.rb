@@ -8,6 +8,18 @@ class Like < ActiveRecord::Base
 
 	validate :cannot_like_own_video
 
+	def self.up_total(likes)
+		count = 0
+		likes.each { |like| count += 1 if like.value == 1 }
+		count
+	end
+
+	def self.down_total(likes)
+		count = 0
+		likes.each { |like| count += 1 if like.value == -1 }
+		count
+	end
+
 private
 
 	def cannot_like_own_video
