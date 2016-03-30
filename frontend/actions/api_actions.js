@@ -9,6 +9,15 @@ var ApiActions = {
 		};
 
 		Dispatcher.dispatch(payload);
+	},
+
+	receiveComments: function (comments) {
+		var payload = {
+			actionType: ApiConstants.COMMENTS_RECEIVED,
+			data: comments
+		};
+
+		Dispatcher.dispatch(payload);
 	}
 };
 

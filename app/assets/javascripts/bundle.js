@@ -51,6 +51,7 @@
 	var Route = __webpack_require__(159).Route;
 	var IndexRoute = __webpack_require__(159).IndexRoute;
 	var hashHistory = __webpack_require__(159).hashHistory;
+	var Link = __webpack_require__(159).Link;
 	
 	var VideoPage = __webpack_require__(216);
 	
@@ -67,6 +68,11 @@
 					'h2',
 					null,
 					'CatTube'
+				),
+				React.createElement(
+					Link,
+					{ to: '/videos/1' },
+					'To Video'
 				),
 				this.props.children
 			);
@@ -24765,6 +24771,7 @@
 	var VideoBar = __webpack_require__(217);
 	var VideoIndex = __webpack_require__(241);
 	var Video = __webpack_require__(242);
+	var CommentIndex = __webpack_require__(246);
 	
 	var VideoPage = React.createClass({
 		displayName: 'VideoPage',
@@ -24776,7 +24783,8 @@
 				{ className: 'video-page' },
 				React.createElement(Video, { videoId: this.props.params.videoId }),
 				React.createElement(VideoBar, null),
-				React.createElement(VideoIndex, null)
+				React.createElement(VideoIndex, null),
+				React.createElement(CommentIndex, { videoId: this.props.params.videoId })
 			);
 		}
 	
@@ -24901,7 +24909,7 @@
 	};
 	
 	VideoStore.all = function () {
-		return _video;
+		return $.extend({}, _video);
 	};
 	
 	module.exports = VideoStore;
@@ -31672,7 +31680,8 @@
 /***/ function(module, exports) {
 
 	var ApiConstants = {
-		VIDEO_RECEIVED: 'VIDEO_RECEIVED'
+		VIDEO_RECEIVED: 'VIDEO_RECEIVED',
+		COMMENTS_RECEIVED: 'COMMENTS_RECEIVED'
 	};
 	
 	module.exports = ApiConstants;
@@ -31747,20 +31756,35 @@
 	var ApiActions = __webpack_require__(244);
 	
 	var ApiUtils = {
-		getVideoById: function (videoId) {
+		getVideoById: function (videoId, callback) {
 			$.ajax({
 				url: '/api/videos/' + videoId,
 				method: 'GET',
 				dataType: 'json',
 				success: function (res) {
 					ApiActions.receiveVideo(res);
+					callback && callback();
 				},
 				failure: function (res) {
 					console.log('Error in ApiUtils#getVideoById with res: ' + res);
 				}
 			});
-		}
+		},
 	
+		getCommentsByVideoId: function (videoId, callback) {
+			$.ajax({
+				url: '/api/videos/' + videoId + '/comments',
+				method: 'GET',
+				dataType: 'json',
+				success: function (res) {
+					ApiActions.receiveComments(res);
+					callback && callback();
+				},
+				failure: function (res) {
+					console.log('Error in ApiUtils#getCommentsByVideoId with res: ' + res);
+				}
+			});
+		}
 	};
 	
 	module.exports = ApiUtils;
@@ -31780,10 +31804,152 @@
 			};
 	
 			Dispatcher.dispatch(payload);
+		},
+	
+		receiveComments: function (comments) {
+			var payload = {
+				actionType: ApiConstants.COMMENTS_RECEIVED,
+				data: comments
+			};
+	
+			Dispatcher.dispatch(payload);
 		}
 	};
 	
 	module.exports = ApiActions;
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var Comment = React.createClass({
+		displayName: 'Comment',
+	
+	
+		render: function () {
+			var comment = this.props.comment;
+	
+			return React.createElement(
+				'ul',
+				{ className: 'comment' },
+				React.createElement(
+					'li',
+					null,
+					comment.user_id
+				),
+				React.createElement(
+					'li',
+					null,
+					comment.body
+				),
+				React.createElement(
+					'li',
+					null,
+					comment.updated_at
+				),
+				this.props.children
+			);
+		}
+	
+	});
+	
+	module.exports = Comment;
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var ApiUtils = __webpack_require__(243);
+	var CommentsStore = __webpack_require__(247);
+	var Comment = __webpack_require__(245);
+	
+	var CommentIndex = React.createClass({
+		displayName: 'CommentIndex',
+	
+	
+		getInitialState: function () {
+			return { comments: null };
+		},
+	
+		componentDidMount: function () {
+			this.storeToken = CommentsStore.addListener(this._onChange);
+			ApiUtils.getCommentsByVideoId(this.props.videoId);
+		},
+	
+		componentWillUnmount: function () {
+			this.storeToken.remove();
+		},
+	
+		_onChange: function () {
+			this.setState({ comments: CommentsStore.all() });
+		},
+	
+		componentWillReceiveProps: function (newProps) {
+			ApiUtils.getCommentsByVideoId(newProps.videoId);
+		},
+	
+		render: function () {
+			if (this.state.comments) {
+				return React.createElement(
+					'section',
+					{ className: 'comment-index' },
+					' ',
+					this.state.comments.map(function (comment) {
+	
+						return React.createElement(
+							Comment,
+							{ key: comment.id, comment: comment },
+							' ',
+							comment.children.map(function (subComment) {
+								return React.createElement(Comment, { key: subComment.id, comment: subComment });
+							})
+						);
+					})
+				);
+			} else {
+				return React.createElement(
+					'div',
+					null,
+					'Loading comments...'
+				);
+			}
+		}
+	});
+	
+	module.exports = CommentIndex;
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Dispatcher = __webpack_require__(219);
+	var Store = __webpack_require__(223).Store;
+	var ApiConstants = __webpack_require__(240);
+	
+	var CommentsStore = new Store(Dispatcher);
+	
+	var _comments = [];
+	
+	CommentsStore.__onDispatch = function (payload) {
+		switch (payload.actionType) {
+			case ApiConstants.COMMENTS_RECEIVED:
+				_comments = payload.data;
+				CommentsStore.__emitChange();
+				break;
+			default:
+				console.log('CommentsStore#__onDispatch ignored a dispatch');
+		}
+	};
+	
+	CommentsStore.all = function () {
+		return _comments.slice();
+	};
+	
+	module.exports = CommentsStore;
 
 /***/ }
 /******/ ]);
