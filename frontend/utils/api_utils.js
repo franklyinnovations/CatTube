@@ -45,6 +45,24 @@ var ApiUtils = {
 			}
 		});
 	},
+
+	uploadVideo: function(formData, callback) {
+		$.ajax({
+			url: '/api/videos',
+			method: 'POST',
+			processData: false,
+			contentType: false,
+			dataType: 'json',
+			data: formData,
+			success: function (res) {
+				console.log('Video uploaded!');
+				callback && callback();
+			},
+			failure: function (res) {
+				console.log('Error in ApiUtils#getLikesByVideoId with res: ' + res);
+			}
+		});
+	}
 };
 
 

@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 	has_many :videos
 
 	validates :username, :password_digest, :session_token, presence: true
+	validates :username, uniqueness: true
 	validates :username, format: { with: /\A[A-Za-z][A-Za-z0-9]*$\z/ }
 	validates :password, length: { minimum: 6 }
 

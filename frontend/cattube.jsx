@@ -8,6 +8,7 @@ var hashHistory = require('react-router').hashHistory;
 var Link = require('react-router').Link;
 
 var VideoPage = require('./components/video_page.jsx');
+var UploadPage = require('./components/upload_page.jsx');
 
 // for generic stuff rendered or configured on all pages
 var CatTubeApp = React.createClass({
@@ -29,6 +30,7 @@ $(function() {
 		<Router history={hashHistory}>
 			<Route path='/' component={CatTubeApp}>
 				<Route path='videos/:videoId' component={VideoPage}/>
+				<Route path='upload' component={UploadPage}/>
 			</Route>
 		</Router>, $('#content')[0]);
 });

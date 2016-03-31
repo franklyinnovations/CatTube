@@ -54,6 +54,7 @@
 	var Link = __webpack_require__(159).Link;
 	
 	var VideoPage = __webpack_require__(216);
+	var UploadPage = __webpack_require__(250);
 	
 	// for generic stuff rendered or configured on all pages
 	var CatTubeApp = React.createClass({
@@ -87,7 +88,8 @@
 			React.createElement(
 				Route,
 				{ path: '/', component: CatTubeApp },
-				React.createElement(Route, { path: 'videos/:videoId', component: VideoPage })
+				React.createElement(Route, { path: 'videos/:videoId', component: VideoPage }),
+				React.createElement(Route, { path: 'upload', component: UploadPage })
 			)
 		), $('#content')[0]);
 	});
@@ -31837,6 +31839,24 @@
 					console.log('Error in ApiUtils#getLikesByVideoId with res: ' + res);
 				}
 			});
+		},
+	
+		uploadVideo: function (formData, callback) {
+			$.ajax({
+				url: '/api/videos',
+				method: 'POST',
+				processData: false,
+				contentType: false,
+				dataType: 'json',
+				data: formData,
+				success: function (res) {
+					console.log('Video uploaded!');
+					callback && callback();
+				},
+				failure: function (res) {
+					console.log('Error in ApiUtils#getLikesByVideoId with res: ' + res);
+				}
+			});
 		}
 	};
 	
@@ -32053,6 +32073,130 @@
 	});
 	
 	module.exports = Comment;
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var ApiUtils = __webpack_require__(243);
+	// var Notification = require('./notification');
+	
+	var UploadPage = React.createClass({
+		displayName: 'UploadPage',
+	
+	
+		getInitialState: function () {
+			return { data: null, errors: {} };
+		},
+	
+		handleFileChange: function (e) {
+			var file = e.currentTarget.files[0];
+	
+			this.setState({ data: file });
+		},
+	
+		handleValidations: function (e) {
+			e.preventDefault();
+	
+			var title = $('.upload-page-title').val();
+			var description = $('.upload-page-description').val();
+			var data = this.state.data;
+			var errorsObj = {};
+			var error_occurred = false;
+	
+			if (title && title.length > 0) {
+				delete errorsObj.title;
+			} else {
+				errorsObj.title = 'No title!';
+				error_occurred = true;
+			}
+	
+			if (description && description.length > 0) {
+				delete errorsObj.description;
+			} else {
+				errorsObj.description = 'No description!';
+				error_occurred = true;
+			}
+	
+			if (data) {
+				delete errorsObj.data;
+			} else {
+				errorsObj.data = 'No video file!';
+				error_occurred = true;
+			}
+	
+			if (!error_occurred) {
+				this.handleSubmit();
+			} else {
+				this.setState({ errors: errorsObj });
+			}
+		},
+	
+		handleSubmit: function () {
+			console.log('handleSubmit called');
+			// var formData = new FormData();
+			//
+			// var title = $('.upload-page-title').val();
+			// var description = $('.upload-page-description').val();
+			//
+			// if(this.state.data && this.state.title && this.state.description) {
+			// 	formData.append('video[title]', this.state.title);
+			// 	formData.append('video[description]', this.state.description);
+			// 	formData.append('video[data]', this.state.data);
+			//
+			// 	ApiUtils.uploadVideo(formData);
+			// }
+		},
+	
+		render: function () {
+			return React.createElement(
+				'form',
+				{ className: 'upload-page', onSubmit: this.handleValidations },
+				React.createElement(
+					'label',
+					null,
+					'Title',
+					React.createElement('input', { type: 'text', className: 'upload-page-title' }),
+					React.createElement(
+						'strong',
+						{ className: 'upload-page-title-errors' },
+						' ',
+						this.state.errors.title
+					)
+				),
+				React.createElement(
+					'label',
+					null,
+					'Description',
+					React.createElement('input', { type: 'text', className: 'upload-page-description' }),
+					React.createElement(
+						'strong',
+						{ className: 'upload-page-title-errors' },
+						' ',
+						this.state.errors.description
+					)
+				),
+				React.createElement(
+					'label',
+					null,
+					'Video',
+					React.createElement('input', { type: 'file', className: 'upload-page-video', onChange: this.handleFileChange }),
+					React.createElement(
+						'strong',
+						{ className: 'upload-page-file-errors' },
+						' ',
+						this.state.errors.data
+					)
+				),
+				React.createElement('input', { type: 'submit', value: 'Upload Video', className: 'upload-page-submit' })
+			);
+		}
+	
+	});
+	
+	module.exports = UploadPage;
 
 /***/ }
 /******/ ]);

@@ -5,6 +5,7 @@ class Api::VideosController < ApplicationController
 	end
 
 	def create
+		debugger
 		@video = Video.create!(video_params);
 		render :show
 	end
