@@ -24768,6 +24768,9 @@
 
 	var React = __webpack_require__(1);
 	
+	var ApiUtils = __webpack_require__(243);
+	var VideoStore = __webpack_require__(218);
+	
 	var VideoBar = __webpack_require__(217);
 	var VideoIndex = __webpack_require__(245);
 	var Video = __webpack_require__(246);
@@ -24777,12 +24780,33 @@
 		displayName: 'VideoPage',
 	
 	
+		getInitialState: function () {
+			return { video: null };
+		},
+	
+		componentDidMount: function () {
+			this.storeToken = VideoStore.addListener(this._onChange);
+			ApiUtils.getVideoById(this.props.params.videoId);
+		},
+	
+		componentWillUnmount: function () {
+			this.storeToken.remove();
+		},
+	
+		_onChange: function () {
+			this.setState({ video: VideoStore.all() });
+		},
+	
+		componentWillReceiveProps: function (newProps) {
+			ApiUtils.getVideoById(newProps.videoId);
+		},
+	
 		render: function () {
 			return React.createElement(
 				'div',
 				{ className: 'video-page' },
-				React.createElement(Video, { videoId: this.props.params.videoId }),
-				React.createElement(VideoBar, null),
+				React.createElement(Video, { video: this.state.video }),
+				React.createElement(VideoBar, { video: this.state.video }),
 				React.createElement(VideoIndex, null),
 				React.createElement(CommentIndex, { videoId: this.props.params.videoId })
 			);
@@ -24798,36 +24822,14 @@
 
 	var React = __webpack_require__(1);
 	
-	// var ApiUtils = require('../../utils/api_utils');
-	var VideoStore = __webpack_require__(218);
 	var Likes = __webpack_require__(241);
 	
 	var VideoBar = React.createClass({
 		displayName: 'VideoBar',
 	
-		getInitialState: function () {
-			return { video: null };
-		},
-	
-		componentDidMount: function () {
-			this.storeToken = VideoStore.addListener(this._onChange);
-			// ApiUtils.getVideoById(this.props.videoId);
-		},
-	
-		componentWillUnmount: function () {
-			this.storeToken.remove();
-		},
-	
-		_onChange: function () {
-			this.setState({ video: VideoStore.all() });
-		},
-	
-		// componentWillReceiveProps: function(newProps) {
-		// 	ApiUtils.getVideoById(newProps.videoId);
-		// },
 	
 		render: function () {
-			var video = this.state.video;
+			var video = this.props.video;
 	
 			if (video) {
 				return React.createElement(
@@ -24859,11 +24861,6 @@
 						React.createElement(
 							'li',
 							null,
-							'Thumbnail:' + video.thumbnail
-						),
-						React.createElement(
-							'li',
-							null,
 							'URL:' + video.url
 						),
 						React.createElement(
@@ -24876,6 +24873,7 @@
 							null,
 							'Updated At:' + video.updated_at
 						),
+						React.createElement('img', { src: video.thumb }),
 						React.createElement(Likes, { videoId: video.id })
 					)
 				);
@@ -31906,39 +31904,21 @@
 
 	var React = __webpack_require__(1);
 	
-	var ApiUtils = __webpack_require__(243);
-	var VideoStore = __webpack_require__(218);
-	
 	var Video = React.createClass({
 		displayName: 'Video',
 	
-		getInitialState: function () {
-			return { video: { url: null } };
-		},
-	
-		componentDidMount: function () {
-			this.storeToken = VideoStore.addListener(this._onChange);
-			ApiUtils.getVideoById(this.props.videoId);
-		},
-	
-		componentWillUnmount: function () {
-			this.storeToken.remove();
-		},
-	
-		_onChange: function () {
-			this.setState({ video: VideoStore.all() });
-		},
-	
-		componentWillReceiveProps: function (newProps) {
-			ApiUtils.getVideoById(newProps.videoId);
-		},
 	
 		render: function () {
-			return React.createElement(
-				'section',
-				{ className: 'video' },
-				React.createElement('video', { controls: true, src: this.state.video.url, className: 'video-player' })
-			);
+	
+			if (this.props.video) {
+				return React.createElement(
+					'section',
+					{ className: 'video' },
+					React.createElement('video', { controls: true, src: this.props.video.url, className: 'video-player' })
+				);
+			} else {
+				return React.createElement('div', null);
+			}
 		}
 	
 	});
@@ -31953,6 +31933,7 @@
 	
 	var ApiUtils = __webpack_require__(243);
 	var CommentsStore = __webpack_require__(248);
+	
 	var Comment = __webpack_require__(249);
 	
 	var CommentIndex = React.createClass({
@@ -31998,11 +31979,7 @@
 					})
 				);
 			} else {
-				return React.createElement(
-					'div',
-					null,
-					'Loading comments...'
-				);
+				return React.createElement('div', null);
 			}
 		}
 	});

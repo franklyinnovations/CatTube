@@ -2,6 +2,7 @@ var React = require('react');
 
 var ApiUtils = require('../../utils/api_utils');
 var CommentsStore = require('../../stores/video_page/comments_store');
+
 var Comment = require('./comment');
 
 var CommentIndex = React.createClass({
@@ -46,7 +47,7 @@ var CommentIndex = React.createClass({
 			);
 		}
 		else {
-			return <div>Loading comments...</div>;
+			return <div></div>;
 		}
 	}
 });
