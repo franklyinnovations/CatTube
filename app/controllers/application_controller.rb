@@ -3,8 +3,12 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-	# temporary hack before user auth and login
 	def current_user
-		@current_user ||= User.all.last
+		# temporary hack before user auth and login
+		if User.all.length == 0
+			User.create!(username: 'default_user', password: 'foobar')
+		end
+
+		@current_user ||= User.all.first
 	end
 end

@@ -7,32 +7,41 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 ActiveRecord::Base.transaction do
+	videos = Video.all
 
-	videos = []
-	users = []
+	User.create!(username: 'bar', password: 'foobar')
+	User.create!(username: 'baz', password: 'foobar')
+	User.create!(username: 'qux', password: 'barfoo')
+	User.create!(username: 'a', password: 'barfoo')
+	User.create!(username: 'b', password: 'barfoo')
+	User.create!(username: 'c', password: 'barfoo')
 
-	users << User.create!(username: 'foo', password: 'foobar')
-	users << User.create!(username: 'bar', password: 'foobar')
-	users << User.create!(username: 'baz', password: 'foobar')
-	users << User.create!(username: 'qux', password: 'barfoo')
+	users = User.all
 
-	title = 'Best Cats VINES COMPILATION'
-	description = 'Creative Commons Video on Cats!'
-	user_id = users.sample.id;
+	# create comments
+	users.each do |user|
+		videos.each do |video|
+			chance_to_comment = 75
 
-	videos << Video.create!(title: title, description: description, user_id: user_id);
+			if chance_to_comment >= rand(0..100)
+				chance_to_comment_on_nested_comment = 50
 
-	file = File.open('app/assets/videos/cats.mp4')
-	video = Video.find(1)
-	video.data = file
-	video.save!
+				parent_id = nil
 
-	5.times do
-		body = SecureRandom::urlsafe_base64(rand(10..20))
+				if chance_to_comment_on_nested_comment >= rand(0..100)
 
-		Comment.create!(body: body, user_id: users.sample.id, video_id: videos.sample.id);
+					comment_list = Comment.where('comments.parent_id IS NULL AND comments.video_id = ?', [video.id])
+
+					parent_id = comment_list.sample.id if comment_list.length > 0
+				end
+
+				comment_body = SecureRandom::urlsafe_base64(rand(10..50))
+				comment = Comment.create!(body: comment_body, user_id: user.id, video_id: video.id, parent_id: parent_id);
+			end
+		end
 	end
 
+	# create likes
 	users.each do |user|
 		videos.each do |video|
 			chance_to_like = 100

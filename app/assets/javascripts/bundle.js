@@ -31854,7 +31854,7 @@
 					callback && callback();
 				},
 				failure: function (res) {
-					console.log('Error in ApiUtils#getLikesByVideoId with res: ' + res);
+					console.log('Error in ApiUtils#uploadVideo with res: ' + res);
 				}
 			});
 		}
@@ -32135,19 +32135,16 @@
 		},
 	
 		handleSubmit: function () {
-			console.log('handleSubmit called');
-			// var formData = new FormData();
-			//
-			// var title = $('.upload-page-title').val();
-			// var description = $('.upload-page-description').val();
-			//
-			// if(this.state.data && this.state.title && this.state.description) {
-			// 	formData.append('video[title]', this.state.title);
-			// 	formData.append('video[description]', this.state.description);
-			// 	formData.append('video[data]', this.state.data);
-			//
-			// 	ApiUtils.uploadVideo(formData);
-			// }
+			var formData = new FormData();
+	
+			var title = $('.upload-page-title').val();
+			var description = $('.upload-page-description').val();
+	
+			formData.append('video[title]', title);
+			formData.append('video[description]', description);
+			formData.append('video[data]', this.state.data);
+	
+			ApiUtils.uploadVideo(formData);
 		},
 	
 		render: function () {

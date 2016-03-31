@@ -59,7 +59,7 @@ var ApiUtils = {
 				callback && callback();
 			},
 			failure: function (res) {
-				console.log('Error in ApiUtils#getLikesByVideoId with res: ' + res);
+				console.log('Error in ApiUtils#uploadVideo with res: ' + res);
 			}
 		});
 	}

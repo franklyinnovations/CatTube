@@ -5,8 +5,7 @@ class Api::VideosController < ApplicationController
 	end
 
 	def create
-		debugger
-		@video = Video.create!(video_params);
+		@video = current_user.videos.create!(video_params);
 		render :show
 	end
 
@@ -24,5 +23,6 @@ class Api::VideosController < ApplicationController
 private
 
 	def video_params
+		params.require(:video).permit(:title, :description, :data)
 	end
 end
