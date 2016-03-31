@@ -3,11 +3,14 @@ class Video < ActiveRecord::Base
 	has_many :comments
 	has_many :likes
 
-	validates :title, :description, :thumbnail, :url, presence: true
+	validates :title, :description, presence: true
 	validates :user, presence: true
 
-private
+	has_attached_file :video, :styles => {
+    # :medium => { :geometry => "640x480", :format => 'flv' },
+    :thumb => { :geometry => "200x110#", :format => 'jpg', :time => 0 }
+  }, :processors => [:transcoder]
 
-	def create_thumbnail
-	end
+	validates_attachment :video,  content_type: { content_type: /\Avideo\/.*\z/ }, size: { in: (0..50_000_000) }
+
 end

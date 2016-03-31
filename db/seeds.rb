@@ -19,11 +19,13 @@ ActiveRecord::Base.transaction do
 	title = 'Best Cats VINES COMPILATION'
 	description = 'Creative Commons Video on Cats!'
 	user_id = users.sample.id;
-	thumbnail = SecureRandom::urlsafe_base64(rand(30..100))
-	url = 'Best Cats VINES COMPILATION.mp4';
 
-	videos << Video.create!(title: title, description: description, user_id: user_id, thumbnail: thumbnail, url: url);
+	videos << Video.create!(title: title, description: description, user_id: user_id);
 
+	file = File.open('app/assets/videos/cats.mp4')
+	first = Video.find(1)
+	first.video = file
+	first.save!
 
 	5.times do
 		body = SecureRandom::urlsafe_base64(rand(10..20))
