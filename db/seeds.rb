@@ -23,9 +23,9 @@ ActiveRecord::Base.transaction do
 	videos << Video.create!(title: title, description: description, user_id: user_id);
 
 	file = File.open('app/assets/videos/cats.mp4')
-	first = Video.find(1)
-	first.video = file
-	first.save!
+	video = Video.find(1)
+	video.data = file
+	video.save!
 
 	5.times do
 		body = SecureRandom::urlsafe_base64(rand(10..20))

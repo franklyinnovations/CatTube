@@ -6,11 +6,11 @@ class Video < ActiveRecord::Base
 	validates :title, :description, presence: true
 	validates :user, presence: true
 
-	has_attached_file :video, :styles => {
+	has_attached_file :data, :styles => {
     # :medium => { :geometry => "640x480", :format => 'flv' },
     :thumb => { :geometry => "200x110#", :format => 'jpg', :time => 0 }
   }, :processors => [:transcoder]
 
-	validates_attachment :video,  content_type: { content_type: /\Avideo\/.*\z/ }, size: { in: (0..50_000_000) }
+	validates_attachment :data,  content_type: { content_type: /\Avideo\/.*\z/ }, size: { in: (0..50_000_000) }
 
 end
