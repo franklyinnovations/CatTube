@@ -35,7 +35,7 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 
 ### Phase 1: Basic Video (1.0 days)
 
-**Objective:** Create barebones video and home page and allow users to watch video.
+**Objective:** Create barebones video and home page and allow users to watch a video.
 
 - [ ] create new project
 - [ ] create `Video` model
@@ -70,6 +70,7 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 
 - [ ] create the components for the search bar
 - [ ] create the search page
+- [ ] create the relevant API endpoints
 
 ### Phase 5: Upload Videos (1.0 day)
 
@@ -90,7 +91,7 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 
 ### Phase 7: Styling (1.5 days)
 
-**Objective:** Start styling in the format of YouTube.
+**Objective:** Start styling with CSS in the format of YouTube.
 
 - [ ] Get feedback on my UI from others
 - [ ] Refactor HTML classes & CSS rules
