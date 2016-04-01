@@ -1,52 +1,55 @@
 var ApiActions = require('../actions/api_actions.js');
 
 var ApiUtils = {
-	getVideoById: function(videoId, callback) {
+	getVideoById: function(videoId, success, error) {
 		$.ajax({
 			url: '/api/videos/' + videoId,
 			method: 'GET',
 			dataType: 'json',
 			success: function (res) {
 				ApiActions.receiveVideo(res);
-				callback && callback();
+				success && success();
 			},
 			error: function (res) {
 				console.log('Error in ApiUtils#getVideoById with res: ' + res);
+				error && error();
 			}
 		});
 	},
 
-	getCommentsByVideoId: function(videoId, callback) {
+	getCommentsByVideoId: function(videoId, success, error) {
 		$.ajax({
 			url: '/api/videos/' + videoId + '/comments',
 			method: 'GET',
 			dataType: 'json',
 			success: function (res) {
 				ApiActions.receiveComments(res);
-				callback && callback();
+				success && success();
 			},
 			error: function (res) {
 				console.log('Error in ApiUtils#getCommentsByVideoId with res: ' + res);
+				error && error();
 			}
 		});
 	},
 
-	getLikesByVideoId: function(videoId, callback) {
+	getLikesByVideoId: function(videoId, success, error) {
 		$.ajax({
 			url: '/api/videos/' + videoId + '/likes',
 			method: 'GET',
 			dataType: 'json',
 			success: function (res) {
 				ApiActions.receiveLikes(res);
-				callback && callback();
+				success && success();
 			},
 			error: function (res) {
 				console.log('Error in ApiUtils#getLikesByVideoId with res: ' + res);
+				error && error();
 			}
 		});
 	},
 
-	uploadVideo: function(formData, callback) {
+	uploadVideo: function(formData, success, error) {
 		$.ajax({
 			url: '/api/videos',
 			method: 'POST',
@@ -56,10 +59,11 @@ var ApiUtils = {
 			data: formData,
 			success: function (res) {
 				console.log('Video uploaded!');
-				callback && callback();
+				success && success();
 			},
 			error: function (res) {
 				console.log('Error in ApiUtils#uploadVideo with res: ' + res);
+				error && error();
 			}
 		});
 	},

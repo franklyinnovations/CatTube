@@ -78,8 +78,8 @@ var LoginPage = React.createClass({
 		var password = this.state.password;
 
 		var onSuccess = function () {
-			var query = this.props.location.query;
-			this.context.router.push({pathname: '/', query: query});
+			var nextState = this.props.location.query.nextState || '/';
+			this.context.router.push({pathname: nextState});
 		};
 
 		var onError = function () {

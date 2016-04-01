@@ -21,7 +21,10 @@ var CatTubeApp = React.createClass({
 		return (
 			<header className='header'>
 				<NavBar/>
-				<Link to='/videos/1'>To First Video</Link>
+				<Link to='/'>Home Page</Link><br/>
+				<Link to='/videos/1'>First Video</Link><br/>
+				<Link to='/upload'>Upload Page</Link><br/>
+				<Link to='/login'>Login Page</Link>
 				{this.props.children}
 			</header>
 		);
@@ -50,7 +53,7 @@ function _ensureLoggedIn (nextState, replace, unblockCallback) {
 
 	function _redirectUnlessLoggedIn () {
 		if(!SessionStore.isLoggedIn()) {
-			replace('/login');
+			replace({pathname: '/login', query: {nextState: nextState.location.pathname}});
 		}
 
 		unblockCallback();
