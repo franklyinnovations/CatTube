@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
 	validates :username, :password_digest, :session_token, presence: true
 	validates :username, uniqueness: true
 	validates :username, format: { with: /\A[A-Za-z][A-Za-z0-9_]*$\z/ }
-	validates :password, length: { minimum: 6 }
+	validates :username, length: { in: (1..128) }
+	validates :password, length: { in: (6..128) }
 
 	after_initialize :ensure_session_token
 	after_initialize :ensure_dummy_password
