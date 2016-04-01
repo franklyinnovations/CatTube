@@ -28,7 +28,7 @@ var VideoPage = React.createClass({
 	},
 
 	componentWillReceiveProps: function(newProps) {
-		ApiUtils.getVideoById(newProps.videoId);
+		ApiUtils.getVideoById(newProps.params.videoId);
 	},
 
 	render: function() {

@@ -14,6 +14,8 @@
 
 node_modules
 .DS_Store
+bundle.js*
+public/system
 
 # Ignore application configuration
 /config/application.yml
