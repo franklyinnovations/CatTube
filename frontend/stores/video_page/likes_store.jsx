@@ -19,7 +19,7 @@ LikesStore.__onDispatch = function (payload) {
 };
 
 LikesStore.all = function () {
-	return $.extend({}, _likes);
+	return $.extend(true, {}, _likes);
 };
 
 module.exports = LikesStore;

@@ -19,7 +19,7 @@ VideoStore.__onDispatch = function (payload) {
 };
 
 VideoStore.all = function () {
-	return $.extend({}, _video);
+	return $.extend(true, {}, _video);
 };
 
 module.exports = VideoStore;

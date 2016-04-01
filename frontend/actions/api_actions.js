@@ -27,6 +27,15 @@ var ApiActions = {
 		};
 
 		Dispatcher.dispatch(payload);
+	},
+
+	receiveSession: function (session) {
+		var payload = {
+			actionType: APIConstants.SESSION_RECEIVED,
+			data: session
+		};
+
+		Dispatcher.dispatch(payload);
 	}
 };
 

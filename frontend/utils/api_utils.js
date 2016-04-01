@@ -62,6 +62,24 @@ var ApiUtils = {
 				console.log('Error in ApiUtils#uploadVideo with res: ' + res);
 			}
 		});
+	},
+
+	getCurrentUser: function(callback, completion) {
+		$.ajax({
+			url: '/api/session',
+			method: 'GET',
+			dataType: 'json',
+			success: function (res) {
+				ApiActions.receiveSession(res);
+			},
+			failure: function (res) {
+				console.log('Error in ApiUtils#getCurrentUser with res: ' + res);
+				callback && callback();
+			},
+			complete: function () {
+				completion && completion();
+			}
+		});
 	}
 };
 
