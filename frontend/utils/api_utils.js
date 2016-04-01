@@ -10,7 +10,7 @@ var ApiUtils = {
 				ApiActions.receiveVideo(res);
 				callback && callback();
 			},
-			failure: function (res) {
+			error: function (res) {
 				console.log('Error in ApiUtils#getVideoById with res: ' + res);
 			}
 		});
@@ -25,7 +25,7 @@ var ApiUtils = {
 				ApiActions.receiveComments(res);
 				callback && callback();
 			},
-			failure: function (res) {
+			error: function (res) {
 				console.log('Error in ApiUtils#getCommentsByVideoId with res: ' + res);
 			}
 		});
@@ -40,7 +40,7 @@ var ApiUtils = {
 				ApiActions.receiveLikes(res);
 				callback && callback();
 			},
-			failure: function (res) {
+			error: function (res) {
 				console.log('Error in ApiUtils#getLikesByVideoId with res: ' + res);
 			}
 		});
@@ -58,13 +58,13 @@ var ApiUtils = {
 				console.log('Video uploaded!');
 				callback && callback();
 			},
-			failure: function (res) {
+			error: function (res) {
 				console.log('Error in ApiUtils#uploadVideo with res: ' + res);
 			}
 		});
 	},
 
-	getCurrentUser: function(callback, completion) {
+	getCurrentUser: function(completion) {
 		$.ajax({
 			url: '/api/session',
 			method: 'GET',
@@ -72,15 +72,31 @@ var ApiUtils = {
 			success: function (res) {
 				ApiActions.receiveSession(res);
 			},
-			failure: function (res) {
+			error: function (res) {
 				console.log('Error in ApiUtils#getCurrentUser with res: ' + res);
-				callback && callback();
 			},
 			complete: function () {
 				completion && completion();
 			}
 		});
-	}
+	},
+
+	loginUser: function(user, success, error) {
+		$.ajax({
+			url: '/api/session',
+			method: 'POST',
+			data: user,
+			dataType: 'json',
+			success: function (res) {
+				ApiActions.receiveSession(res);
+				success && success();
+			},
+			error: function (res) {
+				console.log('Error in ApiUtils#loginUser with res: ' + res);
+				error && error();
+			},
+		});
+	},
 };
 
 

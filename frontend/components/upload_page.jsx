@@ -6,7 +6,10 @@ var ApiUtils = require('../utils/api_utils');
 var UploadPage = React.createClass({
 
 	getInitialState: function () {
-		return {data: null, errors: {}};
+		return {
+			data: null,
+			errors: {}
+		};
 	},
 
 	handleFileChange: function (e) {

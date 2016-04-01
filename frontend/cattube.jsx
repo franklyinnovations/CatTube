@@ -10,7 +10,9 @@ var Link = require('react-router').Link;
 var VideoPage = require('./components/video_page');
 var UploadPage = require('./components/upload_page');
 var NavBar = require('./components/navbar');
-var SessionStore = require('./stores/session_store')
+var SessionStore = require('./stores/session_store');
+var LoginPage = require('./components/login_page');
+var ApiUtils = require('./utils/api_utils');
 
 // for generic stuff rendered or configured on all pages
 var CatTubeApp = React.createClass({

@@ -31,7 +31,7 @@ var ApiActions = {
 
 	receiveSession: function (session) {
 		var payload = {
-			actionType: APIConstants.SESSION_RECEIVED,
+			actionType: ApiConstants.SESSION_RECEIVED,
 			data: session
 		};
 

@@ -1,11 +1,18 @@
 var React = require('react');
 
-var ApiUtils = require('../../utils/api_utils');
+var ApiUtils = require('../utils/api_utils');
 
 var LoginPage = React.createClass({
+	contextTypes: {
+		router: React.PropTypes.object.isRequired
+	},
 
 	getInitialState: function () {
-		return {username: "", password: ""};
+		return {
+			username: "",
+			password: "",
+			errors: {username: "", password: "", status: ""}
+		};
 	},
 
 	render: function() {
@@ -13,13 +20,17 @@ var LoginPage = React.createClass({
 			<div className='cattube-sign-in'>
         <h1>CatTube Sign In</h1>
 
-        <form onSubmit={this.handleSubmit}>
+				<strong className='sign-in-status'>{this.state.errors.status}</strong>
+
+        <form className='sign-in' onSubmit={this.handleValidations}>
           <label>Name
-	          <input onChange={this.updateName} type="text" value={this.state.name}/>
+	          <input className='sign-in-username' onChange={this.updateName} type="text" value={this.state.username}/>
+						<strong className='sign-in-username-errors'>{this.state.errors.username}</strong>
 					</label>
 
           <label>Password
-	          <input onChange={this.updatePassword} type="password" value={this.state.password}/>
+	          <input className='sign-in-password' onChange={this.updatePassword} type="password" value={this.state.password}/>
+						<strong className='sign-in-password-errors'>{this.state.errors.password}</strong>
 					</label>
 
           <input type='submit' value='Submit'/>
@@ -29,7 +40,7 @@ var LoginPage = React.createClass({
 	},
 
 	updateName: function (e) {
-		this.setState({ name: e.currentTarget.value });
+		this.setState({ username: e.currentTarget.value });
 	},
 
 	updatePassword: function (e) {
@@ -39,25 +50,52 @@ var LoginPage = React.createClass({
 	handleValidations: function (e) {
 		e.preventDefault();
 
-		if(this.state.username.length < 1) {
-			
+		var username = this.state.username;
+		var password = this.state.password;
+
+		var errorsObj = {};
+		var error_occurred = false;
+
+		if(username.length === 0) {
+			errorsObj.username = 'Username too short!';
+			error_occurred = true;
 		}
-		else {
 
+		if(password.length < 6) {
+			errorsObj.password = 'Password too short!';
+			error_occurred = true;
 		}
 
-		if(this.state.password.length < 6) {
+		this.setState({errors: errorsObj});
 
-		}
-		else {
-
+		if(!error_occurred) {
+			this.handleSubmit();
 		}
 	},
 
-	handleSubmit: function (e) {
+	handleSubmit: function () {
+		var username = this.state.username;
+		var password = this.state.password;
 
+		var onSuccess = function () {
+			var query = this.props.location.query;
+			this.context.router.push({pathname: '/', query: query});
+		};
 
+		var onError = function () {
+			this.setState({
+				username: '',
+				password: '',
+				errors: {
+					status: 'Error logging in with credentials!'
+				}
+			});
+		};
 
+		ApiUtils.loginUser({
+			username: username,
+			password: password
+		}, onSuccess.bind(this), onError.bind(this));
 	}
 });
 
