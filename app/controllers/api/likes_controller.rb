@@ -1,4 +1,6 @@
 class Api::LikesController < ApplicationController
+	before_action :ensure_logged_in, only: [:create]
+
 	def index
 		raw_likes = Video.find(params[:video_id]).likes
 
@@ -16,7 +18,7 @@ class Api::LikesController < ApplicationController
 			previous_like.update!(value: params[:like][:value])
 			@like = previous_like
 		else
-			@like = current_user.like.new(like_params)
+			@like = current_user.likes.new(like_params)
 			@like.video_id = target_video_id
 			@like.save!
 		end
