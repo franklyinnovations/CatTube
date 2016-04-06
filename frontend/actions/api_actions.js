@@ -45,6 +45,18 @@ var ApiActions = {
 		};
 
 		Dispatcher.dispatch(payload);
+	},
+
+	receiveVideoIndex: function (page, index) {
+		var payload = {
+			actionType: ApiConstants.VIDEO_INDEX_RECEIVED,
+			data: {
+				page: page,
+				index: index
+			}
+		};
+
+		Dispatcher.dispatch(payload);
 	}
 };
 

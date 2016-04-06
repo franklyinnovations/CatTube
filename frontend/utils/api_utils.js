@@ -126,6 +126,22 @@ var ApiUtils = {
 			},
 		});
 	},
+
+	getVideoIndex: function(page, success, error) {
+		$.ajax({
+			url: '/api/videos',
+			method: 'GET',
+			data: {page: page},
+			dataType: 'json',
+			success: function (res) {
+				ApiActions.receiveVideoIndex(page, res);
+				success && success();
+			},
+			error: function (res) {
+				error && error();
+			},
+		});
+	}
 };
 
 module.exports = ApiUtils;
