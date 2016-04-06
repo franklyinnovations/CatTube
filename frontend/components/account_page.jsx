@@ -78,21 +78,19 @@ var AccountPage = React.createClass({
 		var password = this.state.password;
 
 		var onSuccess = function () {
-			var nextState = this.props.location.query.nextState || '/';
+			var nextState = '/';
 			this.context.router.push({pathname: nextState});
 		};
 
-		var onError = function (responseText) {
+		var onError = function () {
 			this.setState({
-				username: '',
-				password: '',
 				errors: {
-					status: responseText
+					status: 'Couldn\'t create account!'
 				}
 			});
 		};
 
-		ApiUtils.loginUser({
+		ApiUtils.createUser({
 			username: username,
 			password: password
 		}, onSuccess.bind(this), onError.bind(this));

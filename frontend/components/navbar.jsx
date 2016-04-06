@@ -39,14 +39,14 @@ var NavBar = React.createClass({
 
 		if(this.state.currentUser) {
 			icon = (
-				<button onClick={this._logoutCurrentUser}>
+				<button className='header-logout' onClick={this._logoutCurrentUser}>
 					Log Out: {this.state.currentUser.username}
 				</button>
 			);
 		}
 		else {
 			icon = (
-				<button onClick={this._loginNewUser}>
+				<button className='header-login' onClick={this._loginNewUser}>
 					Log In
 				</button>
 			);

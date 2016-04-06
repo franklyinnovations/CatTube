@@ -69,7 +69,6 @@ var ApiUtils = {
 			method: 'GET',
 			dataType: 'json',
 			success: function (res) {
-				debugger
 				ApiActions.receiveSession(res);
 			},
 			error: function (res) {
@@ -110,8 +109,23 @@ var ApiUtils = {
 				error && error();
 			},
 		});
-	}
-};
+	},
 
+	createUser: function(user, success, error) {
+		$.ajax({
+			url: '/api/users',
+			method: 'POST',
+			data: {user: user},
+			dataType: 'json',
+			success: function (res) {
+				ApiUtils.getCurrentUser();
+				success && success();
+			},
+			error: function (res) {
+				error && error();
+			},
+		});
+	},
+};
 
 module.exports = ApiUtils;
