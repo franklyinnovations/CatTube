@@ -10,7 +10,9 @@ class Api::CommentsController < ApplicationController
 	end
 
 	def create
-		@comment = current_user.comments.create!(comment_params)
+		@comment = current_user.comments.new(comment_params)
+		@comment.video_id = params[:video_id]
+		@comment.save!
 		render :show
 	end
 
@@ -23,7 +25,7 @@ class Api::CommentsController < ApplicationController
 private
 
 	def comment_params
-		params.require(:comment).permit(:body, :video_id, :parent_id)
+		params.require(:comment).permit(:body, :parent_id)
 	end
 
 	def ensure_owner
