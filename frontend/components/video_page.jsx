@@ -7,6 +7,7 @@ var VideoBar = require('./video_page/video_bar');
 var VideoIndex = require('./video_page/video_index');
 var Video = require('./video_page/video');
 var CommentIndex = require('./video_page/comment_index');
+var AddComment = require('./video_page/add_comment');
 
 var VideoPage = React.createClass({
 
@@ -36,8 +37,9 @@ var VideoPage = React.createClass({
 			<div className='video-page'>
 				<Video video={this.state.video}/>
 				<VideoBar video={this.state.video}/>
-				<VideoIndex/>
+				<AddComment videoId={this.props.params.videoId}/>
 				<CommentIndex videoId={this.props.params.videoId}/>
+				<VideoIndex/>
 			</div>
 		);
 	}

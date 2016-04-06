@@ -141,6 +141,22 @@ var ApiUtils = {
 				error && error();
 			},
 		});
+	},
+
+	createComment: function(videoId, comment, success, error) {
+		$.ajax({
+			url: '/api/videos/' + videoId + '/comments',
+			method: 'POST',
+			data: {comment: comment},
+			dataType: 'json',
+			success: function (res) {
+				ApiUtils.getCommentsByVideoId(videoId);
+				success && success();
+			},
+			error: function (res) {
+				error && error();
+			},
+		});
 	}
 };
 
