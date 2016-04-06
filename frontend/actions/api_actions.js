@@ -36,6 +36,15 @@ var ApiActions = {
 		};
 
 		Dispatcher.dispatch(payload);
+	},
+
+	destroySession: function () {
+		var payload = {
+			actionType: ApiConstants.SESSION_DESTROYED,
+			data: null
+		};
+
+		Dispatcher.dispatch(payload);
 	}
 };
 

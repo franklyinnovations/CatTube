@@ -13,6 +13,7 @@ var NavBar = require('./components/navbar');
 var SessionStore = require('./stores/session_store');
 var LoginPage = require('./components/login_page');
 var ApiUtils = require('./utils/api_utils');
+var AccountPage = require('./components/account_page');
 
 // for generic stuff rendered or configured on all pages
 var CatTubeApp = React.createClass({
@@ -24,7 +25,8 @@ var CatTubeApp = React.createClass({
 				<Link to='/'>Home Page</Link><br/>
 				<Link to='/videos/1'>First Video</Link><br/>
 				<Link to='/upload'>Upload Page</Link><br/>
-				<Link to='/login'>Login Page</Link>
+				<Link to='/login'>Login Page</Link><br/>
+				<Link to='/account'>Account Page</Link>
 				{this.props.children}
 			</header>
 		);
@@ -38,7 +40,8 @@ $(function() {
 			<Route path='/' component={CatTubeApp}>
 				<Route path='videos/:videoId' component={VideoPage}/>
 				<Route path='upload' component={UploadPage} onEnter={_ensureLoggedIn}/>
-				<Route path='login' component={LoginPage}/>
+				<Route path='login' component={LoginPage} onEnter={_ensureLoggedOut}/>
+				<Route path='account' component={AccountPage} onEnter={_ensureLoggedOut}/>
 			</Route>
 		</Router>, $('#content')[0]);
 });
@@ -54,6 +57,23 @@ function _ensureLoggedIn (nextState, replace, unblockCallback) {
 	function _redirectUnlessLoggedIn () {
 		if(!SessionStore.isLoggedIn()) {
 			replace({pathname: '/login', query: {nextState: nextState.location.pathname}});
+		}
+
+		unblockCallback();
+	}
+}
+
+function _ensureLoggedOut (nextState, replace, unblockCallback) {
+	if(!SessionStore.initialFetch()) {
+		ApiUtils.getCurrentUser(_redirectIfLoggedIn)
+	}
+	else {
+		_redirectIfLoggedIn();
+	}
+
+	function _redirectIfLoggedIn () {
+		if(SessionStore.isLoggedIn()) {
+			replace({pathname: '/'});
 		}
 
 		unblockCallback();

@@ -14,14 +14,23 @@ SessionStore.__onDispatch = function (payload) {
 			_currentUser = payload.data;
 			SessionStore.__emitChange();
 			break;
+		case ApiConstants.SESSION_DESTROYED:
+			_initialFetch = true;
+			_currentUser = null;
+			SessionStore.__emitChange();
+			break;
 		default:
 			// console.log('SessionStore#__onDispatch ignored a dispatch');
 	}
-
 };
 
 SessionStore.currentUser = function () {
-	return $.extend(true, {}, _currentUser);
+	if(_currentUser) {
+		return $.extend(true, {}, _currentUser);
+	}
+	else {
+		return null;
+	}
 };
 
 SessionStore.isLoggedIn = function () {

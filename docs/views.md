@@ -26,5 +26,5 @@
 [channel-page]: ./wireframes/channel_page.png
 [search-page]: ./wireframes/search_page.png
 [sign-in-page]: ./wireframes/sign_in_page.png
-[account-page]: ./wireframes/video_page.png
+[account-page]: ./wireframes/account_page.png
 [upload-page]: ./wireframes/upload_page.png
