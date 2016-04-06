@@ -8,6 +8,8 @@ var UploadPage = React.createClass({
 	getInitialState: function () {
 		return {
 			data: null,
+			title: "",
+			description: "",
 			errors: {}
 		};
 	},
@@ -21,49 +23,39 @@ var UploadPage = React.createClass({
 	handleValidations: function (e) {
 		e.preventDefault();
 
-		var title = $('.upload-page-title').val();
-		var description = $('.upload-page-description').val();
+		var title = this.state.title;
+		var description = this.state.description;
 		var data = this.state.data;
 		var errorsObj = {};
 		var error_occurred = false;
 
-		if(title && title.length > 0) {
-			delete errorsObj.title;
-		}
-		else {
+		if(title.length === 0) {
 			errorsObj.title = 'No title!';
 			error_occurred = true;
 		}
 
-		if(description && description.length > 0) {
-			delete errorsObj.description;
-		}
-		else {
+		if(description.length === 0) {
 			errorsObj.description = 'No description!';
 			error_occurred = true;
 		}
 
-		if(data) {
-			delete errorsObj.data;
-		}
-		else {
+		if(!data) {
 			errorsObj.data = 'No video file!';
 			error_occurred = true;
 		}
 
+		this.setState({errors: errorsObj});
+
 		if(!error_occurred) {
 			this.handleSubmit();
-		}
-		else {
-			this.setState({errors: errorsObj});
 		}
 	},
 
 	handleSubmit: function () {
 		var formData = new FormData();
 
-		var title = $('.upload-page-title').val();
-		var description = $('.upload-page-description').val();
+		var title = this.state.title;
+		var description = this.state.description;
 
 		formData.append('video[title]', title);
 		formData.append('video[description]', description);
@@ -72,26 +64,34 @@ var UploadPage = React.createClass({
 		ApiUtils.uploadVideo(formData);
 	},
 
+	updateTitle: function (e) {
+		this.setState({title: e.currentTarget.value});
+	},
+
+	updateDescription: function(e) {
+		this.setState({description: e.currentTarget.value});
+	},
+
 	render: function() {
 		return (
 			<form className='upload-page' onSubmit={this.handleValidations}>
 				<label>Title
-          <input type="text" className='upload-page-title'/>
-					<strong className='upload-page-title-errors'> {
+          <input type="text" className='upload-page-title' onChange={this.updateTitle} value={this.state.title}/>
+					<strong className='upload-page-title-errors'>{
 						this.state.errors.title
 					}</strong>
         </label>
 
 				<label>Description
-          <input type="text" className='upload-page-description'/>
-					<strong className='upload-page-title-errors'> {
+          <input type="text" className='upload-page-description' onChange={this.updateDescription} value={this.state.description}/>
+					<strong className='upload-page-title-errors'>{
 						this.state.errors.description
 					}</strong>
         </label>
 
 				<label>Video
           <input type="file" className='upload-page-video' onChange={this.handleFileChange}/>
-					<strong className='upload-page-file-errors'> {
+					<strong className='upload-page-file-errors'>{
 						this.state.errors.data
 					}</strong>
         </label>
