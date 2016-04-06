@@ -10,7 +10,8 @@ class Comment < ActiveRecord::Base
 	has_many :children,
 		class_name: 'Comment',
 		primary_key: :id,
-		foreign_key: :parent_id
+		foreign_key: :parent_id,
+		dependent: :destroy
 
 	validates :user, :video, :body, presence: true
 	validate :parent_exists_if_present, :parent_is_not_nested
