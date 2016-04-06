@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 	has_many :comments
 	has_many :likes
 	has_many :videos
+	has_many :views
 
 	validates :username, :password_digest, :session_token, presence: true
 	validates :username, uniqueness: true
