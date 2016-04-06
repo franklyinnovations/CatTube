@@ -14,4 +14,8 @@ class Video < ActiveRecord::Base
 
 	validates_attachment :data,  content_type: { content_type: /\Avideo\/.*\z/ }, size: { in: (0..50_000_000) }
 
+	def total_views
+		self.views.size
+	end
+
 end

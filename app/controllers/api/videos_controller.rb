@@ -3,7 +3,7 @@ class Api::VideosController < ApplicationController
 	before_action :ensure_owner, only: [:destroy]
 
 	def index
-		@videos = Video.all
+		@videos = Video.includes(:views)
 		render :index
 	end
 
@@ -14,6 +14,11 @@ class Api::VideosController < ApplicationController
 
 	def show
 		@video = Video.find(params[:id]);
+
+		# assign a view to the served video
+		user_id = logged_in? ? current_user.id : nil
+		@video.views.create!(user_id: user_id)
+
 		render :show
 	end
 
