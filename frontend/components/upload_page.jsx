@@ -10,7 +10,7 @@ var UploadPage = React.createClass({
 			data: null,
 			title: "",
 			description: "",
-			errors: {}
+			errors: {title: "", description: "", data: "", status: ""}
 		};
 	},
 
@@ -61,7 +61,29 @@ var UploadPage = React.createClass({
 		formData.append('video[description]', description);
 		formData.append('video[data]', this.state.data);
 
-		ApiUtils.uploadVideo(formData);
+		var onSuccess = function () {
+			// clear the file
+			$('.upload-page-video')[0].value = ''
+
+			this.setState({
+				title: '',
+				description: '',
+				data: null,
+				errors: {
+					status: 'Video uploaded!'
+				}
+			});
+		};
+
+		var onError = function () {
+			this.setState({
+				errors: {
+					status: 'Upload failed!'
+				}
+			});
+		};
+
+		ApiUtils.uploadVideo(formData, onSuccess.bind(this), onError.bind(this));
 	},
 
 	updateTitle: function (e) {
@@ -75,6 +97,8 @@ var UploadPage = React.createClass({
 	render: function() {
 		return (
 			<form className='upload-page' onSubmit={this.handleValidations}>
+				<strong className='upload-page-status'>{this.state.errors.status}</strong>
+
 				<label>Title
           <input type="text" className='upload-page-title' onChange={this.updateTitle} value={this.state.title}/>
 					<strong className='upload-page-title-errors'>{

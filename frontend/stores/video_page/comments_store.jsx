@@ -13,7 +13,7 @@ CommentsStore.__onDispatch = function (payload) {
 			CommentsStore.__emitChange();
 			break;
 		default:
-			console.log('CommentsStore#__onDispatch ignored a dispatch');
+			// console.log('CommentsStore#__onDispatch ignored a dispatch');
 	}
 
 };

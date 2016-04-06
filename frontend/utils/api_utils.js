@@ -11,7 +11,7 @@ var ApiUtils = {
 				success && success();
 			},
 			error: function (res) {
-				console.log('Error in ApiUtils#getVideoById with res: ' + res);
+				// console.log('Error in ApiUtils#getVideoById with res: ' + res);
 				error && error();
 			}
 		});
@@ -27,7 +27,7 @@ var ApiUtils = {
 				success && success();
 			},
 			error: function (res) {
-				console.log('Error in ApiUtils#getCommentsByVideoId with res: ' + res);
+				// console.log('Error in ApiUtils#getCommentsByVideoId with res: ' + res);
 				error && error();
 			}
 		});
@@ -43,7 +43,7 @@ var ApiUtils = {
 				success && success();
 			},
 			error: function (res) {
-				console.log('Error in ApiUtils#getLikesByVideoId with res: ' + res);
+				// console.log('Error in ApiUtils#getLikesByVideoId with res: ' + res);
 				error && error();
 			}
 		});
@@ -58,11 +58,10 @@ var ApiUtils = {
 			dataType: 'json',
 			data: formData,
 			success: function (res) {
-				console.log('Video uploaded!');
 				success && success();
 			},
 			error: function (res) {
-				console.log('Error in ApiUtils#uploadVideo with res: ' + res);
+				// console.log('Error in ApiUtils#uploadVideo with res: ' + res);
 				error && error();
 			}
 		});
@@ -77,7 +76,7 @@ var ApiUtils = {
 				ApiActions.receiveSession(res);
 			},
 			error: function (res) {
-				console.log('Error in ApiUtils#getCurrentUser with res: ' + res);
+				// console.log('Error in ApiUtils#getCurrentUser with res: ' + res);
 			},
 			complete: function () {
 				completion && completion();
@@ -96,8 +95,9 @@ var ApiUtils = {
 				success && success();
 			},
 			error: function (res) {
-				console.log('Error in ApiUtils#loginUser with res: ' + res);
-				error && error();
+				// console.log('Error in ApiUtils#loginUser with res: ' + res);
+				var message = JSON.parse(res.responseText).message
+				error && error(message);
 			},
 		});
 	},

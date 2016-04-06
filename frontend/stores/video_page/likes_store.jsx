@@ -13,7 +13,7 @@ LikesStore.__onDispatch = function (payload) {
 			LikesStore.__emitChange();
 			break;
 		default:
-			console.log('LikesStore#__onDispatch ignored a dispatch');
+			// console.log('LikesStore#__onDispatch ignored a dispatch');
 	}
 
 };

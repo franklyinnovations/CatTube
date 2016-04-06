@@ -13,7 +13,7 @@ VideoStore.__onDispatch = function (payload) {
 			VideoStore.__emitChange();
 			break;
 		default:
-			console.log('VideoStore#__onDispatch ignored a dispatch');
+			// console.log('VideoStore#__onDispatch ignored a dispatch');
 	}
 
 };

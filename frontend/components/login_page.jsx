@@ -20,10 +20,10 @@ var LoginPage = React.createClass({
 			<div className='cattube-sign-in'>
         <h1>CatTube Sign In</h1>
 
-				<strong className='sign-in-status'>{this.state.errors.status}</strong>
-
         <form className='sign-in' onSubmit={this.handleValidations}>
-          <label>Name
+					<strong className='sign-in-status'>{this.state.errors.status}</strong>
+
+          <label>Username
 	          <input className='sign-in-username' onChange={this.updateName} type="text" value={this.state.username}/>
 						<strong className='sign-in-username-errors'>{this.state.errors.username}</strong>
 					</label>
@@ -82,12 +82,12 @@ var LoginPage = React.createClass({
 			this.context.router.push({pathname: nextState});
 		};
 
-		var onError = function () {
+		var onError = function (responseText) {
 			this.setState({
 				username: '',
 				password: '',
 				errors: {
-					status: 'Error logging in with credentials!'
+					status: responseText
 				}
 			});
 		};

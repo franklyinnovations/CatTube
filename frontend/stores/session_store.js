@@ -15,7 +15,7 @@ SessionStore.__onDispatch = function (payload) {
 			SessionStore.__emitChange();
 			break;
 		default:
-			console.log('SessionStore#__onDispatch ignored a dispatch');
+			// console.log('SessionStore#__onDispatch ignored a dispatch');
 	}
 
 };
