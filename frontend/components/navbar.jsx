@@ -55,16 +55,19 @@ var NavBar = React.createClass({
 		}
 
 		return (
-			<header className='navbar group'>
-				<div className='navbar-cattube'>
-					<h2 className='navbar-cat'>Cat</h2>
-					<h2 className='navbar-tube'>Tube</h2>
-				</div>
-				<SearchBar/>
-				<div className='navbar-right group'>
-					<Link className='navbar-upload' to='/upload'>Upload</Link>
-					{userIcon}
-				</div>
+			<header className='header'>
+				<nav className='navbar group'>
+					<div className='navbar-cattube'>
+						<h2 className='navbar-cat'>Cat</h2>
+						<h2 className='navbar-tube'>Tube</h2>
+					</div>
+					<SearchBar/>
+					<div className='navbar-right group'>
+						<Link className='navbar-upload' to='/upload'>Upload</Link>
+						{userIcon}
+					</div>
+				</nav>
+				<div className='header-block'></div>
 			</header>
 		);
 	}

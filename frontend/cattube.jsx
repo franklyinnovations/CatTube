@@ -5,7 +5,7 @@ var Router = require('react-router').Router;
 var Route = require('react-router').Route;
 var IndexRoute = require('react-router').IndexRoute;
 var hashHistory = require('react-router').hashHistory;
-var Link = require('react-router').Link;
+// var Link = require('react-router').Link;
 
 var VideoPage = require('./components/video_page');
 var UploadPage = require('./components/upload_page');
@@ -14,6 +14,7 @@ var SessionStore = require('./stores/session_store');
 var LoginPage = require('./components/login_page');
 var ApiUtils = require('./utils/api_utils');
 var AccountPage = require('./components/account_page');
+var HomePage = require('./components/home_page');
 
 // for generic stuff rendered or configured on all pages
 var CatTubeApp = React.createClass({
@@ -22,11 +23,6 @@ var CatTubeApp = React.createClass({
 		return (
 			<header className='header'>
 				<NavBar/>
-				<Link to='/'>Home Page</Link><br/>
-				<Link to='/videos/1'>First Video</Link><br/>
-				<Link to='/upload'>Upload Page</Link><br/>
-				<Link to='/login'>Login Page</Link><br/>
-				<Link to='/account'>Account Page</Link>
 				{this.props.children}
 			</header>
 		);
@@ -38,6 +34,7 @@ $(function() {
 	ReactDOM.render(
 		<Router history={hashHistory}>
 			<Route path='/' component={CatTubeApp}>
+				<IndexRoute component={HomePage}/>
 				<Route path='videos/:videoId' component={VideoPage}/>
 				<Route path='upload' component={UploadPage} onEnter={_ensureLoggedIn}/>
 				<Route path='login' component={LoginPage} onEnter={_ensureLoggedOut}/>
