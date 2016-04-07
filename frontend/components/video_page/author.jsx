@@ -1,14 +1,16 @@
 var React = require('react');
 
+var Icon = require('./icon');
+
 var Author = React.createClass({
 
 	render: function() {
+		var author = this.props.author;
+		
 		return (
 			<div className='author group'>
-				<div className='author-icon'></div>
-				<strong className='author-name'>{
-					this.props.author.username
-				}</strong>
+				<Icon userId={author.userId}/>
+				<strong className='author-name'>{author.username}</strong>
 			</div>
 		);
 	}

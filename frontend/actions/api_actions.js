@@ -60,6 +60,15 @@ var ApiActions = {
 		};
 
 		Dispatcher.dispatch(payload);
+	},
+
+	receiveUser: function (user) {
+		var payload = {
+			actionType: ApiConstants.USER_RECEIVED,
+			data: user
+		};
+
+		Dispatcher.dispatch(payload);
 	}
 };
 

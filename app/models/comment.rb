@@ -16,6 +16,10 @@ class Comment < ActiveRecord::Base
 	validates :user, :video, :body, presence: true
 	validate :parent_exists_if_present, :parent_is_not_nested
 
+	def created_ago
+		ActionController::Base.helpers.time_ago_in_words(self.updated_at)
+	end
+
 private
 
 	def parent_exists_if_present

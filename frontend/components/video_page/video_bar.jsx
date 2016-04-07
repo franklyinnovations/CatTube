@@ -10,7 +10,8 @@ var VideoBar = React.createClass({
 
 		if(video) {
 			var author = {
-				username: video.username
+				username: video.username,
+				userId: video.user_id
 			};
 
 			return (

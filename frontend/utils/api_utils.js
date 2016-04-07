@@ -158,6 +158,21 @@ var ApiUtils = {
 				error && error();
 			},
 		});
+	},
+
+	getUserById: function(userId, success, error) {
+		$.ajax({
+			url: '/api/users/' + userId,
+			method: 'GET',
+			dataType: 'json',
+			success: function (res) {
+				ApiActions.receiveUser(res);
+				success && success();
+			},
+			error: function (res) {
+				error && error();
+			},
+		});
 	}
 };
 

@@ -4,7 +4,7 @@ class Api::CommentsController < ApplicationController
 
 	def index
 		video = Video.find(params[:video_id])
-		@comments = video.comments.includes(:children).where('comments.parent_id IS NULL').page(params[:page]).per(10)
+		@comments = video.comments.includes(:children, :user).where('comments.parent_id IS NULL').page(params[:page]).per(10)
 		@comments_size = video.comments.size
 		render :index
 	end

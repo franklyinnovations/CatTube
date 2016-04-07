@@ -12,13 +12,13 @@ class Video < ActiveRecord::Base
     :thumb => { :geometry => "200x110#", :format => 'jpg', :time => 0 }
   }, :processors => [:transcoder]
 
-	validates_attachment :data,  content_type: { content_type: /\Avideo\/.*\z/ }, size: { in: (0..50_000_000) }
+	validates_attachment :data, presence: true, content_type: { content_type: /\Avideo\/.*\z/ }, size: { in: (0..50_000_000) }
 
 	def total_views
 		self.views.size
 	end
 
 	def created_at_date
-		self.created_at.strftime('%b %-d, %Y')
+		self.updated_at.strftime('%b %-d, %Y')
 	end
 end

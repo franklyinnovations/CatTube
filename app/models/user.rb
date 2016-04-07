@@ -15,6 +15,12 @@ class User < ActiveRecord::Base
 	after_initialize :ensure_session_token
 	after_initialize :ensure_dummy_password
 
+	has_attached_file :avatar,
+		styles: { thumb: "100x100>" },
+		default_url: ActionController::Base.helpers.asset_path("default.jpg")
+
+	validates_attachment :avatar, content_type: { content_type: /\Aimage\/.*\Z/ }
+
 	def self.find_by_credentials(username, password)
 		user = User.find_by(username: username)
 
