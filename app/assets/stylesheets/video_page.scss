@@ -1,0 +1,114 @@
+/* --- VIDEO PAGE --- */
+
+.video-page {
+	width: 1100px;
+	margin: auto;
+}
+
+.video {
+}
+
+.video-player {
+	width: 640px;
+	height: 360px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.video-bar-main {
+	width: 640px;
+	background: #ffffff;
+	padding: 15px;
+	box-sizing: border-box;
+}
+
+.video-bar-title {
+	font-size: 20px;
+	margin-bottom: 10px;
+}
+
+.author {
+	float: left;
+	margin-bottom: 10px;
+}
+
+.author-icon {
+	float: left;
+	width: 50px;
+	height: 50px;
+	background: #ffffff;
+	border: 1px solid #cccccc;
+	box-sizing: border-box;
+	margin-right: 10px;
+}
+
+.author-name {
+	float: right;
+	font-size: 16px;
+}
+
+.video-bar-views {
+	float: right;
+	font-size: 20px;
+	color: #666666;
+	margin-top: 25px;
+}
+
+.video-bar-top {
+	border-bottom: 1px solid #cccccc;
+	margin-bottom: 10px;
+}
+
+.likes {
+	float: right;
+}
+
+.likes-bar-total {
+	width: 150px;
+}
+
+.likes-bar-fill {
+	float: left;
+	background: #167ac6;
+	height: 2px;
+}
+
+.likes-bar-empty {
+	float: right;
+	background: #cccccc;
+	height: 2px;
+}
+
+.likes-bar-updown {
+	padding: 2px;
+	float: left;
+	color: #aaaaaa;
+}
+
+.likes-up {
+	float: left;
+	margin-right: 40px;
+}
+
+.likes-up > .fa-thumbs-up {
+	font-size: 20px;
+}
+
+.likes-down {
+	float: left;
+}
+
+.likes-down > .fa-thumbs-down {
+	font-size: 20px;
+}
+
+.video-bar-likes {
+}
+
+.video-bar-other {
+	width: 640px;
+	background: #ffffff;
+	padding: 15px;
+	box-sizing: border-box;
+	margin-top: 10px;
+}

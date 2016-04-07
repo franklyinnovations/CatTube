@@ -38,9 +38,18 @@ var Likes = React.createClass({
 
 		return (
 			<section className='likes'>
-				<div className='likes-bar'>Bar Percentage: {percent}</div>
-				<div className='likes-up'>Up: {up}</div>
-				<div className='likes-down'>Down: {down}</div>
+				<div className='likes-bar-total group'>
+					<div style={{width: (percent * 100) + '%'}} className='likes-bar-fill'></div>
+					<div style={{width: ((1 - percent) * 100) + '%'}} className='likes-bar-empty'></div>
+				</div>
+				<div className='likes-bar-updown group'>
+					<div className='likes-up'>
+						<i className="fa fa-thumbs-up"></i> {up}
+					</div>
+					<div className='likes-down'>
+						<i className="fa fa-thumbs-down"></i> {down}
+					</div>
+				</div>
 			</section>
 		);
 	}

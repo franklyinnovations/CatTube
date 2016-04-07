@@ -1,6 +1,7 @@
 var React = require('react');
 
 var Likes = require('./likes');
+var Author = require('./author');
 
 var VideoBar = React.createClass({
 
@@ -8,19 +9,27 @@ var VideoBar = React.createClass({
 		var video = this.props.video;
 
 		if(video) {
+			var author = {
+				username: video.username
+			};
+
 			return (
 				<section className='video-bar'>
-					<ul>
-						<li>{'Video ID:' + video.id}</li>
-						<li>{'Title:' + video.title}</li>
-						<li>{'Description:' + video.description}</li>
-						<li>{'User:' + video.user_id}</li>
-						<li>{'URL:' + video.url}</li>
-						<li>{'Created At:' + video.created_at}</li>
-						<li>{'Updated At:' + video.updated_at}</li>
-						<img src={video.thumb}/>
+
+					<div className='video-bar-main group'>
+						<div className='video-bar-top group'>
+							<div className='video-bar-title'>{video.title}</div>
+							<Author author={author}/>
+							<div className='video-bar-views'>{video.total_views}</div>
+						</div>
 						<Likes videoId={video.id}/>
-					</ul>
+					</div>
+
+					<div className='video-bar-other'>
+						<div className='video-bar-description'>{video.description}</div>
+						<div className='video-bar-date'>{video.updated_at}</div>
+					</div>
+
 				</section>
 			);
 		}
