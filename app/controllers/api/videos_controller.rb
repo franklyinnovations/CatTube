@@ -3,7 +3,7 @@ class Api::VideosController < ApplicationController
 	before_action :ensure_owner, only: [:destroy]
 
 	def index
-		@videos = Video.includes(:views, :user).page(params[:page]).per(20)
+		@videos = Video.includes(:views, :user).page(params[:page]).per(10)
 		render :index
 	end
 

@@ -64,14 +64,14 @@ var AddComment = React.createClass({
 		var comment = this.props.comment;
 
 		return (
-			<section className='add-comment'>
+			<section className='add-comment group'>
 				<strong className='add-comment-status'>{
 					this.state.errors.status
 				}</strong>
-				<textarea className='add-comment-textarea' onChange={this._updateText}/>
 				<strong className='add-comment-textarea-errors'>{
-					this.state.errors.body
-				}</strong>
+						this.state.errors.body
+					}</strong>
+				<textarea className='add-comment-textarea' onChange={this._updateText}/>
 				<button className='add-comment-post' onClick={this._handleCommentValidations}>
 					Post
 				</button>

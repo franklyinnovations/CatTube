@@ -18,4 +18,7 @@ class Video < ActiveRecord::Base
 		self.views.size
 	end
 
+	def created_at_date
+		self.created_at.strftime('%b %-d, %Y')
+	end
 end

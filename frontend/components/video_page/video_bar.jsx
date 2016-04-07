@@ -26,8 +26,10 @@ var VideoBar = React.createClass({
 					</div>
 
 					<div className='video-bar-other'>
+						<div className='video-bar-date'>{
+							'Published on ' + video.created_at_date
+						}</div>
 						<div className='video-bar-description'>{video.description}</div>
-						<div className='video-bar-date'>{video.updated_at}</div>
 					</div>
 
 				</section>

@@ -16,13 +16,14 @@ var ApiUtils = {
 		});
 	},
 
-	getCommentsByVideoId: function(videoId, success, error) {
+	getCommentsByVideoId: function(page, videoId, success, error) {
 		$.ajax({
 			url: '/api/videos/' + videoId + '/comments',
 			method: 'GET',
+			data: {page: page},
 			dataType: 'json',
 			success: function (res) {
-				ApiActions.receiveComments(res);
+				ApiActions.receiveComments(page, res);
 				success && success();
 			},
 			error: function (res) {

@@ -4,12 +4,13 @@ var ApiConstants = require('../../constants/api_constants');
 
 var CommentsStore = new Store(Dispatcher);
 
-var _comments = [];
+var _comments = {};
 
 CommentsStore.__onDispatch = function (payload) {
 	switch(payload.actionType) {
 		case ApiConstants.COMMENTS_RECEIVED:
-			_comments = payload.data;
+			_comments[payload.data.page] = payload.data.index.comments;
+			_comments.size = payload.data.index.comments_size;
 			CommentsStore.__emitChange();
 			break;
 		default:
@@ -19,7 +20,7 @@ CommentsStore.__onDispatch = function (payload) {
 };
 
 CommentsStore.all = function () {
-	return _comments.slice();
+	return $.extend(true, {}, _comments);
 };
 
 module.exports = CommentsStore;
