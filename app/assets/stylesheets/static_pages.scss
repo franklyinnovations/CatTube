@@ -1,3 +1,120 @@
 // Place all the styles related to the StaticPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+html, body, header, nav, h1, a, ul, li,
+strong, main, section, img, div, h2, p,
+form, fieldset, label, input, textarea,
+button, article, footer, small {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	outline: 0px;
+
+	font: inherit;
+	background: transparent;
+	color: inherit;
+
+	box-sizing: inherit;
+	text-decoration: inherit;
+	text-align: inherit;
+	vertical-align: inherit;
+}
+
+/* --- ELEMENTS --- */
+
+body {
+	background: #eee;
+	font-family: sans-serif;
+	font-size: 10px;
+	line-height: 1.1666666666;
+}
+
+ul {
+	list-style: none;
+}
+
+img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+/* --- CLEARFIX --- */
+
+.group:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+/* --- NAVBAR --- */
+
+.navbar {
+	background: #ffffff;
+	padding: 10px 30px;
+	border-bottom: 1px solid #e8e8e8;
+	box-sizing: border-box;
+	position: fixed;
+	width: 100%;
+}
+
+.navbar-cattube {
+	float: left;
+	font-size: 18px;
+}
+
+.navbar-cat {
+	float: left;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 25px;
+}
+
+.navbar-tube {
+	float: left;
+	color: #ffffff;
+	border-radius: 20%;
+	background: #ff0000;
+	padding: 2px 5px;
+	margin-left: 5px;
+}
+
+.navbar-search-bar {
+	float: left;
+	margin-left: 100px;
+	background: #cccccc;
+	width: 650px;
+}
+
+.navbar-right {
+	float: right;
+}
+
+.navbar-upload {
+	display: block;
+	float: left;
+	padding: 7px 10px;
+	border: 1px solid #d8d8d8;
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+.navbar-user {
+	float: left;
+	padding: 7px 10px;
+	color: #ffffff;
+	background: #167ac6;
+	border: 1px solid #d8d8d8;
+	font-weight: bold;
+}
+
+.navbar-upload:hover {
+	cursor: pointer;
+	background: #f0f0f0;
+}
+
+.navbar-user:hover {
+	cursor: pointer;
+	background: #126db3;
+}

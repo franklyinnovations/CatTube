@@ -1,7 +1,9 @@
 var React = require('react');
+var Link = require('react-router').Link;
 
 var SessionStore = require('../stores/session_store');
 var ApiUtils = require('../utils/api_utils');
+var SearchBar = require('./navbar/search_bar');
 
 var NavBar = React.createClass({
 	contextTypes: {
@@ -35,27 +37,34 @@ var NavBar = React.createClass({
 	},
 
 	render: function () {
-		var icon;
+		var userIcon;
 
 		if(this.state.currentUser) {
-			icon = (
-				<button className='header-logout' onClick={this._logoutCurrentUser}>
+			userIcon = (
+				<button className='navbar-user' onClick={this._logoutCurrentUser}>
 					Log Out: {this.state.currentUser.username}
 				</button>
 			);
 		}
 		else {
-			icon = (
-				<button className='header-login' onClick={this._loginNewUser}>
-					Log In
+			userIcon = (
+				<button className='navbar-user' onClick={this._loginNewUser}>
+					Sign In
 				</button>
 			);
 		}
 
 		return (
-			<header className='header'>
-				<h2>CatTube</h2>
-				{icon}
+			<header className='navbar group'>
+				<div className='navbar-cattube'>
+					<h2 className='navbar-cat'>Cat</h2>
+					<h2 className='navbar-tube'>Tube</h2>
+				</div>
+				<SearchBar/>
+				<div className='navbar-right group'>
+					<Link className='navbar-upload' to='/upload'>Upload</Link>
+					{userIcon}
+				</div>
 			</header>
 		);
 	}
