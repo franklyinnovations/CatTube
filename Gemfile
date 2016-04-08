@@ -37,11 +37,11 @@ gem 'paperclip-av-transcoder'
 gem 'kaminari'
 gem 'font-awesome-rails'
 gem 'faker'
+gem 'pry-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  gem 'pry-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
 end
