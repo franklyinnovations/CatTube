@@ -1,7 +1,7 @@
 var ApiActions = require('../actions/api_actions.js');
 
 var ApiUtils = {
-	getVideoById: function(videoId, success, error) {
+	getVideoById: function (videoId, success, error) {
 		$.ajax({
 			url: '/api/videos/' + videoId,
 			method: 'GET',
@@ -16,7 +16,7 @@ var ApiUtils = {
 		});
 	},
 
-	getCommentsByPageAndVideoId: function(page, videoId, success, error) {
+	getCommentsByPageAndVideoId: function (page, videoId, success, error) {
 		$.ajax({
 			url: '/api/videos/' + videoId + '/comments',
 			method: 'GET',
@@ -32,7 +32,7 @@ var ApiUtils = {
 		});
 	},
 
-	getLikesByVideoId: function(videoId, success, error) {
+	getLikesByVideoId: function (videoId, success, error) {
 		$.ajax({
 			url: '/api/videos/' + videoId + '/likes',
 			method: 'GET',
@@ -47,7 +47,7 @@ var ApiUtils = {
 		});
 	},
 
-	uploadVideo: function(formData, success, error) {
+	uploadVideo: function (formData, success, error) {
 		$.ajax({
 			url: '/api/videos',
 			method: 'POST',
@@ -64,7 +64,7 @@ var ApiUtils = {
 		});
 	},
 
-	getCurrentUser: function(completion) {
+	getCurrentUser: function (completion) {
 		$.ajax({
 			url: '/api/session',
 			method: 'GET',
@@ -80,7 +80,7 @@ var ApiUtils = {
 		});
 	},
 
-	loginUser: function(user, success, error) {
+	loginUser: function (user, success, error) {
 		$.ajax({
 			url: '/api/session',
 			method: 'POST',
@@ -97,7 +97,7 @@ var ApiUtils = {
 		});
 	},
 
-	logoutUser: function(success, error) {
+	logoutUser: function (success, error) {
 		$.ajax({
 			url: '/api/session',
 			method: 'DELETE',
@@ -112,7 +112,7 @@ var ApiUtils = {
 		});
 	},
 
-	createUser: function(user, success, error) {
+	createUser: function (user, success, error) {
 		$.ajax({
 			url: '/api/users',
 			method: 'POST',
@@ -128,7 +128,7 @@ var ApiUtils = {
 		});
 	},
 
-	getVideoIndex: function(page, success, error) {
+	getVideoIndex: function (page, success, error) {
 		$.ajax({
 			url: '/api/videos',
 			method: 'GET',
@@ -144,7 +144,7 @@ var ApiUtils = {
 		});
 	},
 
-	createComment: function(videoId, comment, success, error) {
+	createComment: function (videoId, comment, success, error) {
 		$.ajax({
 			url: '/api/videos/' + videoId + '/comments',
 			method: 'POST',
@@ -159,7 +159,7 @@ var ApiUtils = {
 		});
 	},
 
-	getUserById: function(userId, success, error) {
+	getUserById: function (userId, success, error) {
 		$.ajax({
 			url: '/api/users/' + userId,
 			method: 'GET',
@@ -174,10 +174,40 @@ var ApiUtils = {
 		});
 	},
 
-	deleteCommentById: function(commentId, success, error) {
+	deleteCommentById: function (commentId, success, error) {
 		$.ajax({
 			url: '/api/comments/' + commentId,
 			method: 'DELETE',
+			dataType: 'json',
+			success: function (res) {
+				success && success();
+			},
+			error: function (res) {
+				error && error();
+			},
+		});
+	},
+
+	getCurrentUserLikeByVideoId: function (videoId, success, error) {
+		$.ajax({
+			url: '/api/videos/' + videoId + '/like',
+			method: 'GET',
+			dataType: 'json',
+			success: function (res) {
+				ApiActions.receiveCurrentUserLike(res);
+				success && success();
+			},
+			error: function (res) {
+				error && error();
+			},
+		});
+	},
+
+	createLike: function (videoId, likeValue, success, error) {
+		$.ajax({
+			url: '/api/videos/' + videoId + '/likes',
+			method: 'POST',
+			data: {like: {value: likeValue}},
 			dataType: 'json',
 			success: function (res) {
 				success && success();

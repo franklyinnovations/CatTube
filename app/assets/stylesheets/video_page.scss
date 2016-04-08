@@ -70,6 +70,7 @@
 
 .likes-bar-total {
 	width: 150px;
+	margin-bottom: 5px;
 }
 
 .likes-bar-fill {
@@ -86,25 +87,26 @@
 
 .likes-bar-updown {
 	padding: 2px;
-	float: left;
+	float: right;
 	color: #aaaaaa;
+	font-size: 10px;
 }
 
 .likes-up {
 	float: left;
-	margin-right: 40px;
+	margin-right: 20px;
 }
 
-.likes-up > .fa-thumbs-up {
-	font-size: 20px;
+.likes-up:hover, .likes-down:hover {
+	cursor: pointer;
+}
+
+.likes-up > .fa-thumbs-up, .likes-down > .fa-thumbs-down {
+	font-size: 16px;
 }
 
 .likes-down {
 	float: left;
-}
-
-.likes-down > .fa-thumbs-down {
-	font-size: 20px;
 }
 
 .video-bar-likes {

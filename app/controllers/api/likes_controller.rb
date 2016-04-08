@@ -9,6 +9,18 @@ class Api::LikesController < ApplicationController
 		render :index
 	end
 
+	def show
+		current_user_id = current_user.nil? ? nil : current_user.id
+		@like = Like.find_by(video_id: params[:video_id], user_id: current_user_id)
+
+		# to signify no Like was found for the video_id and current user
+		if @like.nil?
+			@like = Like.new(id: nil, video_id: nil, user_id: nil, value: nil)
+		end
+
+		render :show
+	end
+
 	def create
 		# check if the current user already liked the video in the past
 		target_video_id = params[:video_id]

@@ -70,6 +70,15 @@ var ApiActions = {
 		};
 
 		Dispatcher.dispatch(payload);
+	},
+
+	receiveCurrentUserLike: function (like) {
+		var payload = {
+			actionType: ApiConstants.CURRENT_USER_LIKE_RECEIVED,
+			data: like
+		};
+
+		Dispatcher.dispatch(payload);
 	}
 };
 

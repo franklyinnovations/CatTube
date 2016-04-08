@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 		resources :videos, only: [:index, :show, :create, :destroy] do
 			resources :comments, only: [:index, :create]
 			resources :likes, only: [:index, :create]
+			# below is same as: "get 'like', to: 'likes#show'"
+			resource :like, only: [:show]
 		end
 
 		resources :comments, only: [:destroy]
