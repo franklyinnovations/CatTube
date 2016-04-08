@@ -21,7 +21,6 @@ var VideoIndex = React.createClass({
 	},
 
 	componentWillReceiveProps: function (newProps) {
-		// doesn't really do anything at the moment (VideoIndexStore may be cleared in the future from a ApiUtils call)
 		this.page = 1;
 		ApiUtils.getVideoIndexByPageAndVideoId(1, this.props.videoId);
 	},
