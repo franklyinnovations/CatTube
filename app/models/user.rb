@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
 	has_attached_file :avatar,
 		styles: { thumb: "100x100>" },
-		default_url: ActionController::Base.helpers.asset_path("default.jpg")
+		default_url: "default.jpg"
 
 	validates_attachment :avatar, content_type: { content_type: /\Aimage\/.*\Z/ }
 
