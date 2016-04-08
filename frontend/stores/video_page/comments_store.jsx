@@ -9,6 +9,8 @@ var _videoId = null;
 var _totalSize = 0;
 // var _totalLoaded = 0;
 
+eCommentsStore = CommentsStore;
+
 CommentsStore._countComments = function () {
 	var size = 0;
 

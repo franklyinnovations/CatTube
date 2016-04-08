@@ -2,6 +2,7 @@ var React = require('react');
 
 var ApiUtils = require('../../utils/api_utils');
 var SessionStore = require('../../stores/session_store');
+var CommentsStore = require('../../stores/video_page/comments_store');
 
 var AddComment = React.createClass({
 	getInitialState: function () {
@@ -48,11 +49,14 @@ var AddComment = React.createClass({
 		};
 
 		var onSuccess = function () {
-			$('.add-comment-textarea')[0].value = '';
+			$('.reply-comment-textarea')[0].value = '';
+			this.setState({body: '', hidden: true});
 
-			this.setState({
-				body: ''
-			});
+			// refresh all comment page in store (since new one might be visible now)
+			var pages = CommentsStore.pages();
+			for(var i = 0; i < pages.length; i++) {
+				ApiUtils.getCommentsByPageAndVideoId(pages[i], this.props.videoId);
+			}
 		};
 
 		var onError = function () {
@@ -85,11 +89,11 @@ var AddComment = React.createClass({
 					<strong className='reply-comment-textarea-errors'>{
 						this.state.errors.body
 					}</strong>
+					<button className='reply-comment-close' onClick={this._hideReply}>X</button>
 					<textarea className='reply-comment-textarea' onChange={this._updateText}/>
 					<button className='reply-comment-post' onClick={this._handleCommentValidations}>
 						Post
 					</button>
-					<button className='reply-comment-close' onClick={this._hideReply}>X</button>
 				</section>
 			);
 		}
