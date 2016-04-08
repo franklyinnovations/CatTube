@@ -40,15 +40,12 @@ var AddComment = React.createClass({
 
 		var onSuccess = function () {
 			$('.add-comment-textarea')[0].value = '';
-
-			this.setState({
-				body: ''
-			});
+			this.setState({body: ''});
 
 			// refresh all comment page in store (since new one might be visible now)
 			var pages = CommentsStore.pages();
-			for(var i = 0; i < pages; i++) {
-				ApiUtils.getCommentsByPageAndVideoId(pages[i]);
+			for(var i = 0; i < pages.length; i++) {
+				ApiUtils.getCommentsByPageAndVideoId(pages[i], this.props.videoId);
 			}
 		};
 
