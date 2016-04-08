@@ -10,22 +10,34 @@ var VideoIndex = React.createClass({
 	},
 
 	componentDidMount: function () {
+		this.page = 1;
 		this.storeToken = VideoIndexStore.addListener(this._onChange);
 		// get only the first page for now
-		ApiUtils.getVideoIndex(1);
+		ApiUtils.getVideoIndexByPageAndVideoId(1, this.props.videoId);
 	},
 
 	componentWillUnmount: function () {
 		this.storeToken.remove();
 	},
 
+	componentWillReceiveProps: function (newProps) {
+		// doesn't really do anything at the moment (VideoIndexStore may be cleared in the future from a ApiUtils call)
+		this.page = 1;
+		ApiUtils.getVideoIndexByPageAndVideoId(1, this.props.videoId);
+	},
+
 	_onChange: function () {
 		this.setState({videoIndex: VideoIndexStore.all()});
+	},
+
+	_showMoreVideos: function () {
+		ApiUtils.getVideoIndexByPageAndVideoId(++this.page, this.props.videoId);
 	},
 
 	render: function() {
 		var videoIndex = this.state.videoIndex;
 		var output = [];
+		var showMoreButton;
 
 		// go through each page in the videoIndex and for each page, extract videos
 		for(var p in videoIndex) {
@@ -35,6 +47,15 @@ var VideoIndex = React.createClass({
 					output.push(currPage[i]);
 				}
 			}
+		}
+
+		// render Show More button if not all videos are loaded
+		if(!VideoIndexStore.fullyLoaded()) {
+			showMoreButton = (
+				<button onClick={this._showMoreVideos} className='video-index-more'>
+					Show More
+				</button>
+			);
 		}
 
 		return (
@@ -49,6 +70,8 @@ var VideoIndex = React.createClass({
 						</Link>
 					);
 				})
+			}{
+				showMoreButton
 			}</section>
 		);
 	}

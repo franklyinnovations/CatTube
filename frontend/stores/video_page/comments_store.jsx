@@ -7,7 +7,6 @@ var CommentsStore = new Store(Dispatcher);
 var _comments = {};
 var _videoId = null;
 var _totalSize = 0;
-// var _totalLoaded = 0;
 
 eCommentsStore = CommentsStore;
 
@@ -31,7 +30,6 @@ CommentsStore._countComments = function () {
 
 CommentsStore._appendComments = function (data) {
 	_comments[data.page] = data.index.comments;
-	// _totalLoaded += CommentsStore._countComments(data.index.comments);
 	_totalSize = data.index.total_comments_size;
 };
 
@@ -41,7 +39,6 @@ CommentsStore.__onDispatch = function (payload) {
 			// check if the comments should be reset to blank (if the videoId changed)
 			if(_videoId !== payload.data.videoId) {
 				_comments = {};
-				// _totalLoaded = 0;
 				_videoId = payload.data.videoId;
 			}
 
@@ -49,7 +46,6 @@ CommentsStore.__onDispatch = function (payload) {
 			CommentsStore.__emitChange();
 			break;
 		default:
-			// console.log('CommentsStore#__onDispatch ignored a dispatch');
 	}
 };
 

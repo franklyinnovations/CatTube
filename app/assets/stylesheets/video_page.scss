@@ -348,3 +348,20 @@
 	display: block;
 	color: #666666;
 }
+
+.video-index-more {
+	border-top: 1px solid #cccccc;
+	padding: 5px 20px;
+	width: 370px;
+	text-align: center;
+	box-sizing: border-box;
+	text-transform: uppercase;
+	font-size: 10px;
+	font-weight: bold;
+	color: #666666;
+}
+
+.video-index-more:hover {
+	color: #000000;
+	cursor: pointer;
+}

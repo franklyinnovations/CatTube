@@ -37,7 +37,8 @@ var VideoPage = React.createClass({
 				<Video video={this.state.video}/>
 				<VideoBar video={this.state.video}/>
 				<CommentIndex videoId={this.props.params.videoId}/>
-				<VideoIndex/>
+				// right now, VideoIndex does nothing with the videoId prop
+				<VideoIndex videoId={this.props.params.videoId}/>
 			</div>
 		);
 	}

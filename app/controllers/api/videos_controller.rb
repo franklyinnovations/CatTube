@@ -4,6 +4,7 @@ class Api::VideosController < ApplicationController
 
 	def index
 		@videos = Video.includes(:views, :user).page(params[:page]).per(10)
+		@total_videos_size = Video.all.size
 		render :index
 	end
 
