@@ -199,6 +199,19 @@
 	color: #555555;
 }
 
+.comment-delete {
+	float: right;
+	padding: 2px;
+	color: #555555;
+	border: 1px solid #d8d8d8;
+	font-size: 10px;
+}
+
+.comment-delete:hover {
+	background: #cccccc;
+	cursor: pointer;
+}
+
 .comment-body {
 	margin-bottom: 5px;
 }
@@ -207,8 +220,11 @@
 	color: #aaaaaa;
 }
 
-.reply-comment {
+.reply-comment-unhide:hover {
+	color: #555555;
+}
 
+.reply-comment {
 }
 
 .reply-comment-status {
@@ -250,6 +266,11 @@
 	font-weight: bold;
 }
 
+.reply-comment-close:hover {
+	background: #cccccc;
+	cursor: pointer;
+}
+
 .sub-comments {
 	margin-left: 40px;
 }
@@ -272,4 +293,8 @@
 	margin-left: 105px;
 	box-sizing: border-box;
 	text-align: center;
+}
+
+.comment-index-more:hover {
+	background: #eeeeee;
 }

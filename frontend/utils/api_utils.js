@@ -172,6 +172,20 @@ var ApiUtils = {
 				error && error();
 			},
 		});
+	},
+
+	deleteCommentById: function(commentId, success, error) {
+		$.ajax({
+			url: '/api/comments/' + commentId,
+			method: 'DELETE',
+			dataType: 'json',
+			success: function (res) {
+				success && success();
+			},
+			error: function (res) {
+				error && error();
+			},
+		});
 	}
 };
 

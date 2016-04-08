@@ -52,7 +52,7 @@ var AddComment = React.createClass({
 			$('.reply-comment-textarea')[0].value = '';
 			this.setState({body: '', hidden: true});
 
-			// refresh all comment page in store (since new one might be visible now)
+			// refresh all comment pages in store (since new one might be visible now)
 			var pages = CommentsStore.pages();
 			for(var i = 0; i < pages.length; i++) {
 				ApiUtils.getCommentsByPageAndVideoId(pages[i], this.props.videoId);
