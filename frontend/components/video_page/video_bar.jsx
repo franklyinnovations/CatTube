@@ -15,9 +15,9 @@ var VideoBar = React.createClass({
 			};
 
 			return (
-				<section className='video-bar'>
+				<section className='video-bar group'>
 
-					<div className='video-bar-main group'>
+					<div className='video-bar-main'>
 						<div className='video-bar-top group'>
 							<div className='video-bar-title'>{video.title}</div>
 							<Author author={author}/>

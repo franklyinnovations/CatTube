@@ -1,4 +1,5 @@
 var React = require('react');
+var Link = require('react-router').Link;
 
 var VideoIndexStore = require('../../stores/video_page/video_index_store');
 var ApiUtils = require('../../utils/api_utils');
@@ -40,13 +41,12 @@ var VideoIndex = React.createClass({
 			<section className='video-index'>{
 				output.map( function (video) {
 					return (
-						<ul className='video-index-item' key={video.id}>
-							<li>Title: {video.title}</li>
-							<li>User: {video.user_id}</li>
-							<li>Views: {video.views}</li>
-							<li>Date: {video.updated_at}</li>
-							<img src={video.thumb}/>
-						</ul>
+						<Link to={'/videos/' + video.id} className='video-index-item group' key={video.id}>
+							<img className='video-index-thumb' src={video.thumb}/>
+							<strong className='video-index-title'>{video.title}</strong>
+							<strong className='video-index-username'>{video.username}</strong>
+							<strong className='video-index-views'>{video.total_views} views</strong>
+						</Link>
 					);
 				})
 			}</section>

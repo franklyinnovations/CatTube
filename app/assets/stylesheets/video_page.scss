@@ -1,11 +1,13 @@
 /* --- VIDEO PAGE --- */
 
 .video-page {
-	width: 1100px;
+	position: relative;
+	width: 1050px;
 	margin: auto;
 }
 
 .video {
+	float: left;
 }
 
 .video-player {
@@ -16,10 +18,12 @@
 }
 
 .video-bar {
+	float: left;
 	margin-bottom: 10px;
 }
 
 .video-bar-main {
+	float: left;
 	width: 640px;
 	background: #ffffff;
 	padding: 15px;
@@ -113,6 +117,7 @@
 }
 
 .video-bar-other {
+	float: left;
 	width: 640px;
 	background: #ffffff;
 	padding: 15px;
@@ -124,6 +129,7 @@
 }
 
 .comment-index {
+	float: left;
 	width: 640px;
 	background: #ffffff;
 	padding: 15px;
@@ -299,4 +305,46 @@
 
 .comment-index-more:hover {
 	background: #eeeeee;
+}
+
+.video-index {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 400px;
+	background: #ffffff;
+	padding: 15px;
+	box-sizing: border-box;
+}
+
+.video-index-item {
+	display: block;
+}
+
+.video-index-item:hover > .video-index-title {
+	color: #167ac6;
+}
+
+.video-index-thumb {
+	float: left;
+	width: 120px;
+	height: 90px;
+	padding: 10px 0;
+	margin-right: 5px;
+}
+
+.video-index-title {
+	display: block;
+	font-weight: bold;
+	padding-top: 10px;
+}
+
+.video-index-username {
+	display: block;
+	color: #666666;
+}
+
+.video-index-views {
+	display: block;
+	color: #666666;
 }

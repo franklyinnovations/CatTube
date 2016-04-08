@@ -33,7 +33,7 @@ var VideoPage = React.createClass({
 
 	render: function() {
 		return (
-			<div className='video-page'>
+			<div className='video-page group'>
 				<Video video={this.state.video}/>
 				<VideoBar video={this.state.video}/>
 				<CommentIndex videoId={this.props.params.videoId}/>
