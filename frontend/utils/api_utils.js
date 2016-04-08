@@ -16,14 +16,14 @@ var ApiUtils = {
 		});
 	},
 
-	getCommentsByVideoId: function(page, videoId, success, error) {
+	getCommentsByPageAndVideoId: function(page, videoId, success, error) {
 		$.ajax({
 			url: '/api/videos/' + videoId + '/comments',
 			method: 'GET',
 			data: {page: page},
 			dataType: 'json',
 			success: function (res) {
-				ApiActions.receiveComments(page, res);
+				ApiActions.receiveComments(page, videoId, res);
 				success && success();
 			},
 			error: function (res) {
@@ -151,7 +151,6 @@ var ApiUtils = {
 			data: {comment: comment},
 			dataType: 'json',
 			success: function (res) {
-				ApiUtils.getCommentsByVideoId(videoId);
 				success && success();
 			},
 			error: function (res) {

@@ -2,14 +2,22 @@ var React = require('react');
 
 var ApiUtils = require('../../utils/api_utils');
 var SessionStore = require('../../stores/session_store');
-var CommentsStore = require('../../stores/video_page/comments_store');
 
 var AddComment = React.createClass({
 	getInitialState: function () {
 		return {
+			hidden: true,
 			body: '',
 			errors: {body: '', status: ''}
 		};
+	},
+
+	_unhideReply: function () {
+		this.setState({hidden: false});
+	},
+
+	_hideReply: function () {
+		this.setState({hidden: true});
 	},
 
 	_handleCommentValidations: function () {
@@ -35,7 +43,8 @@ var AddComment = React.createClass({
 
 	_handleCommentSubmit: function () {
 		var comment = {
-			body: this.state.body
+			body: this.state.body,
+			parent_id: this.props.parentId
 		};
 
 		var onSuccess = function () {
@@ -44,21 +53,16 @@ var AddComment = React.createClass({
 			this.setState({
 				body: ''
 			});
-
-			// refresh all comment page in store (since new one might be visible now)
-			var pages = CommentsStore.pages();
-			for(var i = 0; i < pages; i++) {
-				ApiUtils.getCommentsByPageAndVideoId(pages[i]);
-			}
 		};
 
 		var onError = function () {
 			this.setState({
 				errors: {
-					status: 'Couldn\'t post comment!'
+					status: 'Couldn\'t reply to comment!'
 				}
 			});
 		};
+
 		ApiUtils.createComment(this.props.videoId, comment, onSuccess.bind(this), onError.bind(this));
 	},
 
@@ -69,20 +73,26 @@ var AddComment = React.createClass({
 	render: function () {
 		var comment = this.props.comment;
 
-		return (
-			<section className='add-comment group'>
-				<strong className='add-comment-status'>{
-					this.state.errors.status
-				}</strong>
-				<strong className='add-comment-textarea-errors'>{
+		if(this.state.hidden) {
+			return <button className='reply-comment-unhide' onClick={this._unhideReply}>Reply</button>;
+		}
+		else {
+			return (
+				<section className='reply-comment group'>
+					<strong className='reply-comment-status'>{
+						this.state.errors.status
+					}</strong>
+					<strong className='reply-comment-textarea-errors'>{
 						this.state.errors.body
 					}</strong>
-				<textarea className='add-comment-textarea' onChange={this._updateText}/>
-				<button className='add-comment-post' onClick={this._handleCommentValidations}>
-					Post
-				</button>
-			</section>
-		);
+					<textarea className='reply-comment-textarea' onChange={this._updateText}/>
+					<button className='reply-comment-post' onClick={this._handleCommentValidations}>
+						Post
+					</button>
+					<button className='reply-comment-close' onClick={this._hideReply}>X</button>
+				</section>
+			);
+		}
 	}
 
 });

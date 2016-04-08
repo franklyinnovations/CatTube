@@ -14,7 +14,7 @@ var SubCommentIndex = React.createClass({
 		}
 	},
 
-	_unHideSubComments: function () {
+	_unhideSubComments: function () {
 		this.setState({hidden: false});
 	},
 
@@ -26,7 +26,7 @@ var SubCommentIndex = React.createClass({
 			return (
 				<div className='sub-comments'>
 					<Comment comment={subComments[length - 1]}/>
-					<button className='sub-comments-unhide' onClick={this._unHideSubComments}>View all {length} replies</button>
+					<button className='sub-comments-unhide' onClick={this._unhideSubComments}>View all {length} replies</button>
 				</div>
 			);
 		}

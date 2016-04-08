@@ -11,11 +11,12 @@ var ApiActions = {
 		Dispatcher.dispatch(payload);
 	},
 
-	receiveComments: function (page, comments) {
+	receiveComments: function (page, videoId, comments) {
 		var payload = {
 			actionType: ApiConstants.COMMENTS_RECEIVED,
 			data: {
 				page: page,
+				videoId: videoId,
 				index: comments
 			}
 		};

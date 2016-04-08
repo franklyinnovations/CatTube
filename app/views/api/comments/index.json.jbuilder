@@ -6,4 +6,4 @@ json.comments @comments do |comment|
 	end
 end
 
-json.comments_size @comments_size
+json.total_comments_size @total_comments_size

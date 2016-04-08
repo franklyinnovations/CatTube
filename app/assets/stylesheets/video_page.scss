@@ -155,6 +155,7 @@
 	width: 610px;
 	height: 50px;
 	box-sizing: border-box;
+	padding: 5px;
 }
 
 .add-comment-post {
@@ -188,6 +189,42 @@
 .comment-date {
 	font-size: 10px;
 	color: #555555;
+}
+
+.comment-body {
+	margin-bottom: 5px;
+}
+
+.reply-comment-unhide {
+	color: #aaaaaa;
+}
+
+.reply-comment {
+
+}
+
+.reply-comment-status {
+
+}
+
+.reply-comment-textarea-errors {
+
+}
+
+.reply-comment-textarea {
+	border: 1px solid #cccccc;
+	background: #ffffff;
+	width: 470px;
+	height: 50px;
+	box-sizing: border-box;
+}
+
+.reply-comment-post {
+
+}
+
+.reply-comment-close {
+
 }
 
 .sub-comments {
