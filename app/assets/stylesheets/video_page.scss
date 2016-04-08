@@ -172,8 +172,11 @@
 }
 
 .comment {
-	display: block;
 	padding: 10px;
+}
+
+.comment-top {
+	padding-bottom: 5px;
 }
 
 .comment-username {
@@ -185,4 +188,17 @@
 .comment-date {
 	font-size: 10px;
 	color: #555555;
+}
+
+.sub-comments {
+	margin-left: 40px;
+}
+
+.sub-comments-unhide {
+	font-weight: bold;
+	color: #167ac6;
+}
+
+.sub-comments-unhide:hover {
+	text-decoration: underline;
 }

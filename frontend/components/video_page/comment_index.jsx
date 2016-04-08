@@ -5,6 +5,7 @@ var CommentsStore = require('../../stores/video_page/comments_store');
 
 var Comment = require('./comment');
 var AddComment = require('./add_comment');
+var SubCommentIndex = require('./sub_comment_index');
 
 var CommentIndex = React.createClass({
 
@@ -52,9 +53,7 @@ var CommentIndex = React.createClass({
 					output.map( function (comment) {
 						return (
 							<Comment key={comment.id} comment={comment}> {
-								comment.children.map( function (subComment) {
-									return <Comment key={subComment.id} comment={subComment}/>;
-								})
+								<SubCommentIndex subComments={comment.children}/>
 							}</Comment>
 						);
 					})

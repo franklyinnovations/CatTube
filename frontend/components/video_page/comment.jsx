@@ -8,11 +8,13 @@ var Comment = React.createClass({
 		var comment = this.props.comment;
 
 		return (
-			<article className='comment group'>
-				<Icon userId={comment.user_id}/>
-				<strong className='comment-username'>{comment.username}</strong>
-				<strong className='comment-date'>{comment.created_ago}</strong>
-				<p>{comment.body}</p>
+			<article className='comment'>
+				<div className='comment-top group'>
+					<Icon userId={comment.user_id}/>
+					<strong className='comment-username'>{comment.username}</strong>
+					<strong className='comment-date'>{comment.created_ago}</strong>
+					<p>{comment.body}</p>
+				</div>
 
 				{this.props.children}
 			</article>

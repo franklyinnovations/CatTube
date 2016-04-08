@@ -35,7 +35,7 @@ var AddComment = React.createClass({
 	_handleCommentSubmit: function () {
 		var comment = {
 			body: this.state.body
-		}
+		};
 
 		var onSuccess = function () {
 			$('.add-comment-textarea')[0].value = '';
