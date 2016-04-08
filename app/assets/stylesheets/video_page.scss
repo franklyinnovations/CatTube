@@ -178,6 +178,14 @@
 
 .comment-top {
 	padding-bottom: 5px;
+	padding-left: 60px;
+	position: relative;
+}
+
+.comment-avatar {
+	top: 0;
+	left: 0;
+	position: absolute;
 }
 
 .comment-username {

@@ -9,9 +9,11 @@ var Comment = React.createClass({
 		var comment = this.props.comment;
 
 		return (
-			<article className='comment'>
+			<article className='comment group'>
 				<div className='comment-top group'>
-					<Icon userId={comment.user_id}/>
+					<div className='comment-avatar group'>
+						<Icon userId={comment.user_id}/>
+					</div>
 					<strong className='comment-username'>{comment.username}</strong>
 					<strong className='comment-date'>{comment.created_ago}</strong>
 					<p className='comment-body'>{comment.body}</p>
