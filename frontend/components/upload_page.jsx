@@ -73,6 +73,8 @@ var UploadPage = React.createClass({
 					status: 'Video uploaded!'
 				}
 			});
+
+			$('.upload-page-submit').prop('disabled', false);
 		};
 
 		var onError = function (res) {
@@ -83,8 +85,11 @@ var UploadPage = React.createClass({
 					status: errorMessage
 				}
 			});
+
+			$('.upload-page-submit').prop('disabled', false);
 		};
 
+		$('.upload-page-submit').prop('disabled', true);
 		ApiUtils.uploadVideo(formData, onSuccess.bind(this), onError.bind(this));
 	},
 
@@ -122,7 +127,7 @@ var UploadPage = React.createClass({
 					}</strong>
         </label>
 
-        <input type="submit" value="Upload Video" className='upload-page-submit'/>
+				<input type="submit" value="Upload Video" className='upload-page-submit'/>
 			</form>
 		);
 	}
