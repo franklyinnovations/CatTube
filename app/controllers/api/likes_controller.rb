@@ -1,5 +1,6 @@
 class Api::LikesController < ApplicationController
 	before_action :ensure_logged_in, only: [:create]
+	before_action :ensure_owner, only: [:destroy]
 
 	def index
 		raw_likes = Video.find(params[:video_id]).likes
@@ -38,9 +39,23 @@ class Api::LikesController < ApplicationController
 		render :show
 	end
 
+	def destroy
+		@like = current_user.likes.find(params[:id])
+		@like.destroy
+		render :show
+	end
+
 private
 
 	def like_params
 		params.require(:like).permit(:value)
+	end
+
+	def ensure_owner
+		if !logged_in?
+			render json: { message: 'You must be logged in!' }, status: 401
+		elsif Like.find(params[:id]).user_id != current_user.id
+			render json: { message: 'You must be the like owner!' }, status: 401
+		end
 	end
 end

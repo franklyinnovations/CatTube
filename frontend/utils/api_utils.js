@@ -216,6 +216,20 @@ var ApiUtils = {
 				error && error();
 			},
 		});
+	},
+
+	deleteLikeById: function (likeId, success, error) {
+		$.ajax({
+			url: '/api/likes/' + likeId,
+			method: 'DELETE',
+			dataType: 'json',
+			success: function (res) {
+				success && success();
+			},
+			error: function (res) {
+				error && error();
+			},
+		});
 	}
 };
 

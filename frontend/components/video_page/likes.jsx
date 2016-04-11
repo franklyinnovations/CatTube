@@ -7,7 +7,7 @@ var ApiUtils = require('../../utils/api_utils');
 var Likes = React.createClass({
 
 	getInitialState: function () {
-		return {likes: {up: 0, down: 0}, current_like: null};
+		return {likes: {up: 0, down: 0}, currentLike: CurrentUserLikeStore.all()};
 	},
 
 	componentDidMount: function () {
@@ -33,21 +33,57 @@ var Likes = React.createClass({
 	},
 
 	_onChangeCurrentUserLikeStore: function () {
-		this.setState({current_like: CurrentUserLikeStore.all()});
+		this.setState({currentLike: CurrentUserLikeStore.all()});
 	},
 
 	_likeUpVideo: function () {
-		ApiUtils.createLike(this.props.videoId, 1, function () {
+		// delete the like if it is already up
+		var onSuccess = function () {
 			ApiUtils.getLikesByVideoId(this.props.videoId);
 			ApiUtils.getCurrentUserLikeByVideoId(this.props.videoId);
-		}.bind(this));
+		}.bind(this);
+
+		if(this._currentLikeIsUp()) {
+			ApiUtils.deleteLikeById(this.state.currentLike.id, onSuccess.bind(this));
+		}
+		else {
+			ApiUtils.createLike(this.props.videoId, 1, onSuccess.bind(this));
+		}
 	},
 
 	_likeDownVideo: function () {
-		ApiUtils.createLike(this.props.videoId, -1, function () {
+		// delete the like if it is already down
+		var onSuccess = function () {
 			ApiUtils.getLikesByVideoId(this.props.videoId);
 			ApiUtils.getCurrentUserLikeByVideoId(this.props.videoId);
-		}.bind(this));
+		}.bind(this);
+
+		if(this._currentLikeIsDown()) {
+			ApiUtils.deleteLikeById(this.state.currentLike.id, onSuccess.bind(this));
+		}
+		else {
+			ApiUtils.createLike(this.props.videoId, -1, onSuccess.bind(this));
+		}
+	},
+
+	_currentLikeIsUp: function () {
+		var currentLike = this.state.currentLike;
+		if(currentLike.value !== null && currentLike.value > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	},
+
+	_currentLikeIsDown: function () {
+		var currentLike = this.state.currentLike;
+		if(currentLike.value !== null && currentLike.value < 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	},
 
 	render: function() {
@@ -55,7 +91,7 @@ var Likes = React.createClass({
 		var down = this.state.likes.down;
 		var percent = up / (up + down);
 
-		var current_like = this.state.current_like;
+		var currentLike = this.state.currentLike;
 		var thumbsUpStyle = {};
 		var thumbsDownStyle = {};
 
@@ -64,13 +100,11 @@ var Likes = React.createClass({
 			percent = 1;
 		}
 
-		if(current_like && current_like.value !== null) {
-			if(current_like.value > 0) {
-				thumbsUpStyle = {color: '#555555'};
-			}
-			else if(current_like.value < 0) {
-				thumbsDownStyle = {color: '#555555'};
-			}
+		if(this._currentLikeIsUp()) {
+			thumbsUpStyle = {color: '#555555'};
+		}
+		else if(this._currentLikeIsDown()) {
+			thumbsDownStyle = {color: '#555555'};
 		}
 
 		return (
