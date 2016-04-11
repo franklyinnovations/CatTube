@@ -10,10 +10,14 @@ class Api::CommentsController < ApplicationController
 	end
 
 	def create
-		@comment = current_user.comments.new(comment_params)
-		@comment.video_id = params[:video_id]
-		@comment.save!
-		render :show
+		begin
+			@comment = current_user.comments.new(comment_params)
+			@comment.video_id = params[:video_id]
+			@comment.save!
+			render :show
+		rescue ActiveRecord::RecordInvalid => e
+			render json: {message: e.record.errors.full_messages.join(', ')}, status: 422
+		end
 	end
 
 	def destroy

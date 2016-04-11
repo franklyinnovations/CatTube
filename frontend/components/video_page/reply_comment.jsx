@@ -59,10 +59,12 @@ var AddComment = React.createClass({
 			}
 		};
 
-		var onError = function () {
+		var onError = function (res) {
+			var errorMessage = JSON.parse(res.responseText).message;
+
 			this.setState({
 				errors: {
-					status: 'Couldn\'t reply to comment!'
+					status: errorMessage
 				}
 			});
 		};

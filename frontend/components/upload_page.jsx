@@ -75,10 +75,12 @@ var UploadPage = React.createClass({
 			});
 		};
 
-		var onError = function () {
+		var onError = function (res) {
+			var errorMessage = JSON.parse(res.responseText).message;
+
 			this.setState({
 				errors: {
-					status: 'Upload failed!'
+					status: errorMessage
 				}
 			});
 		};

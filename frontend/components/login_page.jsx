@@ -82,12 +82,14 @@ var LoginPage = React.createClass({
 			this.context.router.push({pathname: nextState});
 		};
 
-		var onError = function (responseText) {
+		var onError = function (res) {
+			var errorMessage = JSON.parse(res.responseText).message;
+
 			this.setState({
 				username: '',
 				password: '',
 				errors: {
-					status: responseText
+					status: errorMessage
 				}
 			});
 		};

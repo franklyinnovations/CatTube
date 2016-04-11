@@ -8,10 +8,10 @@ var ApiUtils = {
 			dataType: 'json',
 			success: function (res) {
 				ApiActions.receiveVideo(res);
-				success && success();
+				success && success(res);
 			},
 			error: function (res) {
-				error && error();
+				error && error(res);
 			}
 		});
 	},
@@ -24,10 +24,10 @@ var ApiUtils = {
 			dataType: 'json',
 			success: function (res) {
 				ApiActions.receiveComments(page, videoId, res);
-				success && success();
+				success && success(res);
 			},
 			error: function (res) {
-				error && error();
+				error && error(res);
 			}
 		});
 	},
@@ -39,10 +39,10 @@ var ApiUtils = {
 			dataType: 'json',
 			success: function (res) {
 				ApiActions.receiveLikes(res);
-				success && success();
+				success && success(res);
 			},
 			error: function (res) {
-				error && error();
+				error && error(res);
 			}
 		});
 	},
@@ -56,10 +56,10 @@ var ApiUtils = {
 			dataType: 'json',
 			data: formData,
 			success: function (res) {
-				success && success();
+				success && success(res);
 			},
 			error: function (res) {
-				error && error();
+				error && error(res);
 			}
 		});
 	},
@@ -88,11 +88,10 @@ var ApiUtils = {
 			dataType: 'json',
 			success: function (res) {
 				ApiActions.receiveSession(res);
-				success && success();
+				success && success(res);
 			},
 			error: function (res) {
-				var message = JSON.parse(res.responseText).message
-				error && error(message);
+				error && error(res);
 			},
 		});
 	},
@@ -104,10 +103,10 @@ var ApiUtils = {
 			dataType: 'json',
 			success: function (res) {
 				ApiActions.destroySession();
-				success && success();
+				success && success(res);
 			},
 			error: function (res) {
-				error && error();
+				error && error(res);
 			},
 		});
 	},
@@ -120,10 +119,10 @@ var ApiUtils = {
 			dataType: 'json',
 			success: function (res) {
 				ApiUtils.getCurrentUser();
-				success && success();
+				success && success(res);
 			},
 			error: function (res) {
-				error && error();
+				error && error(res);
 			},
 		});
 	},
@@ -136,10 +135,10 @@ var ApiUtils = {
 			dataType: 'json',
 			success: function (res) {
 				ApiActions.receiveVideoIndex(page, videoId, res);
-				success && success();
+				success && success(res);
 			},
 			error: function (res) {
-				error && error();
+				error && error(res);
 			},
 		});
 	},
@@ -151,10 +150,10 @@ var ApiUtils = {
 			data: {comment: comment},
 			dataType: 'json',
 			success: function (res) {
-				success && success();
+				success && success(res);
 			},
 			error: function (res) {
-				error && error();
+				error && error(res);
 			},
 		});
 	},
@@ -166,10 +165,10 @@ var ApiUtils = {
 			dataType: 'json',
 			success: function (res) {
 				ApiActions.receiveUser(res);
-				success && success();
+				success && success(res);
 			},
 			error: function (res) {
-				error && error();
+				error && error(res);
 			},
 		});
 	},
@@ -180,10 +179,10 @@ var ApiUtils = {
 			method: 'DELETE',
 			dataType: 'json',
 			success: function (res) {
-				success && success();
+				success && success(res);
 			},
 			error: function (res) {
-				error && error();
+				error && error(res);
 			},
 		});
 	},
@@ -195,10 +194,10 @@ var ApiUtils = {
 			dataType: 'json',
 			success: function (res) {
 				ApiActions.receiveCurrentUserLike(res);
-				success && success();
+				success && success(res);
 			},
 			error: function (res) {
-				error && error();
+				error && error(res);
 			},
 		});
 	},
@@ -210,10 +209,10 @@ var ApiUtils = {
 			data: {like: {value: likeValue}},
 			dataType: 'json',
 			success: function (res) {
-				success && success();
+				success && success(res);
 			},
 			error: function (res) {
-				error && error();
+				error && error(res);
 			},
 		});
 	},
@@ -224,10 +223,10 @@ var ApiUtils = {
 			method: 'DELETE',
 			dataType: 'json',
 			success: function (res) {
-				success && success();
+				success && success(res);
 			},
 			error: function (res) {
-				error && error();
+				error && error(res);
 			},
 		});
 	}

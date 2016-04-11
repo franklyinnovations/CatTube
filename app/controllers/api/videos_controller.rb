@@ -9,8 +9,12 @@ class Api::VideosController < ApplicationController
 	end
 
 	def create
-		@video = current_user.videos.create!(video_params);
-		render :show
+		begin
+			@video = current_user.videos.create!(video_params);
+			render :show
+		rescue ActiveRecord::RecordInvalid => e
+			render json: {message: e.record.errors.full_messages.join(', ')}, status: 422
+		end
 	end
 
 	def show

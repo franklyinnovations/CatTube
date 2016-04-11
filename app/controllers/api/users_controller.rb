@@ -7,9 +7,13 @@ class Api::UsersController < ApplicationController
 	end
 
 	def create
-		@user = User.create!(user_params)
-		log_in!(@user)
-		render :show
+		begin
+			@user = User.create!(user_params)
+			log_in!(@user)
+			render :show
+		rescue ActiveRecord::RecordInvalid => e
+			render json: {message: e.record.errors.full_messages.join(', ')}, status: 422
+		end
 	end
 
 	def show

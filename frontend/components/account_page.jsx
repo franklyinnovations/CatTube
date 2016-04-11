@@ -82,10 +82,12 @@ var AccountPage = React.createClass({
 			this.context.router.push({pathname: nextState});
 		};
 
-		var onError = function () {
+		var onError = function (res) {
+			var errorMessage = JSON.parse(res.responseText).message;
+
 			this.setState({
 				errors: {
-					status: 'Couldn\'t create account!'
+					status: errorMessage
 				}
 			});
 		};
