@@ -10,32 +10,20 @@
 	z-index: 1;
 }
 
-.navbar-cattube {
+.navbar-cattube-logo {
 	float: left;
-	font-size: 18px;
-	transform: scale(.85, 1.25);
 }
 
-.navbar-cat {
-	float: left;
-	font-weight: bold;
-	line-height: 25px;
+.navbar-cat-logo {
 }
 
-.navbar-tube {
-	float: left;
-	color: #ffffff;
-	border-radius: 20%;
-	background: #dd0000;
-	padding: 2px 5px;
-	margin-left: 2px;
+.navbar-tube-logo {
 }
 
 .navbar-search-bar {
 	float: left;
 	margin-left: 100px;
 	background: #cccccc;
-	width: 650px;
 }
 
 .navbar-right {

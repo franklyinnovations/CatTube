@@ -17,23 +17,27 @@ var LoginPage = React.createClass({
 
 	render: function() {
 		return (
-			<div className='cattube-sign-in'>
-        <h1>CatTube Sign In</h1>
+			<div className='sign-in'>
+				<div className='sign-in-cattube-logo logo-cattube group'>
+					<h1 className='sign-in-cat-logo logo-cat'>Cat</h1>
+					<h1 className='sign-in-tube-logo logo-tube'>Tube</h1>
+				</div>
+        <h1 className='sign-in-text'>Please enter your username and password</h1>
 
-        <form className='sign-in' onSubmit={this.handleValidations}>
+        <form className='sign-in-form' onSubmit={this.handleValidations}>
 					<strong className='sign-in-status'>{this.state.errors.status}</strong>
 
-          <label>Username
-	          <input className='sign-in-username' onChange={this.updateName} type="text" value={this.state.username}/>
+          <label className='sign-in-username-label'>Username
 						<strong className='sign-in-username-errors'>{this.state.errors.username}</strong>
+	          <input className='sign-in-username' onChange={this.updateName} type="text" value={this.state.username}/>
 					</label>
 
-          <label>Password
-	          <input className='sign-in-password' onChange={this.updatePassword} type="password" value={this.state.password}/>
+          <label className='sign-in-password-label'>Password
 						<strong className='sign-in-password-errors'>{this.state.errors.password}</strong>
+	          <input className='sign-in-password' onChange={this.updatePassword} type="password" value={this.state.password}/>
 					</label>
 
-          <input type='submit' value='Submit'/>
+          <input className='sign-in-submit' type='submit' value='Sign In'/>
         </form>
       </div>
 		);

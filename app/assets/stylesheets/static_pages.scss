@@ -47,3 +47,25 @@ img {
 	display: block;
 	clear: both;
 }
+
+/* --- APPLICATION WIDE --- */
+
+.logo-cattube {
+	font-size: 18px;
+	transform: scale(.85, 1.25);
+}
+
+.logo-cat {
+	float: left;
+	font-weight: bold;
+	line-height: 25px;
+}
+
+.logo-tube {
+	float: left;
+	color: #ffffff;
+	border-radius: 20%;
+	background: #dd0000;
+	padding: 2px 5px;
+	margin-left: 2px;
+}

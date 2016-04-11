@@ -1,0 +1,96 @@
+.sign-in {
+	width: 350px;
+	background: #f7f7f7;
+	margin: auto;
+	padding: 15px;
+}
+
+.sign-in-cattube-logo {
+	width: 90px;
+	margin: auto;
+}
+
+.sign-in-cat-logo {
+}
+
+.sign-in-tube-logo {
+}
+
+.sign-in-text {
+	display: block;
+	color: #555555;
+	font-size: 18px;
+	margin: 10px 0;
+}
+
+.sign-in-form {
+}
+
+.sign-in-status {
+	display: block;
+}
+
+.sign-in-username-label {
+	color: #555555;
+	font-size: 15px;
+}
+
+.sign-in-username:focus {
+	border: 1px solid #167ac6;
+}
+
+.sign-in-username-errors {
+	display: block;
+}
+
+.sign-in-username {
+	display: block;
+	color: #000000;
+	border: 1px solid #cccccc;
+	padding: 5px;
+	margin-bottom: 10px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.sign-in-password-label {
+	color: #555555;
+	font-size: 15px;
+}
+
+.sign-in-password-errors {
+	display: block;
+}
+
+.sign-in-password {
+	display: block;
+	color: #000000;
+	border: 1px solid #cccccc;
+	padding: 5px;
+	margin-bottom: 10px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.sign-in-password:focus {
+	border: 1px solid #167ac6;
+}
+
+.sign-in-submit {
+	padding: 7px 10px;
+	color: #ffffff;
+	background: #3079ed;
+	border: 1px solid #d8d8d8;
+	font-weight: bold;
+	margin: auto;
+	width: 100%;
+	text-align: center;
+	box-sizing: border-box;
+	height: 40px;
+	border-radius: 5px;
+}
+
+.sign-in-submit:hover {
+	cursor: pointer;
+	background: #167ac6;
+}
