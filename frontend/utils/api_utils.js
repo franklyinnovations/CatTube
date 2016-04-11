@@ -111,12 +111,14 @@ var ApiUtils = {
 		});
 	},
 
-	createUser: function (user, success, error) {
+	createUser: function (formData, success, error) {
 		$.ajax({
 			url: '/api/users',
 			method: 'POST',
-			data: {user: user},
+			processData: false,
+			contentType: false,
 			dataType: 'json',
+			data: formData,
 			success: function (res) {
 				ApiUtils.getCurrentUser();
 				success && success(res);
