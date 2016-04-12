@@ -63,7 +63,7 @@ var UploadPage = React.createClass({
 
 		var onSuccess = function () {
 			// clear the file
-			$('.upload-page-video')[0].value = ''
+			$('.upload-page-video')[0].value = '';
 
 			this.setState({
 				title: '',
@@ -104,27 +104,29 @@ var UploadPage = React.createClass({
 	render: function() {
 		return (
 			<form className='upload-page' onSubmit={this.handleValidations}>
+				<h1 className='upload-page-text'>Upload your video</h1>
+
 				<strong className='upload-page-status'>{this.state.errors.status}</strong>
 
-				<label>Title
-          <input type="text" className='upload-page-title' onChange={this.updateTitle} value={this.state.title}/>
-					<strong className='upload-page-title-errors'>{
-						this.state.errors.title
-					}</strong>
-        </label>
-
-				<label>Description
-          <input type="text" className='upload-page-description' onChange={this.updateDescription} value={this.state.description}/>
-					<strong className='upload-page-title-errors'>{
-						this.state.errors.description
-					}</strong>
-        </label>
-
-				<label>Video
-          <input type="file" className='upload-page-video' onChange={this.handleFileChange}/>
+				<div className='upload-page-video-element'>
 					<strong className='upload-page-file-errors'>{
-						this.state.errors.data
-					}</strong>
+							this.state.errors.data
+						}</strong>
+					<input type="file" className='upload-page-video' onChange={this.handleFileChange}/>
+				</div>
+
+				<label className='upload-page-title-label'>Title
+					<strong className='upload-page-title-errors'>{
+							this.state.errors.title
+						}</strong>
+          <input type="text" className='upload-page-title' onChange={this.updateTitle} value={this.state.title}/>
+        </label>
+
+				<label className='upload-page-description-label'>Description
+					<strong className='upload-page-description-errors'>{
+							this.state.errors.description
+						}</strong>
+          <textarea className='upload-page-description' onChange={this.updateDescription}>{this.state.description}</textarea>
         </label>
 
 				<input type="submit" value="Upload Video" className='upload-page-submit'/>

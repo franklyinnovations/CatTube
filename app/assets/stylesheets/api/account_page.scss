@@ -38,10 +38,6 @@
 	font-size: 15px;
 }
 
-.new-account-username:focus {
-	border: 1px solid #167ac6;
-}
-
 .new-account-username-errors {
 	font-size: 12px;
 	display: block;
@@ -55,6 +51,10 @@
 	margin-bottom: 10px;
 	width: 100%;
 	box-sizing: border-box;
+}
+
+.new-account-username:focus {
+	border: 1px solid #167ac6;
 }
 
 .new-account-password-label {
