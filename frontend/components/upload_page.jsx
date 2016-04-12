@@ -126,7 +126,7 @@ var UploadPage = React.createClass({
 					<strong className='upload-page-description-errors'>{
 							this.state.errors.description
 						}</strong>
-          <textarea className='upload-page-description' onChange={this.updateDescription}>{this.state.description}</textarea>
+					<textarea className='upload-page-description' onChange={this.updateDescription} value={this.state.description}/>
         </label>
 
 				<input type="submit" value="Upload Video" className='upload-page-submit'/>
