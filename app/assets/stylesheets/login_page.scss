@@ -1,4 +1,7 @@
 .sign-in {
+}
+
+.sign-in-form {
 	width: 350px;
 	background: #f7f7f7;
 	margin: auto;
@@ -17,10 +20,10 @@
 }
 
 .sign-in-text {
-	display: block;
 	color: #555555;
 	font-size: 18px;
 	margin: 10px 0;
+	text-align: center;
 }
 
 .sign-in-form {
@@ -95,4 +98,17 @@
 .sign-in-submit:hover {
 	cursor: pointer;
 	background: #167ac6;
+}
+
+.sign-in-create-account {
+	margin-top: 10px;
+	font-size: 14px;
+	display: block;
+	color: #427fed;
+	text-align: center;
+}
+
+.sign-in-create-account:hover {
+	cursor: pointer;
+	text-decoration: underline;
 }

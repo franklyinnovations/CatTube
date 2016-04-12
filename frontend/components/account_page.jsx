@@ -32,7 +32,7 @@ var AccountPage = React.createClass({
 			this.setState({ data: file });
 		}
 		else {
-			this.setState({ avatar: null });
+			this.setState({ data: null, avatar: null });
 		}
 	},
 
@@ -45,7 +45,7 @@ var AccountPage = React.createClass({
 				</div>
         <h1 className='new-account-text'>Please create your new account</h1>
 
-        <form className='new-account' onSubmit={this.handleValidations}>
+        <form className='new-account-form' onSubmit={this.handleValidations}>
 					<strong className='new-account-status'>{this.state.errors.status}</strong>
 
           <label className='new-account-username-label'>New Username
@@ -62,12 +62,14 @@ var AccountPage = React.createClass({
 						<input className='new-account-verify' onChange={this.updateVerify} type="password" value={this.state.verify}/>
 					</label>
 
-					<label className='new-account-upload-avatar'>Custom Avatar
-						<img src={this.state.avatar}/>
-						<input className='new-account-avatar' type='file' onChange={this.handleFileChange}/>
+					<label className='new-account-avatar-label group'>Custom Avatar
+						<div className='new-account-avatar-element'>
+							<img className='new-account-avatar-icon' src={this.state.avatar}/>
+							<input className='new-account-avatar' type='file' onChange={this.handleFileChange}/>
+						</div>
 					</label>
 
-          <input type='submit' value='Submit'/>
+          <input className='new-account-submit' type='submit' value='Create Account'/>
         </form>
       </div>
 		);

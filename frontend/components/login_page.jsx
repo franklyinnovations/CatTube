@@ -1,4 +1,5 @@
 var React = require('react');
+var Link = require('react-router').Link;
 
 var ApiUtils = require('../utils/api_utils');
 
@@ -39,6 +40,8 @@ var LoginPage = React.createClass({
 
           <input className='sign-in-submit' type='submit' value='Sign In'/>
         </form>
+
+				<Link className='sign-in-create-account' to='account'>Create account</Link>
       </div>
 		);
 	},

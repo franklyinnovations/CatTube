@@ -1,0 +1,144 @@
+.new-account {
+}
+
+.new-account-form {
+	width: 350px;
+	background: #f7f7f7;
+	margin: auto;
+	padding: 15px;
+}
+
+.new-account-cattube-logo {
+	width: 90px;
+	margin: auto;
+}
+
+.new-account-cat-logo {
+}
+
+.new-account-tube-logo {
+}
+
+.new-account-text {
+	color: #555555;
+	font-size: 18px;
+	margin: 10px 0;
+	text-align: center;
+}
+
+.new-account-form {
+}
+
+.new-account-status {
+	display: block;
+}
+
+.new-account-username-label {
+	color: #555555;
+	font-size: 15px;
+}
+
+.new-account-username:focus {
+	border: 1px solid #167ac6;
+}
+
+.new-account-username-errors {
+	font-size: 12px;
+	display: block;
+}
+
+.new-account-username {
+	display: block;
+	color: #000000;
+	border: 1px solid #cccccc;
+	padding: 5px;
+	margin-bottom: 10px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.new-account-password-label {
+	color: #555555;
+	font-size: 15px;
+}
+
+.new-account-password-errors {
+	font-size: 12px;
+	display: block;
+}
+
+.new-account-password {
+	display: block;
+	color: #000000;
+	border: 1px solid #cccccc;
+	padding: 5px;
+	margin-bottom: 10px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.new-account-password:focus {
+	border: 1px solid #167ac6;
+}
+
+.new-account-verify-label {
+	color: #555555;
+	font-size: 15px;
+}
+
+.new-account-verify {
+	display: block;
+	color: #000000;
+	border: 1px solid #cccccc;
+	padding: 5px;
+	margin-bottom: 10px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.new-account-verify:focus {
+	border: 1px solid #167ac6;
+}
+
+.new-account-avatar-label {
+	color: #555555;
+	font-size: 15px;
+}
+
+.new-account-avatar-element {
+}
+
+.new-account-avatar-icon {
+	float: left;
+	width: 50px;
+	height: 50px;
+	background: #ffffff;
+	border: 1px solid #cccccc;
+	box-sizing: border-box;
+	margin: auto;
+	margin-bottom: 10px;
+}
+
+.new-account-avatar {
+	font-size: 12px;
+	float: right;
+}
+
+.new-account-submit {
+	padding: 7px 10px;
+	color: #ffffff;
+	background: #3079ed;
+	border: 1px solid #d8d8d8;
+	font-weight: bold;
+	margin: auto;
+	width: 100%;
+	text-align: center;
+	box-sizing: border-box;
+	height: 40px;
+	border-radius: 5px;
+}
+
+.new-account-submit:hover {
+	cursor: pointer;
+	background: #167ac6;
+}
