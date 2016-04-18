@@ -20,7 +20,6 @@ var AccountPage = React.createClass({
 
 	handleFileChange: function (e) {
 		var file = e.currentTarget.files[0];
-
 		if(file) {
 			var fr = new FileReader();
 
@@ -65,7 +64,7 @@ var AccountPage = React.createClass({
 					<label className='new-account-avatar-label group'>Custom Avatar
 						<div className='new-account-avatar-element'>
 							<img className='new-account-avatar-icon' src={this.state.avatar}/>
-							<input className='new-account-avatar' type='file' onChange={this.handleFileChange}/>
+							<input className='new-account-avatar' type='file' accept="image/*" onChange={this.handleFileChange}/>
 						</div>
 					</label>
 

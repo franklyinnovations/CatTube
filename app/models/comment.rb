@@ -14,7 +14,7 @@ class Comment < ActiveRecord::Base
 		dependent: :destroy
 
 	validates :user, :video, :body, presence: true
-	validates :body, length: { in: (1..500) }
+	validates :body, length: { in: (1..300) }
 	validate :parent_exists_if_present, :parent_is_not_nested
 
 	def created_ago

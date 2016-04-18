@@ -112,7 +112,7 @@ var UploadPage = React.createClass({
 					<strong className='upload-page-file-errors'>{
 							this.state.errors.data
 						}</strong>
-					<input type="file" className='upload-page-video' onChange={this.handleFileChange}/>
+					<input type="file" accept="video/mp4" className='upload-page-video' onChange={this.handleFileChange}/>
 				</div>
 
 				<label className='upload-page-title-label'>Title

@@ -5,6 +5,8 @@ class Video < ActiveRecord::Base
 	has_many :views, dependent: :destroy
 
 	validates :title, :description, presence: true
+	validates :title, length: { in: (1..100) }
+	validates :description, length: { in: (1..300) }
 	validates :user, presence: true
 
 	has_attached_file :data, :styles => {
