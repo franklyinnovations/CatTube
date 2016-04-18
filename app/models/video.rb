@@ -6,7 +6,7 @@ class Video < ActiveRecord::Base
 
 	validates :title, :description, presence: true
 	validates :title, length: { in: (1..100) }
-	validates :description, length: { in: (1..300) }
+	validates :description, length: { in: (1..1000) }
 	validates :user, presence: true
 
 	has_attached_file :data, :styles => {

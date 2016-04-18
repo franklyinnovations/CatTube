@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160407203429) do
+ActiveRecord::Schema.define(version: 20160418215426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "comments", force: :cascade do |t|
-    t.string   "body",       null: false
+    t.text     "body",       null: false
     t.integer  "user_id",    null: false
     t.integer  "video_id",   null: false
     t.integer  "parent_id"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20160407203429) do
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   create_table "videos", force: :cascade do |t|
-    t.string   "title",             null: false
+    t.text     "title",             null: false
     t.text     "description",       null: false
     t.integer  "user_id",           null: false
     t.datetime "created_at",        null: false
