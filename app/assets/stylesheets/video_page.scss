@@ -188,6 +188,7 @@
 	padding-left: 60px;
 	position: relative;
 	min-height: 50px;
+	margin-bottom: 10px;
 }
 
 .comment-avatar {
@@ -283,14 +284,15 @@
 	margin-left: 40px;
 }
 
-.sub-comments-unhide {
+.sub-comments-unhide, .sub-comments-hide {
 	display: block;
 	font-weight: bold;
 	color: #167ac6;
 }
 
-.sub-comments-unhide:hover {
+.sub-comments-unhide:hover, .sub-comments-hide:hover {
 	text-decoration: underline;
+	cursor: pointer;
 }
 
 .comment-index-more {

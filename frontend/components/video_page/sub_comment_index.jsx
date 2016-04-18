@@ -18,21 +18,37 @@ var SubCommentIndex = React.createClass({
 		this.setState({hidden: false});
 	},
 
+	_hideSubComments: function () {
+		this.setState({hidden: true});
+	},
+
 	render: function() {
 		var subComments = this.props.subComments;
 		var length = subComments.length;
+		var hideCommentsButton;
+
+		if(this.props.subComments.length > 1) {
+			hideCommentsButton = (
+				<button className='sub-comments-hide' onClick={this._hideSubComments}>
+					Hide replies
+				</button>
+			);
+		}
 
 		if(this.state.hidden) {
 			return (
 				<div className='sub-comments'>
+					<button className='sub-comments-unhide' onClick={this._unhideSubComments}>
+						View all {length} replies
+					</button>
 					<Comment comment={subComments[length - 1]}/>
-					<button className='sub-comments-unhide' onClick={this._unhideSubComments}>View all {length} replies</button>
 				</div>
 			);
 		}
 		else {
 			return (
-				<div className='sub-comments'>{
+				<div className='sub-comments'>
+					{hideCommentsButton} {
 					subComments.map( function (subComment) {
 						return <Comment key={subComment.id} comment={subComment}/>;
 					})

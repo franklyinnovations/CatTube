@@ -92,3 +92,8 @@
 	cursor: pointer;
 	background: #167ac6;
 }
+
+.upload-page-submit:disabled {
+	cursor: default;
+	background: #aaaaaa;
+}
