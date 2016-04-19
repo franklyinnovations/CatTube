@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 	after_initialize :ensure_dummy_password
 
 	has_attached_file :avatar,
-		styles: { thumb: "100x100>" },
+		styles: { thumb: "100x100#" },
 		default_url: "default.jpg"
 
 	validates_attachment :avatar, content_type: { content_type: /\Aimage\/.*\Z/ }
