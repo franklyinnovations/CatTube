@@ -129,7 +129,7 @@ var ApiUtils = {
 		});
 	},
 
-	getVideoIndexByPageAndType: function (page, type, success, error) {
+	getVideoIndexByPageAndTypeAndVideoId: function (page, type, videoId, success, error) {
 		$.ajax({
 			url: '/api/videos',
 			method: 'GET',

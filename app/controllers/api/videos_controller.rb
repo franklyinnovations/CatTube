@@ -11,7 +11,7 @@ class Api::VideosController < ApplicationController
 
 		if request_type == "rec"
 			if logged_in?
-				results = Api::VideosController.get_recommended_videos(current_user), requested_page)
+				results = Api::VideosController.get_recommended_videos(current_user, requested_page)
 				@videos = results[0]
 				@total_videos_size = results[1]
 			else

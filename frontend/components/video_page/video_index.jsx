@@ -13,7 +13,7 @@ var VideoIndex = React.createClass({
 		this.page = 1;
 		this.storeToken = VideoIndexStore.addListener(this._onChange);
 		// get only the first page for now
-		ApiUtils.getVideoIndexByPageAndType(1, "pop");
+		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(1, "pop", this.props.videoId);
 	},
 
 	componentWillUnmount: function () {
@@ -22,7 +22,7 @@ var VideoIndex = React.createClass({
 
 	componentWillReceiveProps: function (newProps) {
 		this.page = 1;
-		ApiUtils.getVideoIndexByPageAndType(1,  "pop");
+		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(1, "pop", this.props.videoId);
 	},
 
 	_onChange: function () {
@@ -30,7 +30,7 @@ var VideoIndex = React.createClass({
 	},
 
 	_showMoreVideos: function () {
-		ApiUtils.getVideoIndexByPageAndType(++this.page, "pop");
+		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(++this.page, "pop", this.props.videoId);
 	},
 
 	render: function() {
