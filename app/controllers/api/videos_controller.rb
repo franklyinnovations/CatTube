@@ -3,6 +3,7 @@ class Api::VideosController < ApplicationController
 	before_action :ensure_owner, only: [:destroy]
 
 	PER_PAGE = 10
+	RECOMMENDED_VIDEO_LIMIT = 100
 
 	def index
 		request_type = params[:type]
@@ -10,17 +11,18 @@ class Api::VideosController < ApplicationController
 
 		if request_type == "rec"
 			if logged_in?
-				@videos = Api::VideosController.get_recommended_videos(current_user, requested_page)
+				results = Api::VideosController.get_recommended_videos(current_user), requested_page)
+				@videos = results[0]
+				@total_videos_size = results[1]
 			else
 				render json: {message: "Can't get recommended when not logged in!"}, status: 401
 				return
 			end
 		else
-			@videos = Api::VideosController.get_popular_videos(requested_page)
+			results = Api::VideosController.get_popular_videos(requested_page)
+			@videos = results[0]
+			@total_videos_size = results[1]
 		end
-
-		@total_videos_size = @videos.size
-		@videos = @videos[(requested_page - 1) * PER_PAGE...(requested_page * PER_PAGE)]
 
 		render :index
 	end
@@ -72,9 +74,15 @@ class Api::VideosController < ApplicationController
 				videos.id = results.popular_video
 			ORDER BY
 				results.views_for_video DESC
+			OFFSET
+				#{PER_PAGE * (curr_page - 1)}
+			LIMIT
+				#{PER_PAGE}
 		SQL
 
-		results
+		# note this isn't the same as the total number of all videos
+		total_viewed_videos = View.group(:video_id).count.size
+		return [results, total_viewed_videos]
 	end
 
 	def self.get_recommended_videos(arg_user, curr_page = 1)
@@ -113,9 +121,12 @@ class Api::VideosController < ApplicationController
 				)
 			ORDER BY
 				results.views_for_user DESC
+			LIMIT
+				#{RECOMMENDED_VIDEO_LIMIT}
 		SQL
 
-		results
+		results = results[(curr_page - 1) * PER_PAGE...(curr_page * PER_PAGE)]
+		return [results, results.size]
 	end
 
 private

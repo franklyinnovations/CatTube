@@ -129,11 +129,11 @@ var ApiUtils = {
 		});
 	},
 
-	getVideoIndexByPageAndVideoId: function (page, videoId, success, error) {
+	getVideoIndexByPageAndType: function (page, type, success, error) {
 		$.ajax({
 			url: '/api/videos',
 			method: 'GET',
-			data: {page: page, video_id: videoId},
+			data: {page: page, type: type},
 			dataType: 'json',
 			success: function (res) {
 				ApiActions.receiveVideoIndex(page, videoId, res);
