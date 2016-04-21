@@ -11,7 +11,7 @@ var NavBar = React.createClass({
 	},
 
 	getInitialState: function () {
-		return {currentUser: SessionStore.currentUser()}
+		return {currentUser: SessionStore.currentUser()};
 	},
 
 	_onChange: function () {

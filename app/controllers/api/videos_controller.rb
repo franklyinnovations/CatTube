@@ -2,9 +2,26 @@ class Api::VideosController < ApplicationController
 	before_action :ensure_logged_in, only: [:create]
 	before_action :ensure_owner, only: [:destroy]
 
+	PER_PAGE = 10
+
 	def index
-		@videos = Video.includes(:views, :user).page(params[:page]).per(10)
-		@total_videos_size = Video.all.size
+		request_type = params[:type]
+		requested_page = Integer(params[:page])
+
+		if request_type == "rec"
+			if logged_in?
+				@videos = Api::VideosController.get_recommended_videos(current_user, requested_page)
+			else
+				render json: {message: "Can't get recommended when not logged in!"}, status: 401
+				return
+			end
+		else
+			@videos = Api::VideosController.get_popular_videos(requested_page)
+		end
+
+		@total_videos_size = @videos.size
+		@videos = @videos[(requested_page - 1) * PER_PAGE...(requested_page * PER_PAGE)]
+
 		render :index
 	end
 
@@ -31,6 +48,74 @@ class Api::VideosController < ApplicationController
 		@video = Video.find(params[:id]);
 		@video.destroy
 		render :show
+	end
+
+	def self.get_popular_videos(curr_page = 1)
+		# select the most popular videos, ordered by view count
+		results = Video.find_by_sql(<<-SQL)
+			SELECT
+				videos.*
+			FROM
+				videos
+			INNER JOIN
+			(
+				SELECT
+					videos.id AS popular_video, COUNT(views.id) AS views_for_video
+				FROM
+					views
+				INNER JOIN
+					videos ON views.video_id = videos.id
+				GROUP BY
+					videos.id
+			) AS results
+			ON
+				videos.id = results.popular_video
+			ORDER BY
+				results.views_for_video DESC
+		SQL
+
+		results
+	end
+
+	def self.get_recommended_videos(arg_user, curr_page = 1)
+		# get the videos by the authors that were also the authors for the videos watched by the user previously
+		results = Video.find_by_sql(<<-SQL)
+			SELECT
+				videos.*
+			FROM
+				videos
+			INNER JOIN
+			(
+				SELECT
+					users.id AS recommended_user_id, COUNT(views.id) AS views_for_user
+				FROM
+					views
+				INNER JOIN
+					videos ON views.video_id = videos.id
+				INNER JOIN
+					users ON videos.user_id = users.id
+				WHERE
+					views.user_id = #{arg_user.id} AND users.id != #{arg_user.id}
+				GROUP BY
+					users.id
+			) AS results
+			ON
+				videos.user_id = results.recommended_user_id
+			WHERE
+				videos.id NOT IN
+				(
+					SELECT
+						views.video_id
+					FROM
+						views
+					WHERE
+						views.user_id = #{arg_user.id}
+				)
+			ORDER BY
+				results.views_for_user DESC
+		SQL
+
+		results
 	end
 
 private

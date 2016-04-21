@@ -16,6 +16,7 @@ node_modules
 .DS_Store
 bundle.js*
 public/system
+.byebug_history
 
 # Ignore application configuration
 /config/application.yml

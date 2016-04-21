@@ -23,4 +23,10 @@ class Video < ActiveRecord::Base
 	def created_at_date
 		self.updated_at.strftime('%b %-d, %Y')
 	end
+
+	def sibling_videos
+		author_id = self.user_id
+		Video.all.where("videos.user_id = ? AND videos.id != ?", author_id, self.id)
+	end
+
 end

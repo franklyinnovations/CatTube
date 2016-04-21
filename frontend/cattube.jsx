@@ -62,7 +62,7 @@ function _ensureLoggedIn (nextState, replace, unblockCallback) {
 
 function _ensureLoggedOut (nextState, replace, unblockCallback) {
 	if(!SessionStore.initialFetch()) {
-		ApiUtils.getCurrentUser(_redirectIfLoggedIn)
+		ApiUtils.getCurrentUser(_redirectIfLoggedIn);
 	}
 	else {
 		_redirectIfLoggedIn();
