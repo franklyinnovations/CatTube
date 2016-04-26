@@ -1,12 +1,38 @@
+.home-page-video-indexes {
+	width: 1050px;
+	margin: auto;
+	background: #ffffff;
+	padding: 15px;
+	box-sizing: border-box;
+}
+
 .slider-container {
-  margin: auto;
-  width: 1056px;
-  color: #333;
-  background: #419be0;
 }
 
 .slider-container img {
-	padding: 10px;
+	width: 100%;
 	height: auto;
+}
+
+.slider-element {
+	padding: 5px;
 	box-sizing: border-box;
+}
+
+.slider-element-title {
+	display: block;
+}
+
+.slider-element-username {
+	display: block;
+}
+
+.slider-element-views {
+}
+
+.slider-element-seperator {
+	margin: 0 5px;
+}
+
+.slider-element-date {
 }

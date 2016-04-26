@@ -1,5 +1,6 @@
 var React = require('react');
 var Slider = require('react-slick');
+var Link = require('react-router').Link
 
 var VideosSlider = React.createClass({
   render: function () {
@@ -16,12 +17,15 @@ var VideosSlider = React.createClass({
 				<Slider {...settings}>{
 					this.props.page.map(function (video) {
 						return (
-							<div className="slider-element">
-								<img key={video.id} src={video.thumb}></img>
-								<strong className='slider-element-title'>{video.title}</strong>
-								<strong className='slider-element-username'>{video.username}</strong>
-								<strong className='slider-element-views'>{video.total_views} views</strong>
-								<strong className='slider-element-date'>{video.created_at_date}</strong>
+							<div className="slider-element" key={video.id}>
+								<Link to={'/videos/' + video.id} className='slider-element-link' key={video.id}>
+									<img src={video.thumb}></img>
+									<strong className="slider-element-title">{video.title}</strong>
+								</Link>
+								<strong className="slider-element-username">{video.username}</strong>
+								<strong className="slider-element-views">{video.total_views} views</strong>
+								<strong className="slider-element-seperator">-</strong>
+								<strong className="slider-element-date">{video.created_ago}</strong>
 							</div>
 						);
 					})

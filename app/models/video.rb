@@ -24,6 +24,10 @@ class Video < ActiveRecord::Base
 		self.updated_at.strftime('%b %-d, %Y')
 	end
 
+	def created_ago
+		ActionController::Base.helpers.time_ago_in_words(self.updated_at)
+	end
+
 	def sibling_videos
 		author_id = self.user_id
 		Video.all.where("videos.user_id = ? AND videos.id != ?", author_id, self.id)

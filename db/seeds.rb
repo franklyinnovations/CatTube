@@ -23,21 +23,27 @@ ActiveRecord::Base.transaction do
 
 	# upload "cats with human mouth.mp4" many, many times
 	duplicates = 100;
-	view_helper = ActionView::Base.new
-	file = File.open("app/assets/videos/cats_with_human_mouth.mp4")
+	files = [
+		File.open("app/assets/videos/cats_go_meow_markiplier.mp4"),
+		File.open("app/assets/videos/cats_love_pizza.mp4"),
+		File.open("app/assets/videos/cats_with_human_mouth.mp4"),
+		File.open("app/assets/videos/funny_videos_cats_talking.mp4"),
+		File.open("app/assets/videos/japanese_cats_say_nyan_not_meow.mp4"),
+		File.open("app/assets/videos/yelling_cat.mp4")
+	];
 
 	duplicates.times.each do |i|
 		video = Video.new(title: "foo #{i}", description: "bar #{i}", user_id: users[0].id)
-		video.data = file
+		video.data = files.sample
 		video.save!
 	end
 
-	file.close
+	files.each { |file| file.close }
 	videos = Video.all
 
 	# change video descriptions, titles, and user_id
 	videos.each do |video|
-		title = 'Cats and ' + Faker::Hipster.word.capitalize
+		title = 'Cats and ' + Faker::Company.catch_phrase
 		description = Faker::Hipster.paragraphs(rand(1..3)).join("\n")
 		user_id = users.sample.id
 
