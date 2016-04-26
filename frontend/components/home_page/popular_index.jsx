@@ -38,12 +38,17 @@ var PopularIndex = React.createClass({
 		this.setState({videoIndex: PopularIndexStore.all()});
 	},
 
-	_showMoreVideos: function () {
+	_loadMoreVideos: function () {
 		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(++this.page, "POPULAR", this.props.videoId);
 	},
 
 	render: function() {
 		var sliders = [];
+		var showMoreButton;
+
+		if(!PopularIndexStore.fullyLoaded()) {
+			showMoreButton = <button className="popular-index-more" onClick={this._loadMoreVideos}>Load more</button>;
+		}
 
 		// convert object to an array
 		$.each(this.state.videoIndex, function(page, videoPage) {
@@ -52,7 +57,16 @@ var PopularIndex = React.createClass({
 			);
 		});
 
-		return <div className="popular-index-sliders">{sliders}</div>;
+		return (
+			<div className="popular-index">
+				<h2 className="popular-index-title">Most Popular</h2>
+				<div className="popular-index-sliders">
+					{sliders}
+				</div>
+
+				{showMoreButton}
+			</div>
+		);
 	}
 });
 

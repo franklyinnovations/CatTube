@@ -6,21 +6,52 @@
 	box-sizing: border-box;
 }
 
+.popular-index-title {
+	font-size: 15px;
+	font-weight: bold;
+	padding-left: 5px;
+	padding-bottom: 20px;
+}
+
+.popular-index-more {
+	border: 1px solid #cccccc;
+	background: #ffffff;
+	width: 100px;
+	height: 35px;
+	padding: 5px;
+	margin: auto;
+	box-sizing: border-box;
+	text-align: center;
+	display: block;
+}
+
+.popular-index-more:hover {
+	background: #eeeeee;
+}
+
 .slider-container {
 }
 
 .slider-container img {
 	width: 100%;
 	height: auto;
+	margin-bottom: 5px;
 }
 
 .slider-element {
 	padding: 5px;
 	box-sizing: border-box;
+	color: #666666;
 }
 
 .slider-element-title {
 	display: block;
+	font-size: 13px;
+	color: #167ac6;
+}
+
+.slider-element-title:hover {
+	text-decoration: underline;
 }
 
 .slider-element-username {

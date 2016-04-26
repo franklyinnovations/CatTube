@@ -17,32 +17,10 @@ var HomePage = React.createClass({
 		};
 	},
 
-	componentDidMount: function () {
-		this.popPage = 1;
-
-		// this.recStoreToken = RecommendedIndexStore.addListener(function() {
-		// 	this.setState({ recVideos: RecommendedIndexStore.all() });
-		// }.bind(this));
-
-		// this.popStoreToken = PopularIndexStore.addListener(function () {
-		// 	this.setState({ popVideos: PopularIndexStore.all() });
-		// }.bind(this));
-
-		// ApiUtils.getVideoIndexByPageAndTypeAndVideoId(1, "rec", -1);
-		// ApiUtils.getVideoIndexByPageAndTypeAndVideoId(this.popPage, "pop", -1);
-	},
-
-	_handleLoadMore: function () {
-		// ApiUtils.getVideoIndexByPageAndTypeAndVideoId(++this.popPage, "pop", 0);
-	},
-
 	render: function() {
 		return (
 			<div className="home-page-video-indexes">
-				<div className="popular-index">{
-					<PopularIndex />
-				}</div>
-				<button onClick={this._handleLoadMore}>Load more</button>
+				<PopularIndex />
 			</div>
 		);
 	}

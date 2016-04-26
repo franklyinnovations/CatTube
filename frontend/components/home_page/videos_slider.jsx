@@ -1,6 +1,6 @@
 var React = require('react');
 var Slider = require('react-slick');
-var Link = require('react-router').Link
+var Link = require('react-router').Link;
 
 var VideosSlider = React.createClass({
   render: function () {
