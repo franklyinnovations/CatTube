@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-		"postinstall": "./node_modules/.bin/webpack"
+    "postinstall": "./node_modules/.bin/webpack"
   },
   "repository": {
     "type": "git",
@@ -30,10 +30,11 @@
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-router": "^2.0.1",
+    "react-slick": "^0.12.0",
     "webpack": "^1.12.14"
   },
-	"engines": {
-		"node": "5.1.0",
-		"npm": "3.3.12"
-	}
+  "engines": {
+    "node": "5.1.0",
+    "npm": "3.3.12"
+  }
 }

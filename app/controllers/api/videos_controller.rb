@@ -9,7 +9,7 @@ class Api::VideosController < ApplicationController
 		request_type = params[:type]
 		requested_page = Integer(params[:page])
 
-		if request_type == "rec"
+		if request_type == "RECOMMENDED"
 			if logged_in?
 				results = Api::VideosController.get_recommended_videos(current_user, requested_page)
 				@videos = results[0]
@@ -73,7 +73,7 @@ class Api::VideosController < ApplicationController
 			ON
 				videos.id = results.popular_video
 			ORDER BY
-				results.views_for_video DESC
+				results.views_for_video DESC, results.popular_video DESC
 			OFFSET
 				#{PER_PAGE * (curr_page - 1)}
 			LIMIT
@@ -120,7 +120,7 @@ class Api::VideosController < ApplicationController
 						views.user_id = #{arg_user.id}
 				)
 			ORDER BY
-				results.views_for_user DESC
+				results.views_for_user DESC, results.recommended_user_id DESC
 			LIMIT
 				#{RECOMMENDED_VIDEO_LIMIT}
 		SQL

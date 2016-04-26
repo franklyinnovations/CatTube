@@ -7,8 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 ActiveRecord::Base.transaction do
-	videos = Video.all
-
 	# generate a list of default users
 	users_name_array = ['bar', 'baz', 'qux']
 	10.times do
@@ -22,6 +20,20 @@ ActiveRecord::Base.transaction do
 	end
 
 	users = User.all
+
+	# upload "cats with human mouth.mp4" many, many times
+	duplicates = 100;
+	view_helper = ActionView::Base.new
+	file = File.open("app/assets/videos/cats_with_human_mouth.mp4")
+
+	duplicates.times.each do |i|
+		video = Video.new(title: "foo #{i}", description: "bar #{i}", user_id: users[0].id)
+		video.data = file
+		video.save!
+	end
+
+	file.close
+	videos = Video.all
 
 	# change video descriptions, titles, and user_id
 	videos.each do |video|

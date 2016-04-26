@@ -136,7 +136,7 @@ var ApiUtils = {
 			data: {page: page, type: type},
 			dataType: 'json',
 			success: function (res) {
-				ApiActions.receiveVideoIndex(page, videoId, res);
+				ApiActions.receiveVideoIndex(page, type, videoId, res);
 				success && success(res);
 			},
 			error: function (res) {

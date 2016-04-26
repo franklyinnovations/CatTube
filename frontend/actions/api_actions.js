@@ -51,11 +51,12 @@ var ApiActions = {
 		Dispatcher.dispatch(payload);
 	},
 
-	receiveVideoIndex: function (page, videoId, index) {
+	receiveVideoIndex: function (page, type, videoId, index) {
 		var payload = {
 			actionType: ApiConstants.VIDEO_INDEX_RECEIVED,
 			data: {
 				page: page,
+				type: type,
 				videoId: videoId,
 				index: index
 			}
