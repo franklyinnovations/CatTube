@@ -32,7 +32,7 @@ var CatTubeApp = React.createClass({
 
 $(function() {
 	ReactDOM.render(
-		<Router history={hashHistory}>
+		<Router history={hashHistory} onUpdate={_scrollToTop}>
 			<Route path='/' component={CatTubeApp}>
 				<IndexRoute component={HomePage}/>
 				<Route path='videos/:videoId' component={VideoPage}/>
@@ -42,6 +42,10 @@ $(function() {
 			</Route>
 		</Router>, $('#content')[0]);
 });
+
+function _scrollToTop () {
+	window.scrollTo(0, 0);
+}
 
 function _ensureLoggedIn (nextState, replace, unblockCallback) {
 	if(!SessionStore.initialFetch()) {
