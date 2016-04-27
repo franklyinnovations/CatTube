@@ -8,7 +8,8 @@ class Api::VideosController < ApplicationController
 		request_type = params[:type]
 		requested_page = Integer(params[:page])
 
-		if request_type == "RECOMMENDED"
+		case request_type
+		when "RECOMMENDED"
 			if logged_in?
 				results = Api::VideosController.get_recommended_videos(current_user)
 				@videos = results[0]
@@ -17,7 +18,7 @@ class Api::VideosController < ApplicationController
 				render json: {message: "Can't get recommended when not logged in!"}, status: 401
 				return
 			end
-		elsif request_type == "WATCHED"
+		when "WATCHED"
 			if logged_in?
 				results = Api::VideosController.get_watched_videos(current_user)
 				@videos = results[0]
@@ -26,6 +27,10 @@ class Api::VideosController < ApplicationController
 				render json: {message: "Can't get watched when not logged in!"}, status: 401
 				return
 			end
+		when "FEATURED"
+			results = Api::VideosController.get_featured_videos
+			@videos = results[0]
+			@total_videos_size = results[1]
 		else
 			results = Api::VideosController.get_popular_videos(requested_page)
 			@videos = results[0]
@@ -60,8 +65,48 @@ class Api::VideosController < ApplicationController
 		render :show
 	end
 
+	def self.get_featured_videos
+		# select the latest videos from the user with the most total views
+		results = Video.find_by_sql(<<-SQL)
+			SELECT
+				videos.*
+			FROM
+				videos
+			WHERE
+				videos.user_id IN
+				(
+					SELECT
+						users.id
+					FROM
+						views
+					INNER JOIN
+						videos
+					ON
+						views.video_id = videos.id
+					INNER JOIN
+						users
+					ON
+						videos.user_id = users.id
+					GROUP BY
+						users.id
+					HAVING
+						COUNT(DISTINCT videos.id) >= #{PER_PAGE}
+					ORDER BY
+						COUNT(views.id) DESC
+					LIMIT
+						1
+				)
+			ORDER BY
+				videos.updated_at DESC
+			LIMIT
+				4
+		SQL
+
+		return [results, results.size]
+	end
+
 	def self.get_watched_videos(arg_user)
-		# select the videos the user has already watched, starting with the latest one
+		# select the videos the arg_user has already watched, starting with the latest one
 		results = Video.find_by_sql(<<-SQL)
 			SELECT
 				videos.*
@@ -81,7 +126,7 @@ class Api::VideosController < ApplicationController
 				#{PER_PAGE}
 		SQL
 
-		return [results.uniq, results.size]
+		return [results, results.size]
 	end
 
 	def self.get_popular_videos(curr_page = 1)
