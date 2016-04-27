@@ -5,20 +5,20 @@
 	box-sizing: border-box;
 }
 
-.recommended-index {
+.watched-index, .recommended-index {
 	border-bottom: 1px solid #e2e2e2;
 	padding: 15px;
 }
 
-.recommended-index-title, .popular-index-title {
+.popular-index {
+	padding: 15px;
+}
+
+.recommended-index-title, .popular-index-title, .watched-index-title {
 	font-size: 15px;
 	font-weight: bold;
 	padding-left: 5px;
-	padding-bottom: 20px;
-}
-
-.popular-index {
-	padding: 15px;
+	padding-bottom: 15px;
 }
 
 .popular-index-more {
@@ -34,7 +34,12 @@
 }
 
 .popular-index-more:hover {
+	cursor: pointer;
 	background: #eeeeee;
+}
+
+.slick-slider {
+	margin-bottom: 10px;
 }
 
 .slider-container {

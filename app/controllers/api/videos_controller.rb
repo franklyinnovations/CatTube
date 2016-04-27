@@ -3,7 +3,6 @@ class Api::VideosController < ApplicationController
 	before_action :ensure_owner, only: [:destroy]
 
 	PER_PAGE = 10
-	RECOMMENDED_VIDEO_LIMIT = 100
 
 	def index
 		request_type = params[:type]
@@ -11,11 +10,20 @@ class Api::VideosController < ApplicationController
 
 		if request_type == "RECOMMENDED"
 			if logged_in?
-				results = Api::VideosController.get_recommended_videos(current_user, requested_page)
+				results = Api::VideosController.get_recommended_videos(current_user)
 				@videos = results[0]
 				@total_videos_size = results[1]
 			else
 				render json: {message: "Can't get recommended when not logged in!"}, status: 401
+				return
+			end
+		elsif request_type == "WATCHED"
+			if logged_in?
+				results = Api::VideosController.get_watched_videos(current_user)
+				@videos = results[0]
+				@total_videos_size = results[1]
+			else
+				render json: {message: "Can't get watched when not logged in!"}, status: 401
 				return
 			end
 		else
@@ -52,6 +60,30 @@ class Api::VideosController < ApplicationController
 		render :show
 	end
 
+	def self.get_watched_videos(arg_user)
+		# select the videos the user has already watched, starting with the latest one
+		results = Video.find_by_sql(<<-SQL)
+			SELECT
+				videos.*
+			FROM
+				videos
+			INNER JOIN
+				views
+			ON
+				videos.id = views.video_id
+			WHERE
+				views.user_id = #{arg_user.id}
+			GROUP BY
+				videos.id
+			ORDER BY
+				MAX(views.updated_at) DESC
+			LIMIT
+				#{PER_PAGE}
+		SQL
+
+		return [results.uniq, results.size]
+	end
+
 	def self.get_popular_videos(curr_page = 1)
 		# select the most popular videos, ordered by view count
 		results = Video.find_by_sql(<<-SQL)
@@ -85,7 +117,7 @@ class Api::VideosController < ApplicationController
 		return [results, total_viewed_videos]
 	end
 
-	def self.get_recommended_videos(arg_user, curr_page = 1)
+	def self.get_recommended_videos(arg_user)
 		# get the videos by the authors that were also the authors for the videos watched by the user previously
 		results = Video.find_by_sql(<<-SQL)
 			SELECT
@@ -122,10 +154,10 @@ class Api::VideosController < ApplicationController
 			ORDER BY
 				results.views_for_user DESC, results.recommended_user_id DESC
 			LIMIT
-				#{RECOMMENDED_VIDEO_LIMIT}
+				#{PER_PAGE}
 		SQL
 
-		results = results[(curr_page - 1) * PER_PAGE...(curr_page * PER_PAGE)]
+		# results = results[(curr_page - 1) * PER_PAGE...(curr_page * PER_PAGE)]
 		return [results, results.size]
 	end
 

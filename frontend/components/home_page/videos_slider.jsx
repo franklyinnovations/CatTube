@@ -14,13 +14,15 @@ var VideosSlider = React.createClass({
 				draggable: false
 	    };
 
+			// console.log('---------------------------\n');
 	    return (
 				<div className="slider-container">
 					<Slider {...settings}>{
 						this.props.page.map(function (video) {
+							// console.log(video.id);
 							return (
 								<div className="slider-element" key={video.id}>
-									<Link to={'/videos/' + video.id} className='slider-element-link' key={video.id}>
+									<Link to={'/videos/' + video.id} className='slider-element-link'>
 										<img src={video.thumb}></img>
 										<strong className="slider-element-title">{video.title}</strong>
 									</Link>
@@ -39,6 +41,7 @@ var VideosSlider = React.createClass({
 		else {
 			return <div></div>;
 		}
+		// console.log('---------------------------\n');
   }
 });
 
