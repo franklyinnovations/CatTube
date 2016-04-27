@@ -18,6 +18,8 @@ var RecommendedIndex = React.createClass({
 
 	componentWillUnmount: function () {
 		this.storeToken.remove();
+		// reset the list if the user goes elsewhere
+		RecommendedIndexStore.reset();
 	},
 
 	_onChange: function () {

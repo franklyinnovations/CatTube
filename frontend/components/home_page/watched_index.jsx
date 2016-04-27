@@ -18,6 +18,8 @@ var WatchedIndex = React.createClass({
 
 	componentWillUnmount: function () {
 		this.storeToken.remove();
+		// reset the list if the user goes elsewhere
+		WatchedIndexStore.reset();
 	},
 
 	_onChange: function () {

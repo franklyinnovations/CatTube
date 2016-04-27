@@ -53,5 +53,10 @@ PopularIndexStore.totalSize = function () {
 	return _totalSize;
 };
 
+PopularIndexStore.reset = function () {
+	_videoIndex = {};
+	_totalSize = 0;
+	_videoId = null;
+};
+
 module.exports = PopularIndexStore;
-window.PIS = PopularIndexStore;

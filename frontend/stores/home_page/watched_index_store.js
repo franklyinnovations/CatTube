@@ -53,4 +53,10 @@ WatchedIndexStore.totalSize = function () {
 	return _totalSize;
 };
 
+WatchedIndexStore.reset = function () {
+	_videoIndex = {};
+	_totalSize = 0;
+	_videoId = null;
+};
+
 module.exports = WatchedIndexStore;

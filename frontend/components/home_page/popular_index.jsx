@@ -27,6 +27,8 @@ var PopularIndex = React.createClass({
 
 	componentWillUnmount: function () {
 		this.storeToken.remove();
+		// reset the list if the user goes elsewhere
+		PopularIndexStore.reset();
 	},
 
 	_onChange: function () {
