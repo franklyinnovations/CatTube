@@ -14,7 +14,7 @@ var PopularIndex = React.createClass({
 	componentDidMount: function () {
 		this.page = 1;
 		this.storeToken = PopularIndexStore.addListener(this._onChange);
-		var limit = 5;
+		var limit = 3;
 
 		var loadUntilLimit = function () {
 			if(!PopularIndexStore.fullyLoaded() && this.page < limit) {
@@ -27,11 +27,6 @@ var PopularIndex = React.createClass({
 
 	componentWillUnmount: function () {
 		this.storeToken.remove();
-	},
-
-	componentWillReceiveProps: function (newProps) {
-		this.page = 1;
-		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(1, "POPULAR", this.props.videoId);
 	},
 
 	_onChange: function () {

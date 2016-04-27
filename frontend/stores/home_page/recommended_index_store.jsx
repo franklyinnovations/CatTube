@@ -26,13 +26,10 @@ RecommendedIndexStore._appendVideos = function (data) {
 RecommendedIndexStore.__onDispatch = function (payload) {
 	switch(payload.actionType) {
 		case ApiConstants.VIDEO_INDEX_RECEIVED:
-			if(payload.data.type === "RECOMMENDED" && _videoId !== payload.data.videoId) {
-				_videoIndex = {};
-				_videoId = payload.data.videoId;
+			if(payload.data.type === "RECOMMENDED") {
+				RecommendedIndexStore._appendVideos(payload.data);
+				RecommendedIndexStore.__emitChange();
 			}
-
-			RecommendedIndexStore._appendVideos(payload.data);
-			RecommendedIndexStore.__emitChange();
 			break;
 		default:
 	}

@@ -26,13 +26,10 @@ PopularIndexStore._appendVideos = function (data) {
 PopularIndexStore.__onDispatch = function (payload) {
 	switch(payload.actionType) {
 		case ApiConstants.VIDEO_INDEX_RECEIVED:
-			if(payload.data.type === "POPULAR" && _videoId !== payload.data.videoId) {
-				_videoIndex = {};
-				_videoId = payload.data.videoId;
+			if(payload.data.type === "POPULAR") {
+				PopularIndexStore._appendVideos(payload.data);
+				PopularIndexStore.__emitChange();
 			}
-
-			PopularIndexStore._appendVideos(payload.data);
-			PopularIndexStore.__emitChange();
 			break;
 		default:
 	}

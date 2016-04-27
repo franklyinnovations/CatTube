@@ -34,7 +34,7 @@ $(function() {
 	ReactDOM.render(
 		<Router history={hashHistory} onUpdate={_scrollToTop}>
 			<Route path='/' component={CatTubeApp}>
-				<IndexRoute component={HomePage}/>
+				<IndexRoute component={HomePage} onEnter={_getInitialFetch}/>
 				<Route path='videos/:videoId' component={VideoPage}/>
 				<Route path='upload' component={UploadPage} onEnter={_ensureLoggedIn}/>
 				<Route path='login' component={LoginPage} onEnter={_ensureLoggedOut}/>
@@ -45,6 +45,10 @@ $(function() {
 
 function _scrollToTop () {
 	window.scrollTo(0, 0);
+}
+
+function _getInitialFetch ( ) {
+	ApiUtils.getCurrentUser();
 }
 
 function _ensureLoggedIn (nextState, replace, unblockCallback) {

@@ -2,15 +2,23 @@
 	width: 1050px;
 	margin: auto;
 	background: #ffffff;
-	padding: 15px;
 	box-sizing: border-box;
 }
 
-.popular-index-title {
+.recommended-index {
+	border-bottom: 1px solid #e2e2e2;
+	padding: 15px;
+}
+
+.recommended-index-title, .popular-index-title {
 	font-size: 15px;
 	font-weight: bold;
 	padding-left: 5px;
 	padding-bottom: 20px;
+}
+
+.popular-index {
+	padding: 15px;
 }
 
 .popular-index-more {
