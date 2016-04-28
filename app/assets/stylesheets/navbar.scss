@@ -29,6 +29,8 @@
 }
 
 .navbar-search-input {
+	display: block;
+	float: left;
 	width: 85%;
 	height: 30px;
 	box-sizing: border-box;
@@ -38,6 +40,8 @@
 }
 
 .navbar-search-button {
+	display: block;
+	float: left;
 	width: 15%;
 	height: 30px;
 	box-sizing: border-box;
@@ -69,6 +73,11 @@
 	border-left: 1px solid #d8d8d8;
 	border-right: 1px solid #d8d8d8;
 	overflow: hidden;
+	cursor: pointer;
+}
+
+.navbar-search-results .selected {
+	background: #dddddd;
 }
 
 .navbar-search-result {

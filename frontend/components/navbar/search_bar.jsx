@@ -6,7 +6,7 @@ var Link = require('react-router').Link;
 
 var SearchBar = React.createClass({
 	getInitialState: function () {
-		return {searchResults: SearchStore.all()};
+		return {selected: null, hide: false, searchResults: SearchStore.all()};
 	},
 
 	componentDidMount: function () {
@@ -18,7 +18,7 @@ var SearchBar = React.createClass({
 	},
 
 	_onChange: function () {
-		this.setState({searchResults: SearchStore.all()});
+		this.setState({hide: false, searchResults: SearchStore.all()});
 	},
 
 	_updateSearch: function () {
@@ -26,8 +26,78 @@ var SearchBar = React.createClass({
 		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(1, "SEARCH", {searchString: currInput, videoId: -1});
 	},
 
-	_submitSearch: function () {
+	_upSelected: function() {
+		var totalResults = this.state.searchResults[1].length;
+		var selected;
 
+		if(totalResults > 0) {
+			if(this.state.selected === null) {
+				selected = totalResults - 1;
+			}
+			else if(this.state.selected === 0) {
+				selected = null;
+			}
+			else {
+				selected = this.state.selected - 1;
+			}
+
+			this.setState({hide: false, selected: selected});
+		}
+	},
+
+	_downSelected: function() {
+		var totalResults = this.state.searchResults[1].length;
+		var selected;
+
+		if(totalResults > 0) {
+			if(this.state.selected === null) {
+				selected = 0;
+			}
+			else if(this.state.selected === totalResults - 1) {
+				selected = null;
+			}
+			else {
+				selected = this.state.selected + 1;
+			}
+
+			this.setState({hide: false, selected: selected});
+		}
+	},
+
+	_mouseSelected: function (e) {
+		var reactid = e.currentTarget.dataset.reactid;
+		var target = parseInt(reactid.substring(reactid.length - 1));
+
+		this.setState({hide: false, selected: target});
+	},
+
+	_handleKeys: function (e) {
+		switch(e.key) {
+			case "Escape":
+				e.preventDefault();
+				this.setState({selected: null, hide: true});
+				break;
+			case "ArrowDown":
+				e.preventDefault();
+				this._downSelected();
+				break;
+			case "ArrowUp":
+				e.preventDefault();
+				this._upSelected();
+				break;
+			case "Enter":
+				e.preventDefault();
+				this._submitSearch();
+				break;
+			default:
+		}
+	},
+
+	_submitSearch: function () {
+		if(this.state.selected !== null) {
+			var searchResults = this.state.searchResults[1];
+			$(".navbar-search-input").val(searchResults[this.state.selected].title);
+		}
 	},
 
 	render: function() {
@@ -39,24 +109,33 @@ var SearchBar = React.createClass({
 			results = videoPage;
 		});
 
-		if(results.length === 0) {
+		if(this.state.hide || results.length === 0) {
 			style = {display: "none"};
 		}
 
 		return (
 			<div className="navbar-search-bar">
-				<input onChange={this._updateSearch} className="navbar-search-input"/>
-				<button onClick={this._submitSearch} className="navbar-search-button">
-					<i className="fa fa-search" aria-hidden="true"></i>
-				</button>
+				<div className="navbar-search-form group">
+					<input onKeyDown={this._handleKeys} onChange={this._updateSearch} className="navbar-search-input"/>
+					<button onClick={this._submitSearch} className="navbar-search-button">
+						<i className="fa fa-search" aria-hidden="true"></i>
+					</button>
+				</div>
 				<ul className="navbar-search-results" style={style}>{
-					results.map(function (video) {
+					results.map(function (video, i) {
+						var searchResultClass = "navbar-search-result";
+
+						// mark the selected one with an additional class for CSS
+						if(this.state.selected !== null && this.state.selected === i) {
+							searchResultClass += " selected";
+						}
+
 						return (
-							<Link className="navbar-search-result" key={video.id} to=''>
-								<strong>{video.title}</strong>
-							</Link>
+							<strong onClick={this._submitSearch} onMouseMove={this._mouseSelected} className={searchResultClass} key={i}>
+								{video.title}
+							</strong>
 						);
-					})
+					}.bind(this))
 				}</ul>
 			</div>
 		);
