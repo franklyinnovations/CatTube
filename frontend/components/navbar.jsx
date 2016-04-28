@@ -56,7 +56,7 @@ var NavBar = React.createClass({
 
 		return (
 			<header className='header'>
-				<nav className='navbar group'>
+				<nav className='navbar'>
 					<Link to='/' className='navbar-cattube-logo logo-cattube'>
 						<h1 className='navbar-cat-logo logo-cat'>Cat</h1>
 						<h1 className='navbar-tube-logo logo-tube'>Tube</h1>

@@ -8,10 +8,11 @@
 	box-sizing: border-box;
 	width: 100%;
 	z-index: 1;
+	display: flex;
 }
 
 .navbar-cattube-logo {
-	float: left;
+	flex-shrink: 0;
 }
 
 .navbar-cat-logo {
@@ -21,14 +22,44 @@
 }
 
 .navbar-search-bar {
-	float: left;
-	margin-left: 100px;
-	background: #cccccc;
-	display: none;
+	flex-grow: 1;
+	max-width: 600px;
+	margin: auto;
+	padding-right: 5px;
+}
+
+.navbar-search-input {
+	width: 85%;
+	height: 30px;
+	box-sizing: border-box;
+	border: 1px solid #d8d8d8;
+	padding: 5px;
+}
+
+.navbar-search-button {
+	width: 15%;
+	height: 30px;
+	box-sizing: border-box;
+	border-top: 1px solid #d8d8d8;
+	border-bottom: 1px solid #d8d8d8;
+	border-right: 1px solid #d8d8d8;
+	background: #f0f0f0;
+	text-align: center;
+}
+
+.navbar-search-button:hover {
+	cursor: pointer;
+	background: #dddddd;
+}
+
+.navbar-search-button > i {
+	font-size: 14px;
+	color: #555555;
 }
 
 .navbar-right {
-	float: right;
+	margin-left: auto;
+	flex-shrink: 0;
 }
 
 .navbar-upload {
