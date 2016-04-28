@@ -1,0 +1,42 @@
+.footer {
+	background: #ffffff;
+	padding: 15px 30px;
+	border-top: 1px solid #e8e8e8;
+	box-sizing: border-box;
+	width: 100%;
+	margin-top: 50px;
+	display: flex;
+}
+
+.footer-cattube-logo {
+	flex-shrink: 0;
+}
+
+.footer-cat-logo {
+}
+
+.footer-tube-logo {
+}
+
+.footer-credits {
+	font-size: 14px;
+}
+
+.footer-right {
+	font-size: 14px;
+	margin-left: auto;
+}
+
+.footer-link-github {
+	margin-right: 20px;
+}
+
+.footer-link-github:hover {
+	color: #167ac6;
+	text-decoration: underline;
+}
+
+.footer-link-cattube:hover {
+	color: #167ac6;
+	text-decoration: underline;
+}

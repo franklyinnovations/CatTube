@@ -19,6 +19,7 @@ var ApiUtils = require('./utils/api_utils');
 var AccountPage = require('./components/account_page');
 var HomePage = require('./components/home_page');
 var SearchPage = require('./components/search_page');
+var Footer = require('./components/footer');
 
 // for generic stuff rendered or configured on all pages
 var CatTubeApp = React.createClass({
@@ -37,6 +38,7 @@ var CatTubeApp = React.createClass({
 				<section onClick={this._removeSearchBarSuggestions} className="not-navbar">
 					{this.props.children}
 				</section>
+				<Footer/>
 			</div>
 		);
 	}
