@@ -11,13 +11,11 @@ var FeaturedIndex = React.createClass({
 
 	componentDidMount: function () {
 		this.storeToken = FeaturedIndexStore.addListener(this._onChange);
-		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(1, "FEATURED", this.props.videoId);
+		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(1, "FEATURED", {videoId: this.props.videoId});
 	},
 
 	componentWillUnmount: function () {
 		this.storeToken.remove();
-		// reset the list if the user goes elsewhere
-		FeaturedIndexStore.reset();
 	},
 
 	_onChange: function () {

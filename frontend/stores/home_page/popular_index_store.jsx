@@ -53,10 +53,14 @@ PopularIndexStore.totalSize = function () {
 	return _totalSize;
 };
 
-PopularIndexStore.reset = function () {
-	_videoIndex = {};
-	_totalSize = 0;
-	_videoId = null;
+PopularIndexStore.take = function (takeCount) {
+	var newVideoIndex = {};
+
+	for(var i = 1; i <= takeCount; i++) {
+		newVideoIndex[i] = _videoIndex[i];
+	}
+
+	_videoIndex = newVideoIndex;
 };
 
 module.exports = PopularIndexStore;

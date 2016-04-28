@@ -129,11 +129,18 @@ var ApiUtils = {
 		});
 	},
 
-	getVideoIndexByPageAndTypeAndVideoId: function (page, type, videoId, success, error) {
+	getVideoIndexByPageAndTypeAndVideoId: function (page, type, options, success, error) {
+		var videoId = options.videoId;
+
+		var data = {page: page, type: type};
+		if(type === "SEARCH") {
+			$.extend(data, {search_string: options.searchString});
+		}
+
 		$.ajax({
 			url: '/api/videos',
 			method: 'GET',
-			data: {page: page, type: type},
+			data: data,
 			dataType: 'json',
 			success: function (res) {
 				ApiActions.receiveVideoIndex(page, type, videoId, res);

@@ -34,6 +34,7 @@
 	box-sizing: border-box;
 	border: 1px solid #d8d8d8;
 	padding: 5px;
+	font-size: 15px;
 }
 
 .navbar-search-button {
@@ -55,6 +56,25 @@
 .navbar-search-button > i {
 	font-size: 14px;
 	color: #555555;
+}
+
+.navbar-search-results {
+	position: absolute;
+	width: 506px;
+	background: #ffffff;
+	font-size: 15px;
+	font-weight: bold;
+	box-sizing: border-box;
+	border-bottom: 1px solid #d8d8d8;
+	border-left: 1px solid #d8d8d8;
+	border-right: 1px solid #d8d8d8;
+	overflow: hidden;
+}
+
+.navbar-search-result {
+	display: block;
+	white-space: nowrap;
+	padding: 5px;
 }
 
 .navbar-right {

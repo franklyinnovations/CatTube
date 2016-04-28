@@ -6,14 +6,20 @@ class Api::VideosController < ApplicationController
 
 	def index
 		request_type = params[:type]
-		requested_page = Integer(params[:page])
+
+		begin
+			requested_page = Integer(params[:page])
+		rescue
+			render json: {message: "Invalid page!"}, status: 422
+			return
+		end
 
 		case request_type
+		when "POPULAR"
+			results = Api::VideosController.get_popular_videos(requested_page)
 		when "RECOMMENDED"
 			if logged_in?
 				results = Api::VideosController.get_recommended_videos(current_user)
-				@videos = results[0]
-				@total_videos_size = results[1]
 			else
 				render json: {message: "Can't get recommended when not logged in!"}, status: 401
 				return
@@ -21,21 +27,21 @@ class Api::VideosController < ApplicationController
 		when "WATCHED"
 			if logged_in?
 				results = Api::VideosController.get_watched_videos(current_user)
-				@videos = results[0]
-				@total_videos_size = results[1]
 			else
 				render json: {message: "Can't get watched when not logged in!"}, status: 401
 				return
 			end
 		when "FEATURED"
 			results = Api::VideosController.get_featured_videos
-			@videos = results[0]
-			@total_videos_size = results[1]
+		when "SEARCH"
+			results = Api::VideosController.search_videos(params[:search_string], requested_page)
 		else
-			results = Api::VideosController.get_popular_videos(requested_page)
-			@videos = results[0]
-			@total_videos_size = results[1]
+			render json: {message: "Invalid search type!"}, status: 422
+			return
 		end
+
+		@videos = results[0]
+		@total_videos_size = results[1]
 
 		render :index
 	end
@@ -63,6 +69,11 @@ class Api::VideosController < ApplicationController
 		@video = Video.find(params[:id]);
 		@video.destroy
 		render :show
+	end
+
+	def self.search_videos(search_string, curr_page = 1)
+		results = Video.search_by_title(search_string).page(curr_page).per(PER_PAGE)
+		[results, results.size]
 	end
 
 	def self.get_featured_videos

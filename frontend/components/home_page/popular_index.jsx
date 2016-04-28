@@ -6,6 +6,8 @@ var ApiUtils = require('../../utils/api_utils');
 
 var VideosSlider = require('./videos_slider');
 
+var INITIAL_LOAD = 3;
+
 var PopularIndex = React.createClass({
 	getInitialState: function () {
 		return {videoIndex: PopularIndexStore.all()};
@@ -14,21 +16,20 @@ var PopularIndex = React.createClass({
 	componentDidMount: function () {
 		this.page = 1;
 		this.storeToken = PopularIndexStore.addListener(this._onChange);
-		var limit = 3;
 
 		var loadUntilLimit = function () {
-			if(!PopularIndexStore.fullyLoaded() && this.page < limit) {
-				ApiUtils.getVideoIndexByPageAndTypeAndVideoId(++this.page, "POPULAR", this.props.videoId, loadUntilLimit);
+			if(!PopularIndexStore.fullyLoaded() && this.page < INITIAL_LOAD) {
+				ApiUtils.getVideoIndexByPageAndTypeAndVideoId(++this.page, "POPULAR", {videoId: this.props.videoId}, loadUntilLimit);
 			}
 		}.bind(this);
 
-		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(1, "POPULAR", this.props.videoId, loadUntilLimit);
+		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(1, "POPULAR", {videoId: this.props.videoId}, loadUntilLimit);
 	},
 
 	componentWillUnmount: function () {
 		this.storeToken.remove();
-		// reset the list if the user goes elsewhere
-		PopularIndexStore.reset();
+		// keep only the first INITIAL_LOAD pages, discard the rest
+		PopularIndexStore.take(INITIAL_LOAD);
 	},
 
 	_onChange: function () {
@@ -36,7 +37,7 @@ var PopularIndex = React.createClass({
 	},
 
 	_loadMoreVideos: function () {
-		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(++this.page, "POPULAR", this.props.videoId);
+		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(++this.page, "POPULAR", {videoId: this.props.videoId});
 	},
 
 	render: function() {

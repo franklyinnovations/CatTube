@@ -1,4 +1,7 @@
 class Video < ActiveRecord::Base
+	include PgSearch
+	pg_search_scope :search_by_title, against: :title, using: {tsearch: {prefix: true} }
+
 	belongs_to :user
 	has_many :comments, dependent: :destroy
 	has_many :likes, dependent: :destroy

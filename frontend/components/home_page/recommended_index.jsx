@@ -13,13 +13,11 @@ var RecommendedIndex = React.createClass({
 
 	componentDidMount: function () {
 		this.storeToken = RecommendedIndexStore.addListener(this._onChange);
-		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(1, "RECOMMENDED", this.props.videoId);
+		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(1, "RECOMMENDED", {videoId: this.props.videoId});
 	},
 
 	componentWillUnmount: function () {
 		this.storeToken.remove();
-		// reset the list if the user goes elsewhere
-		RecommendedIndexStore.reset();
 	},
 
 	_onChange: function () {

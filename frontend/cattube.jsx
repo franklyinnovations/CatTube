@@ -16,6 +16,8 @@ var ApiUtils = require('./utils/api_utils');
 var AccountPage = require('./components/account_page');
 var HomePage = require('./components/home_page');
 
+var OtherActions = require('./actions/other_actions');
+
 // for generic stuff rendered or configured on all pages
 var CatTubeApp = React.createClass({
 
@@ -32,7 +34,7 @@ var CatTubeApp = React.createClass({
 
 $(function() {
 	ReactDOM.render(
-		<Router history={hashHistory} onUpdate={_scrollToTop}>
+		<Router history={hashHistory} onUpdate={_onLinkTo}>
 			<Route path='/' component={CatTubeApp}>
 				<IndexRoute component={HomePage} onEnter={_getInitialFetch}/>
 				<Route path='videos/:videoId' component={VideoPage}/>
@@ -43,7 +45,9 @@ $(function() {
 		</Router>, $('#content')[0]);
 });
 
-function _scrollToTop () {
+function _onLinkTo () {
+	// remove the search bar suggestions everytime the user clicks on a link
+	OtherActions.resetVideoIndexByPageAndTypeAndVideoId(1, "SEARCH", -1);
 	window.scrollTo(0, 0);
 }
 

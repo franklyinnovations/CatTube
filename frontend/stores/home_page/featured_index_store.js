@@ -53,10 +53,4 @@ FeaturedIndexStore.totalSize = function () {
 	return _totalSize;
 };
 
-FeaturedIndexStore.reset = function () {
-	_videoIndex = {};
-	_totalSize = 0;
-	_videoId = null;
-};
-
 module.exports = FeaturedIndexStore;

@@ -13,13 +13,11 @@ var WatchedIndex = React.createClass({
 
 	componentDidMount: function () {
 		this.storeToken = WatchedIndexStore.addListener(this._onChange);
-		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(1, "WATCHED", this.props.videoId);
+		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(1, "WATCHED", {videoId: this.props.videoId});
 	},
 
 	componentWillUnmount: function () {
 		this.storeToken.remove();
-		// reset the list if the user goes elsewhere
-		WatchedIndexStore.reset();
 	},
 
 	_onChange: function () {

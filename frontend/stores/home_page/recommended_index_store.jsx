@@ -53,10 +53,4 @@ RecommendedIndexStore.totalSize = function () {
 	return _totalSize;
 };
 
-RecommendedIndexStore.reset = function () {
-	_videoIndex = {};
-	_totalSize = 0;
-	_videoId = null;
-};
-
 module.exports = RecommendedIndexStore;
