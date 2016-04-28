@@ -1,6 +1,6 @@
 class Video < ActiveRecord::Base
 	include PgSearch
-	pg_search_scope :search_by_title, against: :title, using: {tsearch: {prefix: true} }
+	pg_search_scope :search_by_title, against: :title, using: {tsearch: {prefix: true}}, order_within_rank: "videos.updated_at DESC"
 
 	belongs_to :user
 	has_many :comments, dependent: :destroy

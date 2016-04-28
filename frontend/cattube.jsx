@@ -18,6 +18,7 @@ var LoginPage = require('./components/login_page');
 var ApiUtils = require('./utils/api_utils');
 var AccountPage = require('./components/account_page');
 var HomePage = require('./components/home_page');
+var SearchPage = require('./components/search_page');
 
 // for generic stuff rendered or configured on all pages
 var CatTubeApp = React.createClass({
@@ -51,6 +52,7 @@ $(function() {
 				<Route path='upload' component={UploadPage} onEnter={_ensureLoggedIn}/>
 				<Route path='login' component={LoginPage} onEnter={_ensureLoggedOut}/>
 				<Route path='account' component={AccountPage} onEnter={_ensureLoggedOut}/>
+				<Route path='search' component={SearchPage}/>
 			</Route>
 		</Router>, $('#content')[0]);
 });

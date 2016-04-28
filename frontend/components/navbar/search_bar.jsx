@@ -1,20 +1,23 @@
 var ApiUtils = require('../../utils/api_utils');
-var SearchStore = require('../../stores/navbar/search_store');
+var SuggestedStore = require('../../stores/navbar/suggested_store');
 
 var React = require('react');
-var Link = require('react-router').Link;
 
 // need access to the search bar from cattube.jsx
 window.CatTube.SearchBarInstance = null;
 
 var SearchBar = React.createClass({
+	contextTypes: {
+		router: React.PropTypes.object.isRequired
+	},
+
 	getInitialState: function () {
-		return {selected: null, hide: false, searchResults: SearchStore.all()};
+		return {selected: null, hide: false, searchResults: SuggestedStore.all()};
 	},
 
 	componentDidMount: function () {
 		window.CatTube.SearchBarInstance = this;
-		this.storeToken = SearchStore.addListener(this._onChange);
+		this.storeToken = SuggestedStore.addListener(this._onChange);
 	},
 
 	componentWillUnmount: function () {
@@ -22,12 +25,12 @@ var SearchBar = React.createClass({
 	},
 
 	_onChange: function () {
-		this.setState({hide: false, searchResults: SearchStore.all()});
+		this.setState({hide: false, searchResults: SuggestedStore.all()});
 	},
 
 	_updateSearch: function () {
 		var currInput = $(".navbar-search-input").val();
-		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(1, "SEARCH", {searchString: currInput, videoId: -1});
+		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(1, "SUGGESTED", {searchString: currInput, videoId: -1});
 	},
 
 	_upSelected: function() {
@@ -110,6 +113,12 @@ var SearchBar = React.createClass({
 			var searchResults = this.state.searchResults[1];
 			$(".navbar-search-input").val(searchResults[this.state.selected].title);
 		}
+
+		var searchString = $(".navbar-search-input").val();
+		this.context.router.push({
+			pathname: "search",
+			query: {searchString: searchString}
+		});
 	},
 
 	render: function() {

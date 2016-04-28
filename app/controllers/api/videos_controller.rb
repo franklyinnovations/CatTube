@@ -33,7 +33,7 @@ class Api::VideosController < ApplicationController
 			end
 		when "FEATURED"
 			results = Api::VideosController.get_featured_videos
-		when "SEARCH"
+		when "SEARCH", "SUGGESTED"
 			results = Api::VideosController.search_videos(params[:search_string], requested_page)
 		else
 			render json: {message: "Invalid search type!"}, status: 422

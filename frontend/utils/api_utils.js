@@ -133,7 +133,7 @@ var ApiUtils = {
 		var videoId = options.videoId;
 
 		var data = {page: page, type: type};
-		if(type === "SEARCH") {
+		if(type === "SEARCH" || "SUGGESTED") {
 			$.extend(data, {search_string: options.searchString});
 		}
 
