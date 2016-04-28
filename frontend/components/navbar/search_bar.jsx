@@ -4,12 +4,16 @@ var SearchStore = require('../../stores/navbar/search_store');
 var React = require('react');
 var Link = require('react-router').Link;
 
+// need access to the search bar from cattube.jsx
+window.CatTube.SearchBarInstance = null;
+
 var SearchBar = React.createClass({
 	getInitialState: function () {
 		return {selected: null, hide: false, searchResults: SearchStore.all()};
 	},
 
 	componentDidMount: function () {
+		window.CatTube.SearchBarInstance = this;
 		this.storeToken = SearchStore.addListener(this._onChange);
 	},
 
@@ -27,8 +31,12 @@ var SearchBar = React.createClass({
 	},
 
 	_upSelected: function() {
-		var totalResults = this.state.searchResults[1].length;
+		var totalResults = 0;
 		var selected;
+
+		if(this.state.searchResults[1]) {
+			totalResults = this.state.searchResults[1].length;
+		}
 
 		if(totalResults > 0) {
 			if(this.state.selected === null) {
@@ -46,8 +54,12 @@ var SearchBar = React.createClass({
 	},
 
 	_downSelected: function() {
-		var totalResults = this.state.searchResults[1].length;
+		var totalResults = 0;
 		var selected;
+
+		if(this.state.searchResults[1]) {
+			totalResults = this.state.searchResults[1].length;
+		}
 
 		if(totalResults > 0) {
 			if(this.state.selected === null) {

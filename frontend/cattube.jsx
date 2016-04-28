@@ -1,3 +1,6 @@
+// global namespace
+window.CatTube = window.CatTube || {};
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -16,17 +19,24 @@ var ApiUtils = require('./utils/api_utils');
 var AccountPage = require('./components/account_page');
 var HomePage = require('./components/home_page');
 
-var OtherActions = require('./actions/other_actions');
-
 // for generic stuff rendered or configured on all pages
 var CatTubeApp = React.createClass({
 
+	// hide suggestions from the search bar if the user clicks outside the header
+	_removeSearchBarSuggestions: function (e) {
+		if(window.CatTube.SearchBarInstance) {
+			window.CatTube.SearchBarInstance.setState({hide: true});
+		}
+	},
+
 	render: function() {
 		return (
-			<header className='header'>
+			<div className="app">
 				<NavBar/>
-				{this.props.children}
-			</header>
+				<section onClick={this._removeSearchBarSuggestions} className="not-navbar">
+					{this.props.children}
+				</section>
+			</div>
 		);
 	}
 
@@ -46,8 +56,11 @@ $(function() {
 });
 
 function _onLinkTo () {
-	// remove the search bar suggestions everytime the user clicks on a link
-	OtherActions.resetVideoIndexByPageAndTypeAndVideoId(1, "SEARCH", -1);
+	// hide the search bar suggestions if the user clicks on a new link
+	if(window.CatTube.SearchBarInstance) {
+		window.CatTube.SearchBarInstance.setState({hide: true});
+	}
+
 	window.scrollTo(0, 0);
 }
 
