@@ -5,7 +5,7 @@
 	box-sizing: border-box;
 }
 
-.watched-index, .recommended-index {
+.featured-index, .watched-index, .recommended-index {
 	border-bottom: 1px solid #e2e2e2;
 	padding: 15px;
 }
@@ -19,6 +19,97 @@
 	font-weight: bold;
 	padding-left: 5px;
 	padding-bottom: 15px;
+}
+
+.featured-main {
+	float: left;
+	width: 600px;
+	height: 220px;
+	color: #666666;
+}
+
+.featured-main-link {
+	display: block;
+	float: left;
+	width: 400px;
+	height: 300px;
+	margin-right: 10px;
+}
+
+.featured-main-link > img {
+	width: 100%;
+}
+
+.featured-main-title {
+	display: block;
+	font-size: 13px;
+	color: #167ac6;
+}
+
+.featured-main-title:hover {
+	text-decoration: underline;
+}
+
+.featured-main-username {
+	display: block;
+}
+
+.featured-main-views {
+}
+
+.featured-main-seperator {
+	margin: 0 5px;
+}
+
+.featured-main-date {
+}
+
+.featured-video-list {
+	width: 420px;
+	float: right;
+}
+
+.featured-video {
+	color: #666666;
+	float: left;
+	width: 100%;
+	margin-bottom: 5px;
+}
+
+.featured-video-link {
+	display: block;
+	float: left;
+	width: 125px;
+	height: 70px;
+	margin-right: 10px;
+}
+
+.featured-video-link > img {
+	width: 100%;
+}
+
+.featured-video-title {
+	display: block;
+	font-size: 13px;
+	color: #167ac6;
+}
+
+.featured-video-title:hover {
+	text-decoration: underline;
+}
+
+.featured-video-username {
+	display: block;
+}
+
+.featured-video-views {
+}
+
+.featured-video-seperator {
+	margin: 0 5px;
+}
+
+.featured-video-date {
 }
 
 .popular-index-more {

@@ -25,36 +25,56 @@ var FeaturedIndex = React.createClass({
 	},
 
 	render: function() {
-		var featured = [];
+		var main = null;
+		var others = [];
 
 		// there should only be one featured video page
 		if(this.state.videoIndex) {
 			$.each(this.state.videoIndex, function(page, videoPage) {
-				featured = videoPage;
+				main = videoPage[0];
+				others = videoPage.slice(1);
 			});
 		}
 
-		return (
-			<div className="featured-index">
-				<h2 className="featured-index-title">Featured</h2>
-				<div className="featured-video-list">{
-					featured.map(function (video) {
-						return (
-							<div key={video.id}>
-								<Link to={'/videos/' + video.id} className='featured-video-link'>
-									<img src={video.thumb}></img>
-									<strong className="featured-video-title">{video.title}</strong>
-								</Link>
-								<strong className="featured-video-username">{video.username}</strong>
-								<strong className="featured-video-views">{video.total_views} views</strong>
-								<strong className="featured-video-seperator">-</strong>
-								<strong className="featured-video-date">{video.created_ago}</strong>
-							</div>
-						);
-					})
-				}</div>
-			</div>
-		);
+		if(main) {
+			return (
+				<div className="featured-index group">
+					<div className="featured-main group">
+						<Link to={'/videos/' + main.id} className="featured-main-link">
+							<img src={main.thumb}></img>
+						</Link>
+						<Link to={'/videos/' + main.id} className="featured-main-title">
+							<strong>{main.title}</strong>
+						</Link>
+						<strong className="featured-main-username">{main.username}</strong>
+						<strong className="featured-main-views">{main.total_views} views</strong>
+						<strong className="featured-main-seperator">-</strong>
+						<strong className="featured-main-date">{main.created_ago} ago</strong>
+					</div>
+					<div className="featured-video-list group">{
+						others.map(function (video) {
+							return (
+								<div key={video.id} className="featured-video group">
+									<Link to={'/videos/' + video.id} className="featured-video-link">
+										<img src={video.thumb}></img>
+									</Link>
+									<Link to={'/videos/' + video.id} className="featured-video-title">
+										<strong>{video.title}</strong>
+									</Link>
+									<strong className="featured-video-username">{video.username}</strong>
+									<strong className="featured-video-views">{video.total_views} views</strong>
+									<strong className="featured-video-seperator">-</strong>
+									<strong className="featured-video-date">{video.created_ago} ago</strong>
+								</div>
+							);
+						})
+					}</div>
+				</div>
+			);
+		}
+		else {
+			return <div></div>;
+		}
 	}
 });
 

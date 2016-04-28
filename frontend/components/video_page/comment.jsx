@@ -46,7 +46,7 @@ var Comment = React.createClass({
 						<Icon userId={comment.user_id}/>
 					</div>
 					<strong className='comment-username'>{comment.username}</strong>
-					<strong className='comment-date'>{comment.created_ago}</strong>
+					<strong className='comment-date'>{comment.created_ago} ago</strong>
 					{deleteComment}
 					<p className='comment-body'>{comment.body}</p>
 					{replyComment}

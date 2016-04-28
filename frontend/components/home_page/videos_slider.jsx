@@ -29,7 +29,7 @@ var VideosSlider = React.createClass({
 									<strong className="slider-element-username">{video.username}</strong>
 									<strong className="slider-element-views">{video.total_views} views</strong>
 									<strong className="slider-element-seperator">-</strong>
-									<strong className="slider-element-date">{video.created_ago}</strong>
+									<strong className="slider-element-date">{video.created_ago} ago</strong>
 								</div>
 							);
 						})
