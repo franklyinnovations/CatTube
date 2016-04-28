@@ -26,6 +26,8 @@
 	color: #666666;
 	margin-bottom: 15px;
 	font-size: 13px;
+	height: 113px;
+	overflow: hidden;
 }
 
 .search-index-result-link {
@@ -52,10 +54,54 @@
 .search-index-result-username {
 	display: block;
 }
-.search-index-result-views {
-}
 .search-index-result-seperator {
 	margin: 0 5px;
 }
-.search-index-result-date {
+
+.search-index-result-description {
+	margin-top: 5px;
+	display: block;
+}
+
+.search-index-buttons {
+	text-align: center;
+}
+
+.search-index-buttons > button {
+	display: inline-block;
+	box-sizing: border-box;
+	border: 1px solid #d8d8d8;
+	background: #f0f0f0;
+	text-align: center;
+	margin-right: 5px;
+	border-radius: 5px;
+	font-size: 11px;
+}
+
+.search-index-buttons > button:hover {
+	cursor: pointer;
+	background: #dddddd;
+}
+
+.search-index-buttons > .selected {
+	background: #aaaaaa;
+}
+
+.search-index-buttons > .selected:hover {
+	background: #aaaaaa;
+}
+
+.search-index-button {
+	width: 30px;
+	height: 30px;
+}
+
+.search-index-prev {
+	width: 75px;
+	height: 30px;
+}
+
+.search-index-next {
+	width: 55px;
+	height: 30px;
 }
