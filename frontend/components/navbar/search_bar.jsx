@@ -86,11 +86,15 @@ var SearchBar = React.createClass({
 		this.setState({hide: false, selected: target});
 	},
 
+	hideSuggestions: function () {
+		this.setState({selected: null, hide: true});
+	},
+
 	_handleKeys: function (e) {
 		switch(e.key) {
 			case "Escape":
 				e.preventDefault();
-				this.setState({selected: null, hide: true});
+				this.hideSuggestions();
 				break;
 			case "ArrowDown":
 				e.preventDefault();

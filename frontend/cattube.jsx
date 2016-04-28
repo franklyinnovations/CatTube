@@ -26,7 +26,7 @@ var CatTubeApp = React.createClass({
 	// hide suggestions from the search bar if the user clicks outside the header
 	_removeSearchBarSuggestions: function (e) {
 		if(window.CatTube.SearchBarInstance) {
-			window.CatTube.SearchBarInstance.setState({hide: true});
+			window.CatTube.SearchBarInstance.hideSuggestions();
 		}
 	},
 
@@ -60,7 +60,7 @@ $(function() {
 function _onLinkTo () {
 	// hide the search bar suggestions if the user clicks on a new link
 	if(window.CatTube.SearchBarInstance) {
-		window.CatTube.SearchBarInstance.setState({hide: true});
+		window.CatTube.SearchBarInstance.hideSuggestions();
 	}
 
 	window.scrollTo(0, 0);
