@@ -72,8 +72,8 @@ class Api::VideosController < ApplicationController
 	end
 
 	def self.search_videos(search_string, curr_page = 1)
-		results = Video.search_by_title(search_string).page(curr_page).per(PER_PAGE)
-		[results, results.size]
+		results = Video.search_by_title(search_string)
+		[results.page(curr_page).per(PER_PAGE), results.size]
 	end
 
 	def self.get_featured_videos
