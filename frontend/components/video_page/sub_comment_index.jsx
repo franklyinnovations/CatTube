@@ -22,6 +22,11 @@ var SubCommentIndex = React.createClass({
 		this.setState({hidden: true});
 	},
 
+	componentDidUpdate: function () {
+		// change the video-page height if necessary (for footer position purposes)
+		this.props.updateParentHeight();
+	},
+
 	render: function() {
 		var subComments = this.props.subComments;
 		var length = subComments.length;

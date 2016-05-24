@@ -37,8 +37,8 @@ var CatTubeApp = React.createClass({
 				<NavBar/>
 				<section onClick={this._removeSearchBarSuggestions} className="not-navbar">
 					{this.props.children}
+					<Footer/>
 				</section>
-				<Footer/>
 			</div>
 		);
 	}

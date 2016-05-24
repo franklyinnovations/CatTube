@@ -37,6 +37,11 @@ var CommentIndex = React.createClass({
 		ApiUtils.getCommentsByPageAndVideoId(1, newProps.videoId);
 	},
 
+	componentDidUpdate: function () {
+		// change the parent's height if necessary
+		this.props.updateParentHeight();
+	},
+
 	render: function() {
 		if(this.state.comments) {
 			var comments = this.state.comments;
@@ -70,10 +75,10 @@ var CommentIndex = React.createClass({
 					output.map( function (comment) {
 						return (
 							<Comment key={comment.id} comment={comment}>{
-								<SubCommentIndex subComments={comment.children}/>
+								<SubCommentIndex subComments={comment.children} updateParentHeight={this.props.updateParentHeight}/>
 							}</Comment>
 						);
-					})
+					}.bind(this))
 				}{
 					showMoreButton
 				}</section>

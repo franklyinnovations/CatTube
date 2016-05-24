@@ -21,6 +21,17 @@ button, article, footer, small {
 	vertical-align: inherit;
 }
 
+html {
+	height: 100%;
+}
+
+body {
+	min-height: 100%;
+	position: relative;
+	padding-bottom: 100px;
+	box-sizing: border-box;
+}
+
 /* --- ELEMENTS --- */
 
 body {

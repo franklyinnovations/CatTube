@@ -31,13 +31,24 @@ var VideoPage = React.createClass({
 		ApiUtils.getVideoById(newProps.params.videoId);
 	},
 
+	updateParentHeight: function() {
+		var leftColumnHeight =
+			$(".video").outerHeight(true) +
+			$(".video-bar").outerHeight(true) +
+			$(".comment-index").outerHeight(true);
+		var rightColumnHeight = $(".video-index").outerHeight();
+
+		var newHeight = (leftColumnHeight > rightColumnHeight) ? leftColumnHeight : rightColumnHeight;
+		$(".video-page").height(newHeight);
+	},
+
 	render: function() {
 		return (
 			<div className='video-page group'>
 				<Video video={this.state.video}/>
 				<VideoBar video={this.state.video}/>
-				<CommentIndex videoId={this.props.params.videoId}/>
-				<VideoIndex videoId={this.props.params.videoId}/>
+				<CommentIndex videoId={this.props.params.videoId} updateParentHeight={this.updateParentHeight}/>
+				<VideoIndex videoId={this.props.params.videoId} updateParentHeight={this.updateParentHeight}/>
 			</div>
 		);
 	}

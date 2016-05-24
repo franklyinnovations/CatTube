@@ -33,6 +33,11 @@ var VideoIndex = React.createClass({
 		ApiUtils.getVideoIndexByPageAndTypeAndVideoId(++this.page, "POPULAR", {videoId: this.props.videoId});
 	},
 
+	componentDidUpdate: function () {
+		// change the parent's height if necessary
+		this.props.updateParentHeight();
+	},
+
 	render: function() {
 		var videoIndex = this.state.videoIndex;
 		var output = [];
