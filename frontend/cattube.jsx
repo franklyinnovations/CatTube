@@ -6,6 +6,7 @@ var ReactDOM = require('react-dom');
 
 var Router = require('react-router').Router;
 var Route = require('react-router').Route;
+var NotFoundRoute = require('react-router').NotFoundRoute;
 var IndexRoute = require('react-router').IndexRoute;
 var hashHistory = require('react-router').hashHistory;
 // var Link = require('react-router').Link;
@@ -19,6 +20,7 @@ var ApiUtils = require('./utils/api_utils');
 var AccountPage = require('./components/account_page');
 var HomePage = require('./components/home_page');
 var SearchPage = require('./components/search_page');
+var NotFoundPage = require('./components/not_found_page');
 var Footer = require('./components/footer');
 
 // for generic stuff rendered or configured on all pages
@@ -55,6 +57,7 @@ $(function() {
 				<Route path='login' component={LoginPage} onEnter={_ensureLoggedOut}/>
 				<Route path='account' component={AccountPage} onEnter={_ensureLoggedOut}/>
 				<Route path='search' component={SearchPage}/>
+				<Route path="*" component={NotFoundPage}/>
 			</Route>
 		</Router>, $('#content')[0]);
 });

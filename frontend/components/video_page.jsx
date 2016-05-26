@@ -9,6 +9,9 @@ var Video = require('./video_page/video');
 var CommentIndex = require('./video_page/comment_index');
 
 var VideoPage = React.createClass({
+	contextTypes: {
+		router: React.PropTypes.object.isRequired
+	},
 
 	getInitialState: function () {
 		return {video: null};
@@ -16,7 +19,7 @@ var VideoPage = React.createClass({
 
 	componentDidMount: function () {
 		this.storeToken = VideoStore.addListener(this._onChange);
-		ApiUtils.getVideoById(this.props.params.videoId);
+		ApiUtils.getVideoById(this.props.params.videoId, null, this._videoNotFound);
 	},
 
 	componentWillUnmount: function () {
@@ -28,7 +31,11 @@ var VideoPage = React.createClass({
 	},
 
 	componentWillReceiveProps: function(newProps) {
-		ApiUtils.getVideoById(newProps.params.videoId);
+		ApiUtils.getVideoById(newProps.params.videoId, null, this._videoNotFound);
+	},
+
+	_videoNotFound: function () {
+		this.context.router.push({pathname: '/404'});
 	},
 
 	updateParentHeight: function() {
