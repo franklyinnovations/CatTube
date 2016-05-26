@@ -31,7 +31,7 @@ module Paperclip
 				raise PaperclipError, "There was an error processing the thumbnail for #{@basename}" if whiny
 			end
 
-			resize_thumbnail(dst)
+			process_thumbnail(dst)
 		end
 
 		def get_video_duration
@@ -46,9 +46,9 @@ module Paperclip
 			Float(duration).to_i
 		end
 
-		def resize_thumbnail(dst)
-			resize = Tempfile.new([@basename, ".jpg"].compact.join("."))
-			cmd = "#{File.expand_path(dst.path)} -resize #{@geometry.to_s} #{File.expand_path(resize.path)}"
+		def process_thumbnail(dst)
+			new_thumb = Tempfile.new([@basename, "jpg"].compact.join("."))
+			cmd = "#{File.expand_path(dst.path)} -resize #{@geometry.to_s} -background '#eeeeee' -gravity center -extent #{@geometry.to_s} #{File.expand_path(new_thumb.path)}"
 
 			begin
 				success = Paperclip.run("convert", cmd)
@@ -56,7 +56,7 @@ module Paperclip
 				raise PaperclipError, "There was an error resizing the video thumbnail for #{@basename}" if whiny
 			end
 
-			resize
+			new_thumb
 		end
 
 	end

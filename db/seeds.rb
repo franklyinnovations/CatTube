@@ -8,8 +8,8 @@
 
 ActiveRecord::Base.transaction do
 	# generate a list of default users
-	users_name_array = ['bar', 'baz', 'qux']
-	10.times do
+	users_name_array = ['foo', 'bar', 'baz', 'qux']
+	5.times do
 		users_name_array << Faker::Hacker.noun.gsub(/\s/, '')
 	end
 
