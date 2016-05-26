@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 		styles: { thumb: "100x100#" },
 		default_url: "default.jpg"
 
-	validates_attachment :avatar, content_type: { content_type: /\Aimage\/.*\Z/ }
+	validates_attachment :avatar, content_type: { content_type: /\Aimage\/.*\Z/ }, size: { in: (0..1_000_000) }
 
 	def self.find_by_credentials(username, password)
 		user = User.find_by(username: username)

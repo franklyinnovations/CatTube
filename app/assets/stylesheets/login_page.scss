@@ -30,6 +30,7 @@
 }
 
 .sign-in-status {
+	color: #ff0000;
 	display: block;
 }
 
@@ -43,6 +44,7 @@
 }
 
 .sign-in-username-errors {
+	color: #ff0000;
 	font-size: 12px;
 	display: block;
 }
@@ -64,6 +66,7 @@
 }
 
 .sign-in-password-errors {
+	color: #ff0000;
 	font-size: 12px;
 	display: block;
 }
@@ -103,7 +106,7 @@
 }
 
 .sign-in-create-account {
-	margin-top: 10px;
+	margin-top: 15px;
 	font-size: 14px;
 	display: block;
 	color: #427fed;
