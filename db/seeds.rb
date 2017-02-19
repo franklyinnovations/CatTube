@@ -29,7 +29,16 @@ ActiveRecord::Base.transaction do
 		File.open("app/assets/videos/cats_with_human_mouth.mp4"),
 		File.open("app/assets/videos/funny_videos_cats_talking.mp4"),
 		File.open("app/assets/videos/japanese_cats_say_nyan_not_meow.mp4"),
-		File.open("app/assets/videos/yelling_cat.mp4")
+		File.open("app/assets/videos/yelling_cat.mp4"),
+		File.open("app/assets/videos/bad_cats.mp4"),
+		File.open("app/assets/videos/cat_dancing_with_michael_jackson_song.mp4"),
+		File.open("app/assets/videos/cat_on_a_lead_indoor_cats_outdoors_cat_goes_for_walkies.mp4"),
+		File.open("app/assets/videos/cats_love_it!.mp4"),
+		File.open("app/assets/videos/cheetoh_cat_sees_owners_for_first_time_in_days.mp4"),
+		File.open("app/assets/videos/diabetic_cats_strange_walk.mp4"),
+		File.open("app/assets/videos/funny_cucumber_cat_prank_2016.mp4"),
+		File.open("app/assets/videos/kung_fu_cat_hits_2_dogs_upon_the_air.mp4"),
+		File.open("app/assets/videos/silly_string_cat.mp4")
 	];
 
 	duplicates.times.each do |i|
