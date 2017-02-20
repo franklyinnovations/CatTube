@@ -9,7 +9,7 @@
 ActiveRecord::Base.transaction do
 	# generate a list of default users
 	users_name_array = ['foo', 'bar', 'baz', 'qux']
-	5.times do
+	6.times do
 		users_name_array << Faker::Hacker.noun.gsub(/\s/, '')
 	end
 
@@ -21,9 +21,30 @@ ActiveRecord::Base.transaction do
 
 	users = User.all
 
+	# create a different avatar thumbnail for each default user
+	avatar_files = [
+		File.open("app/assets/images/cat-1652822_640.jpg"),
+		File.open("app/assets/images/cat-188088_640.jpg"),
+		File.open("app/assets/images/cat-207583_640.jpg"),
+		File.open("app/assets/images/cat-300572_640.jpg"),
+		File.open("app/assets/images/cat-360807_640.jpg"),
+		File.open("app/assets/images/cat-379117_640.jpg"),
+		File.open("app/assets/images/cat-401124_640.jpg"),
+		File.open("app/assets/images/cat-520894_640.jpg"),
+		File.open("app/assets/images/cat-56753_640.jpg"),
+		File.open("app/assets/images/cat-778315_640.jpg")
+	]
+
+	users.each_with_index do |user, idx|
+		user.avatar = avatar_files[idx % avatar_files.size]
+		user.save!
+	end
+
+	avatar_files.each { |file| file.close }
+
 	# upload "cats with human mouth.mp4" many, many times
-	duplicates = 100;
-	files = [
+	video_duplicates = 100;
+	video_files = [
 		File.open("app/assets/videos/cats_go_meow_markiplier.mp4"),
 		File.open("app/assets/videos/cats_love_pizza.mp4"),
 		File.open("app/assets/videos/cats_with_human_mouth.mp4"),
@@ -38,16 +59,16 @@ ActiveRecord::Base.transaction do
 		File.open("app/assets/videos/diabetic_cats_strange_walk.mp4"),
 		File.open("app/assets/videos/funny_cucumber_cat_prank_2016.mp4"),
 		File.open("app/assets/videos/kung_fu_cat_hits_2_dogs_upon_the_air.mp4"),
-		File.open("app/assets/videos/silly_string_cat.mp4")
+		File.open("app/assets/videos/cico_fat_cat.mp4")
 	];
 
-	duplicates.times.each do |i|
+	video_duplicates.times.each do |i|
 		video = Video.new(title: "foo #{i}", description: "bar #{i}", user_id: users[0].id)
-		video.data = files.sample
+		video.data = video_files.sample
 		video.save!
 	end
 
-	files.each { |file| file.close }
+	video_files.each { |file| file.close }
 	videos = Video.all
 
 	# change video descriptions, titles, and user_id
